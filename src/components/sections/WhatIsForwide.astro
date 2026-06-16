@@ -67,6 +67,7 @@ const pillarVisualStyle = (variant: "product" | "system") => {
 	id="vision"
 	class="bg-background px-[var(--frame-inset)] py-[clamp(4rem,10vw,7.5rem)] text-foreground"
 	aria-labelledby="what-is-forwide-title"
+	data-what-section
 >
 	<div class="flex w-full flex-col gap-10 lg:gap-12">
 		<div class="flex flex-col gap-2.5">
@@ -76,13 +77,13 @@ const pillarVisualStyle = (variant: "product" | "system") => {
 			<div class="border-t border-primary pt-[clamp(3rem,8vw,5.25rem)]">
 				<div class="flex flex-col items-start gap-8 lg:flex-row lg:items-end lg:gap-12">
 					<div class="flex min-w-0 flex-1 flex-col gap-6 uppercase">
-						<p class="text-[1.25rem] font-medium italic leading-none tracking-[-0.04em] text-primary">
+						<p class="text-[1.25rem] font-medium italic leading-none tracking-[-0.04em] text-primary" data-what-reveal-text>
 							{eyebrow}
 						</p>
 						<h2
 							id="what-is-forwide-title"
 							class="text-what-title font-black uppercase leading-none tracking-[-0.04em]"
-							data-reveal-heading
+							data-what-reveal-text
 						>
 							{title}
 						</h2>
@@ -90,7 +91,7 @@ const pillarVisualStyle = (variant: "product" | "system") => {
 
 					<p
 						class="max-w-[27rem] text-description font-medium text-pretty lg:shrink-0"
-						data-reveal-copy
+						data-what-reveal-text
 					>
 						{intro}
 					</p>
@@ -108,6 +109,7 @@ const pillarVisualStyle = (variant: "product" | "system") => {
 							pillar.variant === "system" && "bg-surface",
 							pillar.variant === "scale" && "bg-primary text-foreground",
 						]}
+						data-what-reveal-card
 					>
 						{(pillar.variant === "product" || pillar.variant === "system") && (
 							<div
@@ -122,7 +124,7 @@ const pillarVisualStyle = (variant: "product" | "system") => {
 							<div class="relative min-h-0 flex-1">
 								<ScaleCardBackground client:visible />
 								{pillar.index && (
-									<p class="relative z-10 px-4 pt-5 text-[1.25rem] font-medium leading-none tracking-[-0.04em] text-primary-foreground">
+									<p class="relative z-10 px-4 pt-5 text-[1.25rem] font-medium leading-none tracking-[-0.04em] text-primary-foreground" data-what-reveal-text>
 										{pillar.index}
 									</p>
 								)}
@@ -130,7 +132,7 @@ const pillarVisualStyle = (variant: "product" | "system") => {
 						)}
 
 						<div class={contentClass}>
-							<h3 class="text-what-card-title font-bold uppercase leading-none tracking-[-0.04em]">
+							<h3 class="text-what-card-title font-bold uppercase leading-none tracking-[-0.04em]" data-what-reveal-text>
 								{pillar.title}
 							</h3>
 							<p
@@ -139,6 +141,7 @@ const pillarVisualStyle = (variant: "product" | "system") => {
 									pillar.variant === "product" && "opacity-80",
 									pillar.variant === "scale" && "opacity-80",
 								]}
+								data-what-reveal-text
 							>
 								{pillar.body}
 							</p>
@@ -149,3 +152,146 @@ const pillarVisualStyle = (variant: "product" | "system") => {
 		</div>
 	</div>
 </section>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const splitWhatRows = (element: HTMLElement) => {
+		if (element.dataset.whatPrepared === "true") return;
+
+		const text = element.textContent?.replace(/\s+/g, " ").trim();
+		if (!text) return;
+
+		const tokens = text.split(" ");
+		element.textContent = "";
+
+		const measureFragment = document.createDocumentFragment();
+		tokens.forEach((token, index) => {
+			const word = document.createElement("span");
+			word.dataset.whatWord = "";
+			word.textContent = token;
+			word.style.display = "inline-block";
+			measureFragment.appendChild(word);
+
+			if (index < tokens.length - 1) {
+				measureFragment.appendChild(document.createTextNode(" "));
+			}
+		});
+		element.appendChild(measureFragment);
+
+		const words = Array.from(element.querySelectorAll<HTMLElement>("[data-what-word]"));
+		const rows: HTMLElement[][] = [];
+
+		words.forEach((word) => {
+			const rowTop = Math.round(word.offsetTop);
+			const currentRow = rows.at(-1);
+			const currentTop = currentRow?.[0] ? Math.round(currentRow[0].offsetTop) : null;
+
+			if (!currentRow || currentTop === null || Math.abs(rowTop - currentTop) > 2) {
+				rows.push([word]);
+			} else {
+				currentRow.push(word);
+			}
+		});
+
+		const onPrimary = element.closest(".bg-primary");
+		element.textContent = "";
+
+		rows.forEach((row, index) => {
+			const line = document.createElement("span");
+			line.className = "relative block overflow-hidden";
+
+			const lineText = document.createElement("span");
+			lineText.className = "inline-block";
+			lineText.dataset.whatLineText = "";
+			lineText.textContent = row.map((word) => word.textContent).join(" ");
+
+			const lineBar = document.createElement("span");
+			lineBar.className = `pointer-events-none absolute inset-0 z-10 block ${onPrimary ? "bg-background" : "bg-primary"}`;
+			lineBar.dataset.whatLineBar = "";
+			lineBar.setAttribute("aria-hidden", "true");
+
+			line.append(lineText, lineBar);
+			element.appendChild(line);
+
+			if (index < rows.length - 1) {
+				element.appendChild(document.createTextNode(" "));
+			}
+		});
+
+		element.dataset.whatPrepared = "true";
+	};
+
+	const prepareWhatSection = (section: HTMLElement) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-what-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-what-line-bar]"));
+		const cards = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-what-reveal-card]"));
+
+		gsap.set(lineText, { autoAlpha: 1, yPercent: 104 });
+		gsap.set(lineBars, {
+			autoAlpha: 1,
+			xPercent: 0,
+			scaleX: 1,
+			transformOrigin: "left center",
+		});
+		gsap.set(cards, { autoAlpha: 0, y: 24 });
+	};
+
+	const revealWhatSection = (section: HTMLElement) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-what-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-what-line-bar]"));
+		const cards = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-what-reveal-card]"));
+		const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+		timeline
+			.to(lineText, {
+				yPercent: 0,
+				duration: 0.76,
+				stagger: 0.045,
+			})
+			.to(
+				lineBars,
+				{
+					xPercent: 104,
+					duration: 0.82,
+					stagger: 0.045,
+				},
+				"<",
+			)
+			.set(lineBars, { autoAlpha: 0 })
+			.to(
+				cards,
+				{
+					autoAlpha: 1,
+					y: 0,
+					duration: 0.68,
+					stagger: 0.1,
+				},
+				"-=0.42",
+			);
+	};
+
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	document.querySelectorAll<HTMLElement>("[data-what-reveal-text]").forEach(splitWhatRows);
+
+	document.querySelectorAll<HTMLElement>("[data-what-section]").forEach((section) => {
+		prepareWhatSection(section);
+
+		if (reduceMotion) {
+			gsap.set(section.querySelectorAll("[data-what-line-text], [data-what-reveal-card]"), { clearProps: "all" });
+			gsap.set(section.querySelectorAll("[data-what-line-bar]"), { autoAlpha: 0 });
+			return;
+		}
+
+		ScrollTrigger.create({
+			trigger: section,
+			start: "top 68%",
+			once: true,
+			onEnter: () => revealWhatSection(section),
+		});
+	});
+</script>

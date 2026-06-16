@@ -75,6 +75,7 @@
 	});
 
 	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	const headers = gsap.utils.toArray<HTMLElement>("[data-reveal-header]");
 	const fadeItems = gsap.utils.toArray<HTMLElement>("[data-reveal-fade]");
 	const logos = gsap.utils.toArray<HTMLElement>("[data-reveal-logo]");
 	const logoWords = gsap.utils.toArray<SVGPathElement>("[data-reveal-logo-word]");
@@ -85,9 +86,10 @@
 	const copyBars = gsap.utils.toArray<HTMLElement>("[data-reveal-copy-bar]");
 
 	if (reduceMotion) {
-		gsap.set([...fadeItems, ...logos, ...logoWords, ...logoMarks, ...headingText, ...copyText], { clearProps: "all" });
+		gsap.set([...headers, ...fadeItems, ...logos, ...logoWords, ...logoMarks, ...headingText, ...copyText], { clearProps: "all" });
 		gsap.set([...headingBars, ...copyBars], { autoAlpha: 0 });
 	} else {
+		gsap.set(headers, { autoAlpha: 0, y: -12 });
 		gsap.set(fadeItems, { autoAlpha: 0, y: 14 });
 		gsap.set(logos, { autoAlpha: 1 });
 		gsap.set(logoWords, { autoAlpha: 0, y: 10 });
@@ -109,6 +111,14 @@
 			},
 		});
 
+		if (headers.length) {
+			timeline.to(headers, {
+				autoAlpha: 1,
+				y: 0,
+				duration: 0.62,
+			});
+		}
+
 		if (logos.length) {
 			timeline
 				.to(logoWords, {
@@ -116,7 +126,7 @@
 					y: 0,
 					duration: 0.58,
 					stagger: 0.035,
-				})
+				}, headers.length ? "-=0.28" : 0)
 				.to(
 					logoMarks,
 					{

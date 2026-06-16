@@ -20,8 +20,10 @@ uniform float iTime;
 uniform vec3 iResolution;
 uniform vec3 uColor;
 uniform vec3 uColorLight;
+uniform vec3 uBackgroundColor;
 uniform float uAmplitude;
 uniform float uDistance;
+uniform float uOpacity;
 uniform vec2 uMouse;
 
 #define PI 3.1415926538
@@ -114,7 +116,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 
     float colorVal = 1.0 - line_strength;
     vec3 threadColor = mix(uColor, uColorLight, smoothstep(0.18, 0.92, uv.x));
-    fragColor = vec4(threadColor, colorVal);
+    fragColor = vec4(mix(uBackgroundColor, threadColor, colorVal * uOpacity), 1.0);
 }
 
 void main() {
@@ -123,10 +125,12 @@ void main() {
 `;
 
 export default function Threads({
-	color = [1, 1, 1],
-	colorLight = [1, 1, 1],
+	color = 'var(--primary)',
+	colorLight = 'var(--brand-200)',
+	backgroundColor = 'var(--background)',
 	amplitude = 1,
 	distance = 0,
+	opacity = 1,
 	enableMouseInteraction = false,
 	className = '',
 	...rest
@@ -137,12 +141,54 @@ export default function Threads({
 	useEffect(() => {
 		if (!containerRef.current) return;
 		const container = containerRef.current;
-		const renderer = new Renderer({ alpha: true });
+		const renderer = new Renderer({
+			alpha: false,
+			antialias: false,
+			dpr: Math.min(window.devicePixelRatio || 1, 2),
+			premultipliedAlpha: false,
+			powerPreference: 'high-performance',
+		});
 		const gl = renderer.gl;
-		gl.clearColor(0, 0, 0, 0);
-		gl.enable(gl.BLEND);
-		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+		gl.disable(gl.BLEND);
 		container.appendChild(gl.canvas);
+
+		const resolveColor = (value, fallback) => {
+			if (Array.isArray(value)) return value;
+			if (typeof value !== 'string') return fallback;
+
+			if (value.startsWith('#')) {
+				const normalized = value.length === 4
+					? `#${value[1]}${value[1]}${value[2]}${value[2]}${value[3]}${value[3]}`
+					: value;
+				const parsed = Number.parseInt(normalized.slice(1), 16);
+				if (!Number.isNaN(parsed)) {
+					return [
+						((parsed >> 16) & 255) / 255,
+						((parsed >> 8) & 255) / 255,
+						(parsed & 255) / 255,
+					];
+				}
+			}
+
+			const probe = document.createElement('span');
+			probe.style.color = value;
+			probe.style.display = 'none';
+			document.documentElement.appendChild(probe);
+			const resolved = getComputedStyle(probe).color;
+			probe.remove();
+
+			if (!resolved.startsWith('rgb')) return fallback;
+
+			const channels = resolved.match(/[\d.]+/g)?.slice(0, 3).map(Number);
+			if (!channels || channels.length < 3 || channels.some(Number.isNaN)) return fallback;
+
+			return channels.map((channel) => channel / 255);
+		};
+
+		const resolvedColor = resolveColor(color, [1, 0.267, 0]);
+		const resolvedColorLight = resolveColor(colorLight, [1, 0.698, 0.58]);
+		const resolvedBackgroundColor = resolveColor(backgroundColor, [0.958, 0.958, 0.958]);
+		gl.clearColor(resolvedBackgroundColor[0], resolvedBackgroundColor[1], resolvedBackgroundColor[2], 1);
 
 		const geometry = new Triangle(gl);
 		const program = new Program(gl, {
@@ -153,10 +199,12 @@ export default function Threads({
 				iResolution: {
 					value: new Color(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height),
 				},
-				uColor: { value: new Color(...color) },
-				uColorLight: { value: new Color(...colorLight) },
+				uColor: { value: new Color(...resolvedColor) },
+				uColorLight: { value: new Color(...resolvedColorLight) },
+				uBackgroundColor: { value: new Color(...resolvedBackgroundColor) },
 				uAmplitude: { value: amplitude },
 				uDistance: { value: distance },
+				uOpacity: { value: opacity },
 				uMouse: { value: new Float32Array([0.5, 0.5]) },
 			},
 		});
@@ -166,9 +214,9 @@ export default function Threads({
 		function resize() {
 			const { clientWidth, clientHeight } = container;
 			renderer.setSize(clientWidth, clientHeight);
-			program.uniforms.iResolution.value.r = clientWidth;
-			program.uniforms.iResolution.value.g = clientHeight;
-			program.uniforms.iResolution.value.b = clientWidth / clientHeight;
+			program.uniforms.iResolution.value.r = gl.canvas.width;
+			program.uniforms.iResolution.value.g = gl.canvas.height;
+			program.uniforms.iResolution.value.b = gl.canvas.width / gl.canvas.height;
 		}
 
 		let currentMouse = [0.5, 0.5];
@@ -225,7 +273,7 @@ export default function Threads({
 			if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
 			gl.getExtension('WEBGL_lose_context')?.loseContext();
 		};
-	}, [amplitude, color, colorLight, distance, enableMouseInteraction]);
+	}, [amplitude, backgroundColor, color, colorLight, distance, enableMouseInteraction, opacity]);
 
 	return <div ref={containerRef} className={`threads-container ${className}`} {...rest} aria-hidden="true" />;
 }
