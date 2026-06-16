@@ -130,6 +130,7 @@ export default function Threads({
 	backgroundColor = 'var(--background)',
 	amplitude = 1,
 	distance = 0,
+	maxDpr = 1.5,
 	opacity = 1,
 	enableMouseInteraction = false,
 	className = '',
@@ -137,6 +138,7 @@ export default function Threads({
 }) {
 	const containerRef = useRef(null);
 	const animationFrameId = useRef();
+	const isVisibleRef = useRef(true);
 
 	useEffect(() => {
 		if (!containerRef.current) return;
@@ -144,7 +146,7 @@ export default function Threads({
 		const renderer = new Renderer({
 			alpha: false,
 			antialias: false,
-			dpr: Math.min(window.devicePixelRatio || 1, 2),
+			dpr: Math.min(window.devicePixelRatio || 1, maxDpr),
 			premultipliedAlpha: false,
 			powerPreference: 'high-performance',
 		});
@@ -213,6 +215,7 @@ export default function Threads({
 
 		function resize() {
 			const { clientWidth, clientHeight } = container;
+			renderer.dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
 			renderer.setSize(clientWidth, clientHeight);
 			program.uniforms.iResolution.value.r = gl.canvas.width;
 			program.uniforms.iResolution.value.g = gl.canvas.height;
@@ -243,6 +246,11 @@ export default function Threads({
 		}
 
 		function update(time) {
+			if (!isVisibleRef.current) {
+				animationFrameId.current = null;
+				return;
+			}
+
 			if (enableMouseInteraction) {
 				const smoothing = 0.05;
 				currentMouse[0] += smoothing * (targetMouse[0] - currentMouse[0]);
@@ -259,10 +267,39 @@ export default function Threads({
 			animationFrameId.current = requestAnimationFrame(update);
 		}
 
-		animationFrameId.current = requestAnimationFrame(update);
+		const startRendering = () => {
+			if (!animationFrameId.current) {
+				animationFrameId.current = requestAnimationFrame(update);
+			}
+		};
+
+		const stopRendering = () => {
+			if (animationFrameId.current) {
+				cancelAnimationFrame(animationFrameId.current);
+				animationFrameId.current = null;
+			}
+		};
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				const isVisible = entries[0]?.isIntersecting ?? true;
+				isVisibleRef.current = isVisible;
+
+				if (isVisible) {
+					startRendering();
+				} else {
+					stopRendering();
+				}
+			},
+			{ rootMargin: '240px' },
+		);
+
+		observer.observe(container);
+		startRendering();
 
 		return () => {
-			if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
+			observer.disconnect();
+			stopRendering();
 			window.removeEventListener('resize', resize);
 
 			if (enableMouseInteraction) {
@@ -273,7 +310,7 @@ export default function Threads({
 			if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
 			gl.getExtension('WEBGL_lose_context')?.loseContext();
 		};
-	}, [amplitude, backgroundColor, color, colorLight, distance, enableMouseInteraction, opacity]);
+	}, [amplitude, backgroundColor, color, colorLight, distance, enableMouseInteraction, maxDpr, opacity]);
 
 	return <div ref={containerRef} className={`threads-container ${className}`} {...rest} aria-hidden="true" />;
 }

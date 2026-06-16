@@ -10,6 +10,7 @@ export default function HeroBackgroundManager() {
 					backgroundColor="var(--background)"
 					amplitude={1.95}
 					distance={0}
+					maxDpr={1.5}
 					opacity={0.62}
 					enableMouseInteraction
 				/>

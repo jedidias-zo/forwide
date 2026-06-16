@@ -146,6 +146,7 @@ export default function LightRays({
 	mouseInfluence = 0.1,
 	noiseAmount = 0,
 	distortion = 0,
+	maxDpr = 1.25,
 	className = '',
 }) {
 	const containerRef = useRef(null);
@@ -189,7 +190,7 @@ export default function LightRays({
 			if (!containerRef.current) return;
 
 			const renderer = new Renderer({
-				dpr: Math.min(window.devicePixelRatio, 2),
+				dpr: Math.min(window.devicePixelRatio || 1, maxDpr),
 				alpha: true,
 			});
 			rendererRef.current = renderer;
@@ -234,7 +235,7 @@ export default function LightRays({
 			const updatePlacement = () => {
 				if (!containerRef.current || !renderer) return;
 
-				renderer.dpr = Math.min(window.devicePixelRatio, 2);
+				renderer.dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
 				const { clientWidth: widthCss, clientHeight: heightCss } = containerRef.current;
 				renderer.setSize(widthCss, heightCss);
 
@@ -310,6 +311,7 @@ export default function LightRays({
 		mouseInfluence,
 		noiseAmount,
 		distortion,
+		maxDpr,
 	]);
 
 	useEffect(() => {

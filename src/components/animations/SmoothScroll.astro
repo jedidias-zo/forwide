@@ -24,7 +24,7 @@
 
 		lenis.on("scroll", ScrollTrigger.update);
 		gsap.ticker.add(updateLenis);
-		gsap.ticker.lagSmoothing(0);
+		gsap.ticker.lagSmoothing(500, 33);
 
 		window.addEventListener(
 			"beforeunload",
