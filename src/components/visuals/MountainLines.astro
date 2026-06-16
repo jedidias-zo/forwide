@@ -1,0 +1,194 @@
+---
+import mountainLinesSvg from '../../assets/visuals/mountain-lines.svg?raw';
+
+type Props = {
+	class?: string;
+	interactive?: boolean;
+};
+
+const {
+	class: className = "",
+	interactive = true,
+} = Astro.props;
+
+let lineIndex = 0;
+const svgMarkup = mountainLinesSvg
+	.replace("<svg", '<svg class="mountain-lines__svg" aria-hidden="true" focusable="false"')
+	.replaceAll("<path ", () => {
+		lineIndex += 1;
+		return `<path class="mountain-lines__path" data-mountain-line data-line-index="${lineIndex}" `;
+	});
+---
+
+<div
+	data-mountain-lines={interactive ? "interactive" : "static"}
+	class:list={[
+		"mountain-lines select-none will-change-transform",
+		interactive ? "pointer-events-auto" : "pointer-events-none",
+		className,
+	]}
+	set:html={svgMarkup}
+/>
+
+<style>
+	.mountain-lines {
+		--mountain-lines-opacity: 1;
+		--mountain-lines-scale: 1;
+		opacity: var(--mountain-lines-opacity);
+		transform: translate3d(var(--mountain-lines-x, 0), var(--mountain-lines-y, 0), 0)
+			rotate(var(--mountain-lines-rotate, 0deg)) scale(var(--mountain-lines-scale));
+		transform-origin: 50% 50%;
+	}
+
+	.mountain-lines :global(.mountain-lines__svg) {
+		width: 100%;
+		height: 100%;
+		overflow: visible;
+	}
+
+	.mountain-lines :global(.mountain-lines__path) {
+		transform-box: fill-box;
+		transform-origin: center;
+		will-change: transform, opacity;
+	}
+</style>
+
+<script>
+	import { gsap } from "gsap";
+
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+	const setupMountainLines = (root: HTMLElement) => {
+		const lines = gsap.utils.toArray<SVGPathElement>("[data-mountain-line]", root);
+		const svg = root.querySelector("svg");
+		const isInteractive = root.dataset.mountainLines === "interactive";
+
+		if (!svg || lines.length === 0) return;
+
+		gsap.set(root, {
+			x: -12,
+			y: -8,
+			rotation: -0.7,
+			scale: 0.99,
+			transformOrigin: "50% 50%",
+			force3D: true,
+		});
+
+		gsap.set(lines, {
+			transformOrigin: "50% 50%",
+			force3D: true,
+		});
+
+		if (!reduceMotion.matches) {
+			gsap.to(root, {
+				x: 12,
+				y: 10,
+				rotation: 0.8,
+				scale: 1.012,
+				duration: 14,
+				ease: "sine.inOut",
+				yoyo: true,
+				repeat: -1,
+			});
+
+			lines.forEach((line, index) => {
+				const direction = index % 2 === 0 ? 1 : -1;
+				const depth = index / Math.max(lines.length - 1, 1);
+
+				gsap.to(line, {
+					x: direction * gsap.utils.interpolate(4, 18, depth),
+					y: gsap.utils.interpolate(-10, 14, 1 - depth),
+					rotation: direction * gsap.utils.interpolate(0.25, 1.8, depth),
+					scale: gsap.utils.interpolate(0.992, 1.018, depth),
+					opacity: gsap.utils.interpolate(0.52, 0.92, depth),
+					duration: gsap.utils.interpolate(5.5, 9.5, depth),
+					delay: index * 0.08,
+					ease: "sine.inOut",
+					yoyo: true,
+					repeat: -1,
+				});
+			});
+		}
+
+		if (!isInteractive) return;
+
+		const rootX = gsap.quickTo(root, "x", { duration: 0.75, ease: "power3.out" });
+		const rootY = gsap.quickTo(root, "y", { duration: 0.75, ease: "power3.out" });
+		const rootRotate = gsap.quickTo(root, "rotation", { duration: 0.75, ease: "power3.out" });
+		const rootScale = gsap.quickTo(root, "scale", { duration: 0.75, ease: "power3.out" });
+
+		const lineTweens = lines.map((line, index) => {
+			const depth = (index + 1) / lines.length;
+
+			return {
+				x: gsap.quickTo(line, "x", { duration: 0.55 + depth * 0.4, ease: "power3.out" }),
+				y: gsap.quickTo(line, "y", { duration: 0.55 + depth * 0.4, ease: "power3.out" }),
+				scale: gsap.quickTo(line, "scale", { duration: 0.55 + depth * 0.4, ease: "power3.out" }),
+				opacity: gsap.quickTo(line, "opacity", { duration: 0.45, ease: "power2.out" }),
+				depth,
+			};
+		});
+
+		let isHovering = false;
+
+		const moveLines = (event: MouseEvent | PointerEvent) => {
+			const bounds = root.getBoundingClientRect();
+			const normalizedX = ((event.clientX - bounds.left) / bounds.width - 0.5) * 2;
+			const normalizedY = ((event.clientY - bounds.top) / bounds.height - 0.5) * 2;
+
+			isHovering = true;
+			rootX(normalizedX * 22);
+			rootY(normalizedY * 18);
+			rootRotate(normalizedX * 2.2);
+			rootScale(1.025);
+
+			lineTweens.forEach((tween, index) => {
+				const direction = index % 2 === 0 ? 1 : -1;
+				tween.x(normalizedX * direction * (10 + tween.depth * 28));
+				tween.y(normalizedY * (8 + tween.depth * 22));
+				tween.scale(1 + tween.depth * 0.035);
+				tween.opacity(0.72 + tween.depth * 0.28);
+			});
+		};
+
+		const resetLines = () => {
+			rootX(0);
+			rootY(0);
+			rootRotate(0);
+			rootScale(1);
+
+			lineTweens.forEach((tween) => {
+				tween.x(0);
+				tween.y(0);
+				tween.scale(1);
+				tween.opacity(0.7);
+			});
+		};
+
+		const syncPointer = (event: MouseEvent | PointerEvent) => {
+			const bounds = root.getBoundingClientRect();
+			const isInside =
+				event.clientX >= bounds.left &&
+				event.clientX <= bounds.right &&
+				event.clientY >= bounds.top &&
+				event.clientY <= bounds.bottom;
+
+			if (isInside) {
+				moveLines(event);
+				return;
+			}
+
+			if (isHovering) {
+				isHovering = false;
+				resetLines();
+			}
+		};
+
+		window.addEventListener("pointermove", syncPointer, { passive: true });
+		window.addEventListener("mousemove", syncPointer, { passive: true });
+		window.addEventListener("pointerleave", resetLines);
+		window.addEventListener("mouseleave", resetLines);
+	};
+
+	document.querySelectorAll<HTMLElement>("[data-mountain-lines]").forEach(setupMountainLines);
+</script>

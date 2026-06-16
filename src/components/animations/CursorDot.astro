@@ -1,0 +1,57 @@
+<div id="cursor-dot" class="cursor-dot" aria-hidden="true"></div>
+
+<script>
+	const dot = document.getElementById("cursor-dot");
+	const canUseCursorDot = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+	if (dot && canUseCursorDot) {
+		let targetX = 0;
+		let targetY = 0;
+		let currentX = 0;
+		let currentY = 0;
+		let isVisible = false;
+		let rafId = 0;
+
+		const magnetStrength = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 1 : 0.18;
+
+		const setVisible = (visible: boolean) => {
+			isVisible = visible;
+			dot.dataset.visible = String(visible);
+		};
+
+		const render = () => {
+			currentX += (targetX - currentX) * magnetStrength;
+			currentY += (targetY - currentY) * magnetStrength;
+
+			dot.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`;
+
+			rafId = requestAnimationFrame(render);
+		};
+
+		window.addEventListener(
+			"pointermove",
+			(event) => {
+				if (document.body.classList.contains("menu-open")) {
+					setVisible(false);
+					return;
+				}
+
+				targetX = event.clientX;
+				targetY = event.clientY;
+
+				if (!isVisible) {
+					currentX = targetX;
+					currentY = targetY;
+					setVisible(true);
+				}
+			},
+			{ passive: true },
+		);
+
+		window.addEventListener("pointerleave", () => setVisible(false));
+
+		rafId = requestAnimationFrame(render);
+
+		document.addEventListener("astro:before-swap", () => cancelAnimationFrame(rafId));
+	}
+</script>

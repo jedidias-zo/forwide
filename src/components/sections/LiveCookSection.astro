@@ -1,0 +1,451 @@
+---
+import livecookFood001 from "../../assets/livecook/livecook-food-001.png";
+import livecookFood002 from "../../assets/livecook/livecook-food-002.png";
+import livecookFoodLogo from "../../assets/livecook/livecook-food-logo.png";
+import livecookIcon from "../../assets/livecook/livecook-icon.png";
+import livecookMockup001 from "../../assets/livecook/livecook-mockup-001.png";
+import livecookUiCard from "../../assets/livecook/livecook-ui-card-001.png";
+import { ArrowRightIcon } from "@phosphor-icons/react";
+
+type Props = {
+	eyebrow?: string;
+	title?: string;
+	summary?: string;
+	intro?: string;
+	note?: string;
+	proof?: string;
+	cta?: string;
+	ctaLabel?: string;
+};
+
+const {
+	eyebrow = "Producto activo",
+	title = "LiveCook App",
+	summary = "Forwide articula producto, operación y escala desde una misma estructura. La compañía no lanza piezas sueltas: crea plataformas con lógica propia y aprendizaje reutilizable.",
+	intro = "Livecook parte de algo real: muchas personas guardan recetas, siguen chefs y ven videos, pero no siempre llegan a cocinar. La plataforma convierte esa intención en clases en vivo guiadas por chefs reales.",
+	note = "No es contenido para guardar. Es una experiencia para cocinar en el momento, hacer preguntas y terminar con un plato concreto.",
+	proof = "LiveCook demuestra el método de Forwide en condiciones reales: sesiones, personas cocinando, reservas, contenido y ajustes continuos.",
+	cta = "Forwide no depende de una sola app. Usa LiveCook para probar una base que puede sostener futuros verticales.",
+	ctaLabel = "Explorar Livecook",
+} = Astro.props;
+---
+
+<section
+	id="productos"
+	class="relative bg-background text-foreground"
+	aria-label="LiveCook App"
+	data-livecook-section
+>
+	<div class="lg:hidden overflow-hidden px-[var(--frame-inset)] py-[clamp(3.5rem,10vw,5rem)]">
+		<div class="flex w-full flex-col">
+			<div class="space-y-2 uppercase" data-livecook-item>
+				<p class="text-body-sm font-semibold leading-none">{eyebrow}</p>
+				<h2
+					class="text-[clamp(2.25rem,13vw,4.25rem)] font-black italic leading-none tracking-[-0.06em]"
+				>
+					<span class="relative block overflow-hidden">
+						<span class="block" data-livecook-line-text><span class="text-primary">{title.split(" ")[0]}</span> {title.split(" ").slice(1).join(" ")}</span>
+						<span class="pointer-events-none absolute inset-0 z-10 block bg-primary" data-livecook-line-bar aria-hidden="true"></span>
+					</span>
+				</h2>
+			</div>
+
+			<p class="mt-3 max-w-[23rem] text-description font-medium" data-livecook-text data-livecook-item>
+				{summary}
+			</p>
+
+			<div class="relative mt-12 flex justify-center" data-livecook-item>
+				<img
+					src={livecookMockup001.src}
+					alt="Interfaz móvil de LiveCook."
+					class="relative z-10 w-[min(76vw,19rem)] object-contain drop-shadow-[0_1.5rem_3.5rem_rgb(31_29_30_/_0.16)] sm:w-[min(54vw,24rem)] md:w-[min(46vw,28rem)]"
+					loading="lazy"
+				/>
+			</div>
+
+			<figure class="mt-14 w-[min(77vw,19rem)] sm:w-[min(58vw,26rem)] md:w-[min(46vw,30rem)]" data-livecook-item>
+				<img
+					src={livecookFood001.src}
+					alt="Proceso de cocina con selección visual sobre los ingredientes."
+					class="aspect-[1.28] w-full object-cover"
+					loading="lazy"
+				/>
+			</figure>
+
+			<p class="mt-4 max-w-[22rem] text-description font-medium" data-livecook-text data-livecook-item>
+				{intro}
+			</p>
+
+			<div class="mt-12 flex flex-col items-center gap-8" data-livecook-item>
+				<img
+					src={livecookIcon.src}
+					alt=""
+					class="w-[min(46vw,11rem)] object-contain drop-shadow-[0_1rem_2.5rem_rgb(31_29_30_/_0.15)]"
+					loading="lazy"
+				/>
+
+				<p class="ml-auto max-w-[16rem] text-description font-medium" data-livecook-text>
+					{note}
+				</p>
+			</div>
+
+			<figure class="mt-10 w-[min(100%,26rem)] sm:w-[min(82vw,34rem)] md:w-[min(70vw,40rem)]" data-livecook-item>
+				<img
+					src={livecookUiCard.src}
+					alt="Clase en vivo de LiveCook con una tarjeta de reserva y detalles."
+					class="aspect-[1.1] w-full object-cover"
+					loading="lazy"
+				/>
+			</figure>
+
+			<p class="mt-4 max-w-[26rem] text-description font-medium" data-livecook-text data-livecook-item>
+				{proof}
+			</p>
+
+			<div class="relative mt-12" data-livecook-item>
+				<img
+					src={livecookFoodLogo.src}
+					alt="Chef sirviendo pasta en una clase de LiveCook."
+					class="relative z-10 aspect-[4/5] w-[min(72vw,18rem)] object-cover sm:w-[min(52vw,24rem)] md:w-[min(42vw,28rem)]"
+					loading="lazy"
+				/>
+			</div>
+
+			<div class="relative mt-10 flex justify-end" data-livecook-item>
+				<img
+					src={livecookFood002.src}
+					alt="Identificación de tomate dentro de una escena de cocina."
+					class="relative z-10 aspect-[1.1] w-[min(70vw,18rem)] object-cover sm:w-[min(54vw,25rem)] md:w-[min(44vw,30rem)]"
+					loading="lazy"
+				/>
+			</div>
+
+			<a
+				href="#contacto"
+				class="mt-8 flex min-h-[26rem] flex-col justify-between bg-[linear-gradient(135deg,var(--primary)_0%,var(--brand-300)_100%)] p-5 font-semibold uppercase text-foreground"
+				data-livecook-item
+				data-livecook-transition-card
+			>
+				<span class="max-w-[23rem] text-[clamp(1.75rem,8vw,2.5rem)] leading-[1.02] tracking-[-0.055em]" data-livecook-text>{cta}</span>
+				<span class="flex items-center justify-between border-t border-foreground/40 pt-4 text-[1.25rem] normal-case">
+					{ctaLabel}
+					<ArrowRightIcon size={32} aria-hidden="true" />
+				</span>
+			</a>
+		</div>
+	</div>
+
+	<div class="hidden lg:block" data-livecook-pin>
+		<div class="relative h-[100svh] overflow-hidden px-[var(--frame-inset)]">
+			<div
+				class="flex h-full w-max items-center gap-[clamp(4rem,8vw,8rem)] py-header pr-[calc(var(--frame-inset)*2)] will-change-transform"
+				data-livecook-track
+			>
+				<div class="flex w-[36rem] shrink-0 flex-col gap-8" data-livecook-item>
+					<div class="space-y-2 uppercase">
+						<p class="text-[1.15rem] font-semibold leading-none tracking-[-0.03em]">{eyebrow}</p>
+						<h2
+							class="text-[clamp(4rem,6vw,6rem)] font-black italic leading-[0.86] tracking-[-0.065em]"
+						>
+							<span class="relative block overflow-hidden">
+								<span class="block" data-livecook-line-text><span class="text-primary">LiveCook</span> App</span>
+								<span class="pointer-events-none absolute inset-0 z-10 block bg-primary" data-livecook-line-bar aria-hidden="true"></span>
+							</span>
+						</h2>
+					</div>
+
+					<img
+						src={livecookMockup001.src}
+						alt="Interfaz móvil de LiveCook."
+						class="w-[18rem] object-contain drop-shadow-[0_1.5rem_3.5rem_rgb(31_29_30_/_0.16)]"
+						loading="lazy"
+					/>
+				</div>
+
+				<div
+					class="grid w-[58rem] shrink-0 grid-cols-[24rem_24rem] grid-rows-[auto_auto] items-start gap-x-[6rem] gap-y-[clamp(3.5rem,9vh,6rem)] self-center"
+					data-livecook-item
+				>
+					<figure class="w-full">
+						<img
+							src={livecookFood001.src}
+							alt="Proceso de cocina con selección visual sobre los ingredientes."
+							class="aspect-[1.28] w-full object-cover"
+							loading="lazy"
+						/>
+					</figure>
+
+					<p class="max-w-[23rem] text-description font-medium" data-livecook-text>
+						{note}
+					</p>
+
+					<p class="max-w-[24rem] self-end text-description font-medium" data-livecook-text>
+						{intro}
+					</p>
+
+					<div class="flex h-full items-center justify-center self-end">
+						<img
+							src={livecookIcon.src}
+							alt=""
+							class="w-[17rem] object-contain drop-shadow-[0_1rem_2.5rem_rgb(31_29_30_/_0.15)]"
+							loading="lazy"
+						/>
+					</div>
+				</div>
+
+				<div class="flex w-[46rem] shrink-0 flex-col gap-8 self-center" data-livecook-item>
+					<p class="max-w-[38rem] text-description font-medium" data-livecook-text>{proof}</p>
+					<img
+						src={livecookUiCard.src}
+						alt="Clase en vivo de LiveCook con una tarjeta de reserva y detalles."
+						class="h-[clamp(28rem,58vh,34rem)] w-full object-cover"
+						loading="lazy"
+					/>
+				</div>
+
+				<figure class="w-[18rem] shrink-0 self-start pt-[6vh]" data-livecook-item>
+					<img
+						src={livecookFoodLogo.src}
+						alt="Chef sirviendo pasta en una clase de LiveCook."
+						class="aspect-[4/5] w-full object-cover"
+						loading="lazy"
+					/>
+				</figure>
+
+				<figure class="w-[28rem] shrink-0 self-end pb-[8vh]" data-livecook-item>
+					<img
+						src={livecookFood002.src}
+						alt="Identificación de tomate dentro de una escena de cocina."
+						class="aspect-[1.1] w-full object-cover"
+						loading="lazy"
+					/>
+				</figure>
+
+				<a
+					href="#contacto"
+					class="flex h-[21rem] w-[24rem] shrink-0 flex-col justify-between self-center bg-[linear-gradient(135deg,var(--primary)_0%,var(--brand-300)_100%)] p-6 font-semibold uppercase text-foreground"
+					data-livecook-item
+					data-livecook-transition-card
+				>
+					<span class="text-[1.35rem] leading-[1.05] tracking-[-0.04em]" data-livecook-text>{cta}</span>
+					<span class="flex items-center justify-between border-t border-foreground/40 pt-4 text-body-md normal-case">
+						{ctaLabel}
+						<ArrowRightIcon size={32} aria-hidden="true" />
+					</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const splitLivecookRows = (element: HTMLElement) => {
+		if (element.dataset.livecookPrepared === "true") return;
+		if (element.querySelector("[data-livecook-line-text]")) {
+			element.dataset.livecookPrepared = "true";
+			return;
+		}
+
+		const text = element.textContent?.replace(/\s+/g, " ").trim();
+		if (!text) return;
+
+		const tokens = text.split(" ");
+		element.textContent = "";
+
+		const measureFragment = document.createDocumentFragment();
+		tokens.forEach((token, index) => {
+			const word = document.createElement("span");
+			word.dataset.livecookWord = "";
+			word.textContent = token;
+			word.style.display = "inline-block";
+			measureFragment.appendChild(word);
+
+			if (index < tokens.length - 1) {
+				measureFragment.appendChild(document.createTextNode(" "));
+			}
+		});
+		element.appendChild(measureFragment);
+
+		const words = Array.from(element.querySelectorAll<HTMLElement>("[data-livecook-word]"));
+		const rows: HTMLElement[][] = [];
+
+		words.forEach((word) => {
+			const rowTop = Math.round(word.offsetTop);
+			const currentRow = rows.at(-1);
+			const currentTop = currentRow?.[0] ? Math.round(currentRow[0].offsetTop) : null;
+
+			if (!currentRow || currentTop === null || Math.abs(rowTop - currentTop) > 2) {
+				rows.push([word]);
+			} else {
+				currentRow.push(word);
+			}
+		});
+
+		element.textContent = "";
+
+		rows.forEach((row) => {
+			const line = document.createElement("span");
+			line.className = "relative block overflow-hidden";
+
+			const lineText = document.createElement("span");
+			lineText.className = "inline-block";
+			lineText.dataset.livecookLineText = "";
+			lineText.textContent = row.map((word) => word.textContent).join(" ");
+
+			const lineBar = document.createElement("span");
+			lineBar.className = "pointer-events-none absolute inset-0 z-10 block bg-primary";
+			lineBar.dataset.livecookLineBar = "";
+			lineBar.setAttribute("aria-hidden", "true");
+
+			line.append(lineText, lineBar);
+			element.appendChild(line);
+		});
+
+		element.dataset.livecookPrepared = "true";
+	};
+
+	const revealLivecookItem = (item: HTMLElement) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(item.querySelectorAll("[data-livecook-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(item.querySelectorAll("[data-livecook-line-bar]"));
+		const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+		timeline.to(item, {
+			autoAlpha: 1,
+			y: 0,
+			duration: 0.64,
+		});
+
+		if (lineText.length || lineBars.length) {
+			timeline
+				.to(
+					lineText,
+					{
+						yPercent: 0,
+						duration: 0.78,
+						stagger: 0.07,
+					},
+					"-=0.48",
+				)
+				.to(
+					lineBars,
+					{
+						xPercent: 104,
+						duration: 0.82,
+						stagger: 0.07,
+					},
+					"<",
+				)
+				.set(lineBars, { autoAlpha: 0 });
+		}
+	};
+
+	const prepareLivecookItems = (items: HTMLElement[]) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(
+			items.flatMap((item) => Array.from(item.querySelectorAll<HTMLElement>("[data-livecook-line-text]"))),
+		);
+		const lineBars = gsap.utils.toArray<HTMLElement>(
+			items.flatMap((item) => Array.from(item.querySelectorAll<HTMLElement>("[data-livecook-line-bar]"))),
+		);
+
+		gsap.set(items, { autoAlpha: 0, y: 34 });
+		gsap.set(lineText, { autoAlpha: 1, yPercent: 104 });
+		gsap.set(lineBars, {
+			autoAlpha: 1,
+			xPercent: 0,
+			scaleX: 1,
+			transformOrigin: "left center",
+		});
+	};
+
+	const sections = gsap.utils.toArray<HTMLElement>("[data-livecook-section]");
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	document.querySelectorAll<HTMLElement>("[data-livecook-text]").forEach(splitLivecookRows);
+
+	if (!reduceMotion) {
+		sections.forEach((section) => {
+			const pin = section.querySelector<HTMLElement>("[data-livecook-pin]");
+			const track = section.querySelector<HTMLElement>("[data-livecook-track]");
+
+			if (!pin || !track) return;
+
+			const media = gsap.matchMedia();
+
+			media.add("(min-width: 1024px)", () => {
+				const getDistance = () => Math.max(0, track.scrollWidth - window.innerWidth);
+				const items = gsap.utils
+					.toArray<HTMLElement>(track.querySelectorAll("[data-livecook-item]"))
+					.filter((item) => item.offsetParent !== null);
+				const itemTriggers: ScrollTrigger[] = [];
+
+				prepareLivecookItems(items);
+
+				const tween = gsap.to(track, {
+					x: () => -getDistance(),
+					ease: "none",
+					scrollTrigger: {
+						trigger: section,
+						start: "top top",
+						end: () => `+=${getDistance()}`,
+						pin,
+						scrub: 0.85,
+						anticipatePin: 1,
+						invalidateOnRefresh: true,
+					},
+				});
+
+				items.forEach((item) => {
+					itemTriggers.push(
+						ScrollTrigger.create({
+							trigger: item,
+							containerAnimation: tween,
+							start: "left 82%",
+							once: true,
+							onEnter: () => revealLivecookItem(item),
+						}),
+					);
+				});
+
+				return () => {
+					itemTriggers.forEach((trigger) => trigger.kill());
+					tween.scrollTrigger?.kill();
+					tween.kill();
+				};
+			});
+
+			media.add("(max-width: 1023px)", () => {
+				const items = gsap.utils
+					.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-item]"))
+					.filter((item) => item.offsetParent !== null);
+				const itemTriggers: ScrollTrigger[] = [];
+
+				prepareLivecookItems(items);
+
+				items.forEach((item) => {
+					itemTriggers.push(
+						ScrollTrigger.create({
+							trigger: item,
+							start: "top 82%",
+							once: true,
+							onEnter: () => revealLivecookItem(item),
+						}),
+					);
+				});
+
+				return () => {
+					itemTriggers.forEach((trigger) => trigger.kill());
+				};
+			});
+		});
+
+		window.addEventListener("load", () => ScrollTrigger.refresh(), { once: true });
+	} else {
+		gsap.set("[data-livecook-item], [data-livecook-line-text]", { clearProps: "all" });
+		gsap.set("[data-livecook-line-bar]", { autoAlpha: 0 });
+	}
+</script>

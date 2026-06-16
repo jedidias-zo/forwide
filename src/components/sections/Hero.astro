@@ -1,0 +1,64 @@
+---
+import HeroBackgroundManager from '../reactbits/HeroBackgroundManager.jsx';
+import ForwideLogo from '../brand/ForwideLogo.astro';
+
+type HeadlineSegment = {
+	text: string;
+	accent?: boolean;
+};
+
+type Props = {
+	intro?: string;
+	headlineLines?: HeadlineSegment[][];
+};
+
+const {
+	intro = "Forwide es la estructura desde la que nacen productos digitales presentes y futuros. LiveCook es el primer caso activo: una prueba real para validar tecnología, operación y modelo antes de abrir nuevos verticales con más criterio y menos improvisación.",
+	headlineLines = [
+		[{ text: "CONVERTIMOS" }],
+		[{ text: "OPORTUNIDADES DIGITALES" }],
+		[{ text: "EN " }, { text: "PRODUCTOS REALES", accent: true }],
+	],
+} = Astro.props;
+---
+
+<section
+	class="relative isolate min-h-[100svh] overflow-hidden bg-background px-[var(--frame-inset)] pt-header text-foreground"
+	aria-labelledby="hero-title"
+>
+	<HeroBackgroundManager client:load />
+
+	<div class="relative z-10 flex min-h-[calc(100svh-var(--header-height))] min-w-0 flex-col items-center justify-center gap-8 pb-10 text-center lg:gap-10 lg:pb-12">
+		<a
+			href="/"
+			aria-label="Forwide home"
+			class="block w-[min(18rem,62vw)] md:w-[18rem]"
+			data-reveal-logo
+		>
+			<ForwideLogo animated class="mx-auto h-auto w-[min(13rem,20vw)]" />
+		</a>
+
+		<h1
+			id="hero-title"
+			class="max-w-full text-center text-[length:var(--hero-title-size)] font-black uppercase leading-[0.96] [letter-spacing:0] xl:max-w-[96rem]"
+		>
+			{
+				headlineLines.map((line) => (
+					<span class="relative block overflow-hidden" data-reveal-heading-line>
+						<span class="block" data-reveal-heading-text>
+							{line.map((segment) => (
+								<span class:list={[segment.accent && "text-primary"]}>{segment.text}</span>
+							))}
+						</span>
+						<span class="pointer-events-none absolute inset-0 z-10 block bg-primary" data-reveal-heading-bar aria-hidden="true" />
+					</span>
+				))
+			}
+		</h1>
+        <div class="justify-self-center pt-6 md:pt-8">
+			<p class="mx-auto max-w-full text-center text-description font-medium text-pretty sm:max-w-[44rem]" data-reveal-copy>
+				{intro}
+			</p>
+		</div>
+	</div>
+</section>

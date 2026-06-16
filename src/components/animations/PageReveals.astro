@@ -1,0 +1,189 @@
+<script>
+	import { gsap } from "gsap";
+
+	const splitTextRows = (element: HTMLElement, kind: "heading" | "copy") => {
+		if (element.dataset.revealPrepared === "true") return;
+
+		const text = element.textContent?.replace(/\s+/g, " ").trim();
+		if (!text) return;
+
+		const tokens = text.split(" ");
+		element.textContent = "";
+
+		const measureFragment = document.createDocumentFragment();
+		tokens.forEach((token, index) => {
+			const word = document.createElement("span");
+			word.dataset.revealWord = "";
+			word.textContent = token;
+			word.style.display = "inline-block";
+			measureFragment.appendChild(word);
+
+			if (index < tokens.length - 1) {
+				measureFragment.appendChild(document.createTextNode(" "));
+			}
+		});
+		element.appendChild(measureFragment);
+
+		const words = Array.from(element.querySelectorAll<HTMLElement>("[data-reveal-word]"));
+		const rows: HTMLElement[][] = [];
+
+		words.forEach((word) => {
+			const rowTop = Math.round(word.offsetTop);
+			const currentRow = rows.at(-1);
+			const currentTop = currentRow?.[0] ? Math.round(currentRow[0].offsetTop) : null;
+
+			if (!currentRow || currentTop === null || Math.abs(rowTop - currentTop) > 2) {
+				rows.push([word]);
+			} else {
+				currentRow.push(word);
+			}
+		});
+
+		element.textContent = "";
+
+		rows.forEach((row) => {
+			const line = document.createElement("span");
+			line.className = "relative block overflow-hidden";
+			line.dataset[kind === "heading" ? "revealHeadingLine" : "revealCopyLine"] = "";
+
+			const lineText = document.createElement("span");
+			lineText.className = "inline-block";
+			lineText.dataset[kind === "heading" ? "revealHeadingText" : "revealCopyText"] = "";
+			lineText.textContent = row.map((word) => word.textContent).join(" ");
+
+			const lineBar = document.createElement("span");
+			lineBar.className = "pointer-events-none absolute inset-0 z-10 block bg-primary";
+			lineBar.dataset[kind === "heading" ? "revealHeadingBar" : "revealCopyBar"] = "";
+			lineBar.setAttribute("aria-hidden", "true");
+
+			line.append(lineText, lineBar);
+			element.appendChild(line);
+		});
+
+		element.dataset.revealPrepared = "true";
+	};
+
+	document.querySelectorAll<HTMLElement>("[data-reveal-heading]").forEach((element) => {
+		if (!element.querySelector("[data-reveal-heading-text]")) {
+			splitTextRows(element, "heading");
+		}
+	});
+	document.querySelectorAll<HTMLElement>("[data-reveal-copy]").forEach((element) => {
+		if (!element.querySelector("[data-reveal-copy-text]")) {
+			splitTextRows(element, "copy");
+		}
+	});
+
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	const fadeItems = gsap.utils.toArray<HTMLElement>("[data-reveal-fade]");
+	const logos = gsap.utils.toArray<HTMLElement>("[data-reveal-logo]");
+	const logoWords = gsap.utils.toArray<SVGPathElement>("[data-reveal-logo-word]");
+	const logoMarks = gsap.utils.toArray<SVGPathElement>("[data-reveal-logo-mark]");
+	const headingText = gsap.utils.toArray<HTMLElement>("[data-reveal-heading-text]");
+	const headingBars = gsap.utils.toArray<HTMLElement>("[data-reveal-heading-bar]");
+	const copyText = gsap.utils.toArray<HTMLElement>("[data-reveal-copy-text]");
+	const copyBars = gsap.utils.toArray<HTMLElement>("[data-reveal-copy-bar]");
+
+	if (reduceMotion) {
+		gsap.set([...fadeItems, ...logos, ...logoWords, ...logoMarks, ...headingText, ...copyText], { clearProps: "all" });
+		gsap.set([...headingBars, ...copyBars], { autoAlpha: 0 });
+	} else {
+		gsap.set(fadeItems, { autoAlpha: 0, y: 14 });
+		gsap.set(logos, { autoAlpha: 1 });
+		gsap.set(logoWords, { autoAlpha: 0, y: 10 });
+		gsap.set(logoMarks, {
+			autoAlpha: 0,
+			scaleX: 0.68,
+			transformOrigin: "center center",
+		});
+		gsap.set([...headingText, ...copyText], { autoAlpha: 1, yPercent: 104 });
+		gsap.set([...headingBars, ...copyBars], {
+			xPercent: 0,
+			scaleX: 1,
+			transformOrigin: "left center",
+		});
+
+		const timeline = gsap.timeline({
+			defaults: {
+				ease: "power3.out",
+			},
+		});
+
+		if (logos.length) {
+			timeline
+				.to(logoWords, {
+					autoAlpha: 1,
+					y: 0,
+					duration: 0.58,
+					stagger: 0.035,
+				})
+				.to(
+					logoMarks,
+					{
+						autoAlpha: 1,
+						scaleX: 1,
+						duration: 0.46,
+						ease: "back.out(1.7)",
+					},
+					"-=0.34",
+				);
+		}
+
+		if (fadeItems.length) {
+			timeline.to(
+				fadeItems,
+				{
+					autoAlpha: 1,
+					y: 0,
+					duration: 0.55,
+					stagger: 0.08,
+				},
+				logos.length ? "-=0.28" : 0,
+			);
+		}
+
+		if (headingText.length || headingBars.length) {
+			timeline
+				.to(
+					headingText,
+					{
+						yPercent: 0,
+						duration: 0.86,
+					},
+					fadeItems.length || logos.length ? "-=0.42" : 0,
+				)
+				.to(
+					headingBars,
+					{
+						xPercent: 104,
+						duration: 0.92,
+					},
+					"<",
+				)
+				.set(headingBars, { autoAlpha: 0 });
+		}
+
+		if (copyText.length || copyBars.length) {
+			timeline
+				.to(
+					copyText,
+					{
+						yPercent: 0,
+						duration: 0.74,
+						stagger: 0.08,
+					},
+					"-=0.38",
+				)
+				.to(
+					copyBars,
+					{
+						xPercent: 104,
+						duration: 0.8,
+						stagger: 0.08,
+					},
+					"<",
+				)
+				.set(copyBars, { autoAlpha: 0 });
+		}
+	}
+</script>
