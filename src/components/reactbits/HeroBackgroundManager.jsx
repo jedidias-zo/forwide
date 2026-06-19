@@ -5,8 +5,8 @@ export default function HeroBackgroundManager() {
 		<div className="pointer-events-auto absolute inset-0 z-0 overflow-hidden">
 			<div className="absolute inset-[-10%]">
 				<Threads
-					color="var(--primary)"
-					colorLight="var(--brand-200)"
+					color="var(--hero-threads)"
+					colorLight="var(--hero-threads-light)"
 					backgroundColor="var(--background)"
 					amplitude={1.95}
 					distance={0}

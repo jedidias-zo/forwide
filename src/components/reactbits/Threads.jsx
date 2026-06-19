@@ -125,7 +125,7 @@ void main() {
 `;
 
 export default function Threads({
-	color = 'var(--primary)',
+	color = 'var(--hero-threads)',
 	colorLight = 'var(--brand-200)',
 	backgroundColor = 'var(--background)',
 	amplitude = 1,

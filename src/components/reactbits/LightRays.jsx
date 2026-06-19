@@ -15,6 +15,26 @@ const hexToRgb = (hex) => {
 		: [1, 1, 1];
 };
 
+const resolveCssColor = (value, fallback = [1, 1, 1]) => {
+	if (Array.isArray(value)) return value;
+	if (typeof value !== 'string') return fallback;
+	if (value.startsWith('#')) return hexToRgb(value);
+
+	const probe = document.createElement('span');
+	probe.style.color = value;
+	probe.style.display = 'none';
+	document.documentElement.appendChild(probe);
+	const resolved = getComputedStyle(probe).color;
+	probe.remove();
+
+	if (!resolved.startsWith('rgb')) return fallback;
+
+	const channels = resolved.match(/[\d.]+/g)?.slice(0, 3).map(Number);
+	if (!channels || channels.length < 3 || channels.some(Number.isNaN)) return fallback;
+
+	return channels.map((channel) => channel / 255);
+};
+
 const getAnchorAndDir = (origin, width, height) => {
 	const outside = 0.2;
 
@@ -209,7 +229,7 @@ export default function LightRays({
 				iResolution: { value: [1, 1] },
 				rayPos: { value: [0, 0] },
 				rayDir: { value: [0, 1] },
-				raysColor: { value: hexToRgb(raysColor) },
+				raysColor: { value: resolveCssColor(raysColor) },
 				raysSpeed: { value: raysSpeed },
 				lightSpread: { value: lightSpread },
 				rayLength: { value: rayLength },
@@ -320,7 +340,7 @@ export default function LightRays({
 		const uniforms = uniformsRef.current;
 		const renderer = rendererRef.current;
 
-		uniforms.raysColor.value = hexToRgb(raysColor);
+		uniforms.raysColor.value = resolveCssColor(raysColor);
 		uniforms.raysSpeed.value = raysSpeed;
 		uniforms.lightSpread.value = lightSpread;
 		uniforms.rayLength.value = rayLength;

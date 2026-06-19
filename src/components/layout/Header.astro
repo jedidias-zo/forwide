@@ -36,7 +36,7 @@ const {
  * Menu links use the text-menu-link utility (28px mobile → 72px desktop).
  */
 const menuOverlayClasses = [
-	"fixed inset-0 z-[70] flex min-h-dvh flex-col bg-primary text-primary-foreground",
+	"fixed inset-0 z-[70] flex min-h-dvh flex-col bg-surface-menu text-foreground",
 	"opacity-0 pointer-events-none translate-y-2",
 	"transition-[opacity,transform] duration-slow ease-standard",
 	"data-[open=true]:opacity-100 data-[open=true]:pointer-events-auto data-[open=true]:translate-y-0",
@@ -47,7 +47,7 @@ const menuOverlayClasses = [
 	<div class="mx-auto flex h-full max-w-none items-center justify-between px-[var(--frame-inset)]">
 		<a
 			href={homeHref}
-			class="text-[0.875rem] font-medium leading-none text-foreground line-through decoration-1 underline-offset-2 [letter-spacing:0] transition-colors duration-fast hover:text-primary focus-visible:text-primary md:text-[1rem]"
+			class="text-[0.875rem] font-normal leading-none text-foreground line-through decoration-1 underline-offset-2 [letter-spacing:0] transition-colors duration-fast hover:text-primary focus-visible:text-primary md:text-[1rem]"
 		>
 			{homeLabel}
 		</a>
@@ -70,7 +70,7 @@ const menuOverlayClasses = [
 				aria-controls="site-menu"
 				aria-expanded="false"
 				aria-label="Abrir menu"
-				class="group flex size-7 items-center justify-center text-primary transition-colors duration-fast hover:text-foreground focus-visible:text-foreground"
+				class="group flex size-7 items-center justify-center text-[var(--hero-threads)] transition-colors duration-fast hover:text-foreground focus-visible:text-foreground"
 			>
 				<span class="flex w-6 flex-col items-end gap-1.5">
 					<span class="h-0.5 w-6 rounded-full bg-current transition-all duration-normal group-hover:w-5"></span>
@@ -95,14 +95,14 @@ const menuOverlayClasses = [
 			aria-label="Forwide home"
 			class="block w-[min(11rem,28vw)]"
 		>
-			<img src={forwideLogoStroke.src} alt="Forwide" class="h-auto w-full" />
+			<img src={forwideLogoStroke.src} alt="Forwide" class="h-auto w-full invert" />
 		</a>
 
 		<button
 			type="button"
 			data-menu-close
 			aria-label="Cerrar menu"
-			class="flex size-10 shrink-0 items-center justify-center text-primary-foreground transition-transform duration-normal hover:rotate-90 focus-visible:rotate-90"
+			class="flex size-10 shrink-0 items-center justify-center text-foreground transition-transform duration-normal hover:rotate-90 focus-visible:rotate-90"
 		>
 			<span class="relative block size-8">
 				<span class="absolute left-1/2 top-1/2 h-0.5 w-8 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-current"></span>
@@ -113,7 +113,7 @@ const menuOverlayClasses = [
 
 	<nav
 		aria-label="Menu principal"
-		class="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-[var(--frame-inset)] pb-[var(--frame-inset)]"
+		class="flex min-h-0 flex-1 flex-col items-center overflow-y-auto overscroll-contain px-[var(--frame-inset)] pb-[var(--frame-inset)]"
 	>
 		<ul class="my-auto flex w-full max-w-[min(100%,64rem)] flex-col items-center gap-[var(--menu-link-gap)] py-[clamp(1rem,3vh,2.5rem)] text-menu-link leading-none">
 			{
@@ -123,7 +123,7 @@ const menuOverlayClasses = [
 							label={item.label}
 							href={item.href}
 							isActive={item.isActive}
-							class="text-primary-foreground"
+							class="text-foreground"
 						/>
 					</li>
 				))

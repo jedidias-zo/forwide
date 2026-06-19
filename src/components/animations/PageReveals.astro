@@ -52,7 +52,11 @@
 			lineText.textContent = row.map((word) => word.textContent).join(" ");
 
 			const lineBar = document.createElement("span");
-			lineBar.className = "pointer-events-none absolute inset-0 z-10 block bg-primary";
+			const barClass = element.dataset.revealBarClass || "bg-reveal-bar";
+			lineBar.className = `pointer-events-none absolute inset-0 z-10 block ${barClass}`;
+			if (element.dataset.revealBarColor) {
+				lineBar.style.backgroundColor = element.dataset.revealBarColor;
+			}
 			lineBar.dataset[kind === "heading" ? "revealHeadingBar" : "revealCopyBar"] = "";
 			lineBar.setAttribute("aria-hidden", "true");
 

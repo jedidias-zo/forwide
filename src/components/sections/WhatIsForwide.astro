@@ -1,18 +1,18 @@
 ---
 /*
- * Pillar card visuals: export at 448px wide (896px @2x).
- * Height = card minus text block (~190px) → ~340px @1x, or full-bleed top art at 448×340.
- * Card proportion is locked to 448×531 via aspect-[448/531].
+ * Pillar card visuals: export at ~347px square inside a 428px-tall frame (896px @2x).
+ * Card proportion follows Figma 448×631; grid locks to aspect-[448/631] on large screens.
  */
-import pillarProductVisual from "../../assets/sections/what-is-forwide/pillar-product-visual.png";
-import pillarSystemVisual from "../../assets/sections/what-is-forwide/pillar-system-visual.png";
-import ScaleCardBackground from "../reactbits/ScaleCardBackground.jsx";
+import productBase from "../../assets/sections/what-is-forwide/product-base.png";
+import systemBase from "../../assets/sections/what-is-forwide/system-base.png";
+import baseScale from "../../assets/sections/what-is-forwide/base-scale.png";
+import type { ImageMetadata } from "astro";
 
 type Pillar = {
-	index?: string;
+	index: string;
 	title: string;
 	body: string;
-	variant: "product" | "system" | "scale";
+	visual: ImageMetadata;
 };
 
 type Props = {
@@ -24,125 +24,93 @@ type Props = {
 
 const {
 	eyebrow = "[ Qué es Forwide ]",
-	title = "Tecnología antes que catálogo",
+	title = "Tecnología antes que catálogo.",
 	intro = "Forwide articula producto, operación y escala desde una misma estructura. La compañía no lanza piezas sueltas: crea plataformas con lógica propia y aprendizaje reutilizable.",
 	pillars = [
 		{
+			index: "001",
 			title: "Base de producto",
 			body: "Forwide articula producto, operación y escala desde una misma estructura. La compañía no lanza piezas sueltas: crea plataformas con lógica propia y aprendizaje reutilizable.",
-			variant: "product",
+			visual: productBase,
 		},
 		{
+			index: "002",
 			title: "Base de sistema",
 			body: "Ordena tecnología, procesos y aprendizaje para no empezar desde cero en cada lanzamiento.",
-			variant: "system",
+			visual: systemBase,
 		},
 		{
-			index: "[03]",
+			index: "003",
 			title: "Base de escala",
 			body: "Diseña con una pregunta constante: qué puede crecer sin perder foco ni control.",
-			variant: "scale",
+			visual: baseScale,
 		},
 	],
 } = Astro.props;
-
-const pillarVisuals = {
-	product: pillarProductVisual,
-	system: pillarSystemVisual,
-};
-
-const cardBase =
-	"relative flex aspect-[448/531] w-full min-h-0 flex-col overflow-hidden";
-const contentClass = "relative z-10 flex shrink-0 flex-col gap-3 px-4 py-5";
-const visualClass =
-	"min-h-0 w-full flex-1 bg-cover bg-top bg-no-repeat";
-
-const pillarVisualStyle = (variant: "product" | "system") => {
-	const visual = pillarVisuals[variant];
-	return `background-image: url('${visual.src}');`;
-};
 ---
 
 <section
 	id="vision"
-	class="bg-background px-[var(--frame-inset)] py-[clamp(4rem,10vw,7.5rem)] text-foreground"
+	class="border-t border-foreground bg-background px-[var(--frame-inset)] py-[clamp(4rem,8vw,4rem)] text-foreground"
 	aria-labelledby="what-is-forwide-title"
 	data-what-section
 >
-	<div class="flex w-full flex-col gap-10 lg:gap-12">
-		<div class="flex flex-col gap-2.5">
-			<div class="h-px w-full bg-[var(--frame-line)]" aria-hidden="true"></div>
-			<div class="h-px w-full bg-[var(--frame-line)]" aria-hidden="true"></div>
-
-			<div class="border-t border-primary pt-[clamp(3rem,8vw,5.25rem)]">
-				<div class="flex flex-col items-start gap-8 lg:flex-row lg:items-end lg:gap-12">
-					<div class="flex min-w-0 flex-1 flex-col gap-6 uppercase">
-						<p class="text-[1.25rem] font-medium italic leading-none tracking-[-0.04em] text-primary" data-what-reveal-text>
-							{eyebrow}
-						</p>
-						<h2
-							id="what-is-forwide-title"
-							class="text-what-title font-black uppercase leading-none tracking-[-0.04em]"
-							data-what-reveal-text
-						>
-							{title}
-						</h2>
-					</div>
-
-					<p
-						class="max-w-[27rem] text-description font-medium text-pretty lg:shrink-0"
-						data-what-reveal-text
-					>
-						{intro}
-					</p>
-				</div>
+	<div class="flex w-full flex-col gap-[clamp(3rem,8vw,5.25rem)]">
+		<div class="flex flex-col items-start gap-8 px-4 lg:flex-row lg:items-end lg:gap-12">
+			<div class="flex min-w-0 flex-1 flex-col gap-6 uppercase">
+				<p class="text-[1.25rem] italic text-section-label" data-what-reveal-text>
+					{eyebrow}
+				</p>
+				<h2
+					id="what-is-forwide-title"
+					class="text-what-title text-section-heading"
+					data-what-reveal-text
+				>
+					{title}
+				</h2>
 			</div>
+
+			<p
+				class="max-w-[27.125rem] text-section-copy text-foreground/50 lg:shrink-0"
+				data-what-reveal-text
+			>
+				{intro}
+			</p>
 		</div>
 
-		<div class="grid gap-2.5 lg:grid-cols-3">
+		<div class="grid gap-1 lg:grid-cols-3 lg:gap-0">
 			{
-				pillars.map((pillar) => (
+				pillars.map((pillar, index) => (
 					<article
 						class:list={[
-							cardBase,
-							pillar.variant === "product" && "border border-primary",
-							pillar.variant === "system" && "bg-surface",
-							pillar.variant === "scale" && "bg-primary text-foreground",
+							"flex flex-col border border-foreground pb-6",
+							index > 0 && "lg:border-l-0",
 						]}
 						data-what-reveal-card
 					>
-						{(pillar.variant === "product" || pillar.variant === "system") && (
-							<div
-								class={visualClass}
-								style={pillarVisualStyle(pillar.variant)}
-								role="img"
-								aria-hidden="true"
+						<div class="flex items-center py-2 pl-4">
+							<p class="text-[1rem] text-section-label uppercase text-foreground" data-what-reveal-text>
+								{pillar.index}
+							</p>
+						</div>
+
+						<div class="flex h-[clamp(16rem,42vw,26.75rem)] items-center justify-center border-y border-foreground bg-[var(--pillar-visual-bg)]">
+							<img
+								src={pillar.visual.src}
+								width={pillar.visual.width}
+								height={pillar.visual.height}
+								alt=""
+								class="max-h-[min(21.6875rem,82%)] max-w-[min(21.6875rem,88%)] object-contain object-bottom"
+								loading="lazy"
+								decoding="async"
 							/>
-						)}
+						</div>
 
-						{pillar.variant === "scale" && (
-							<div class="relative min-h-0 flex-1">
-								<ScaleCardBackground client:visible />
-								{pillar.index && (
-									<p class="relative z-10 px-4 pt-5 text-[1.25rem] font-medium leading-none tracking-[-0.04em] text-primary-foreground" data-what-reveal-text>
-										{pillar.index}
-									</p>
-								)}
-							</div>
-						)}
-
-						<div class={contentClass}>
-							<h3 class="text-what-card-title font-bold uppercase leading-none tracking-[-0.04em]" data-what-reveal-text>
+						<div class="relative flex flex-col gap-4 px-4 pt-4">
+							<h3 class="text-what-card-title text-section-heading" data-what-reveal-text>
 								{pillar.title}
 							</h3>
-							<p
-								class:list={[
-									"text-description font-medium text-pretty",
-									pillar.variant === "product" && "opacity-80",
-									pillar.variant === "scale" && "opacity-80",
-								]}
-								data-what-reveal-text
-							>
+							<p class="text-section-copy text-foreground/50" data-what-reveal-text>
 								{pillar.body}
 							</p>
 						</div>
@@ -197,7 +165,6 @@ const pillarVisualStyle = (variant: "product" | "system") => {
 			}
 		});
 
-		const onPrimary = element.closest(".bg-primary");
 		element.textContent = "";
 
 		rows.forEach((row, index) => {
@@ -210,7 +177,7 @@ const pillarVisualStyle = (variant: "product" | "system") => {
 			lineText.textContent = row.map((word) => word.textContent).join(" ");
 
 			const lineBar = document.createElement("span");
-			lineBar.className = `pointer-events-none absolute inset-0 z-10 block ${onPrimary ? "bg-background" : "bg-primary"}`;
+			lineBar.className = "pointer-events-none absolute inset-0 z-10 block bg-reveal-bar";
 			lineBar.dataset.whatLineBar = "";
 			lineBar.setAttribute("aria-hidden", "true");
 

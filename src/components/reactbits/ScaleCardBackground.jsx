@@ -5,7 +5,7 @@ export default function ScaleCardBackground() {
 		<div className="pointer-events-auto absolute inset-0 overflow-hidden opacity-80">
 			<LightRays
 				raysOrigin="top-center"
-				raysColor="#ffd0bd"
+				raysColor="var(--brand-200)"
 				raysSpeed={0.55}
 				lightSpread={0.72}
 				rayLength={1.25}
