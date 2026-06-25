@@ -1,0 +1,395 @@
+---
+import heroImage from "../../assets/sections/logo-grid/asset-001.png";
+import structureImage from "../../assets/sections/logo-grid/asset-002.png";
+
+type HeadlineSegment = {
+	text: string;
+	muted?: boolean;
+};
+
+type MethodPoint = {
+	label: string;
+	large?: boolean;
+};
+
+type Props = {
+	eyebrow?: string;
+	headlineLines?: HeadlineSegment[][];
+	body?: string;
+	bridge?: string;
+	points?: MethodPoint[];
+};
+
+const {
+	eyebrow = "[ El problema que vemos ]",
+	headlineLines = [
+		[{ text: "Muchas ideas llegan a " }, { text: "producto.", muted: true }, { text: " Pocas se" }],
+		[{ text: "convierten en capacidad duradera." }],
+	],
+	body = "El mercado digital premia lanzar rápido. Penaliza construir sin estructura. Muchos productos nacen como apuestas aisladas: consumen esfuerzo, no dejan sistema y obligan a empezar de cero la siguiente vez.",
+	bridge = "Forwide quiere construir de otra manera:",
+	points = [
+		{ label: "Con método" },
+		{ label: "Operación" },
+		{ label: "Una estructura capaz de sostener nuevas oportunidades.", large: true },
+	],
+} = Astro.props;
+
+const morphFrames = [
+	{
+		src: heroImage.src,
+		className: "grayscale contrast-125",
+	},
+	{
+		src: heroImage.src,
+		className: "grayscale contrast-150 brightness-110",
+	},
+	{
+		src: structureImage.src,
+		className: "grayscale contrast-110 brightness-105",
+	},
+	{
+		src: heroImage.src,
+		className: "grayscale contrast-125 blur-[1px]",
+	},
+	{
+		src: structureImage.src,
+		className: "grayscale contrast-100 brightness-100",
+	},
+];
+---
+
+<section
+	class="relative overflow-hidden bg-surface-light px-[var(--frame-inset)] text-foreground"
+	aria-labelledby="vision-problem-title"
+	data-vision-problem-section
+	data-vision-morph-frames={JSON.stringify(morphFrames)}
+>
+	<div class="border-x border-t border-foreground">
+		<div class="border-b border-foreground px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(2.75rem,5vw,4.5rem)]">
+			<p class="text-[clamp(1rem,1.3vw,1.25rem)] font-normal uppercase leading-none tracking-[-0.05em] text-muted-foreground" data-vision-reveal-text>
+				{eyebrow}
+			</p>
+		</div>
+
+		<div class="border-b border-foreground px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(2rem,4.3vw,3.6rem)] text-right">
+			<h2
+				id="vision-problem-title"
+				class="ml-auto max-w-[86rem] text-[length:clamp(2.25rem,4.8vw,5.25rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
+				aria-label={headlineLines.flat().map((segment) => segment.text).join("")}
+				data-vision-reveal-manual
+			>
+				{
+					headlineLines.map((line) => (
+						<span class="relative block overflow-hidden" data-vision-line>
+							<span class="block" data-vision-line-text>
+								{line.map((segment) => (
+									<span class:list={[segment.muted && "text-foreground/50"]}>{segment.text}</span>
+								))}
+							</span>
+							<span class="pointer-events-none absolute inset-0 z-10 block bg-reveal-bar" data-vision-line-bar aria-hidden="true"></span>
+						</span>
+					))
+				}
+			</h2>
+		</div>
+
+		<div class="grid gap-0 lg:grid-cols-[0.52fr_1fr]">
+			<figure class="relative min-h-[21rem] bg-surface-menu lg:min-h-[30rem]" data-vision-reveal-fade>
+				<img
+					src={structureImage.src}
+					width={structureImage.width}
+					height={structureImage.height}
+					alt=""
+					class="absolute inset-0 h-full w-full object-contain p-[clamp(2.5rem,6vw,5.5rem)] grayscale"
+					loading="lazy"
+					decoding="async"
+					data-vision-morph-target
+				/>
+			</figure>
+
+			<div class="border-t border-foreground lg:border-l lg:border-t-0">
+				<div class="space-y-[clamp(2rem,4vw,3rem)] px-[clamp(1.5rem,3vw,2.5rem)] py-[clamp(2.25rem,4vw,3.5rem)]">
+					<p class="max-w-[60rem] text-section-copy" data-vision-reveal-text>
+						{body}
+					</p>
+
+					<p class="text-section-copy" data-vision-reveal-text>
+						{bridge}
+					</p>
+				</div>
+
+				<div>
+					{points.map((point) => (
+						<div class="border-t border-foreground px-[clamp(1.5rem,3vw,2.5rem)] py-[clamp(1.4rem,2.6vw,2rem)]">
+							<p
+								class:list={[
+									"font-normal uppercase leading-[0.98] tracking-[-0.06em]",
+									point.large
+										? "max-w-[44rem] text-[clamp(1.8rem,2.5vw,2.25rem)]"
+										: "text-[clamp(1.8rem,2.5vw,2.25rem)]",
+								]}
+								data-vision-reveal-text
+							>
+								{point.label}
+							</p>
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	const splitVisionRows = (element: HTMLElement) => {
+		if (element.dataset.visionPrepared === "true") return;
+
+		const text = element.textContent?.replace(/\s+/g, " ").trim();
+		if (!text) return;
+
+		const tokens = text.split(" ");
+		element.textContent = "";
+
+		const measureFragment = document.createDocumentFragment();
+		tokens.forEach((token, index) => {
+			const word = document.createElement("span");
+			word.dataset.visionWord = "";
+			word.textContent = token;
+			word.style.display = "inline-block";
+			measureFragment.appendChild(word);
+
+			if (index < tokens.length - 1) {
+				measureFragment.appendChild(document.createTextNode(" "));
+			}
+		});
+		element.appendChild(measureFragment);
+
+		const words = Array.from(element.querySelectorAll<HTMLElement>("[data-vision-word]"));
+		const rows: HTMLElement[][] = [];
+
+		words.forEach((word) => {
+			const rowTop = Math.round(word.offsetTop);
+			const currentRow = rows.at(-1);
+			const currentTop = currentRow?.[0] ? Math.round(currentRow[0].offsetTop) : null;
+
+			if (!currentRow || currentTop === null || Math.abs(rowTop - currentTop) > 2) {
+				rows.push([word]);
+			} else {
+				currentRow.push(word);
+			}
+		});
+
+		element.textContent = "";
+
+		rows.forEach((row) => {
+			const line = document.createElement("span");
+			line.className = "relative block overflow-hidden";
+			line.dataset.visionLine = "";
+
+			const lineText = document.createElement("span");
+			lineText.className = "inline-block";
+			lineText.dataset.visionLineText = "";
+			lineText.textContent = row.map((word) => word.textContent).join(" ");
+
+			const lineBar = document.createElement("span");
+			lineBar.className = "pointer-events-none absolute inset-0 z-10 block bg-reveal-bar";
+			lineBar.dataset.visionLineBar = "";
+			lineBar.setAttribute("aria-hidden", "true");
+
+			line.append(lineText, lineBar);
+			element.appendChild(line);
+		});
+
+		element.dataset.visionPrepared = "true";
+	};
+
+	document.querySelectorAll<HTMLElement>("[data-vision-reveal-text]").forEach(splitVisionRows);
+
+	document.querySelectorAll<HTMLElement>("[data-vision-problem-section]").forEach((root) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(root.querySelectorAll("[data-vision-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(root.querySelectorAll("[data-vision-line-bar]"));
+		const fadeItems = gsap.utils.toArray<HTMLElement>(root.querySelectorAll("[data-vision-reveal-fade]"));
+
+		if (reduceMotion) {
+			gsap.set([...lineText, ...fadeItems], { clearProps: "all" });
+			gsap.set(lineBars, { autoAlpha: 0 });
+			return;
+		}
+
+		gsap.set(lineText, { autoAlpha: 1, yPercent: 104 });
+		gsap.set(lineBars, {
+			autoAlpha: 1,
+			xPercent: 0,
+			scaleX: 1,
+			transformOrigin: "left center",
+		});
+		gsap.set(fadeItems, { autoAlpha: 0, y: 18 });
+
+		ScrollTrigger.create({
+			trigger: root,
+			start: "top 92%",
+			once: true,
+			onEnter: () => {
+				const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+				timeline
+					.to(lineText, {
+						yPercent: 0,
+						duration: 0.78,
+						stagger: 0.045,
+					})
+					.to(
+						lineBars,
+						{
+							xPercent: 104,
+							duration: 0.84,
+							stagger: 0.045,
+						},
+						"<",
+					)
+					.set(lineBars, { autoAlpha: 0 })
+					.to(
+						fadeItems,
+						{
+							autoAlpha: 1,
+							y: 0,
+							duration: 0.58,
+							stagger: 0.08,
+						},
+						"-=0.48",
+					);
+			},
+		});
+	});
+
+	const source = document.querySelector<HTMLImageElement>("[data-vision-morph-source]");
+	const section = document.querySelector<HTMLElement>("[data-vision-problem-section]");
+	const target = section?.querySelector<HTMLImageElement>("[data-vision-morph-target]");
+
+	if (source && section && target && !reduceMotion) {
+		const frames = JSON.parse(section.dataset.visionMorphFrames || "[]") as Array<{ src: string; className: string }>;
+		let currentFrame = -1;
+		let startRect = source.getBoundingClientRect();
+		let endRect = target.getBoundingClientRect();
+
+		const floater = document.createElement("img");
+		floater.alt = "";
+		floater.setAttribute("aria-hidden", "true");
+		floater.dataset.visionMorphFloater = "";
+		floater.style.position = "fixed";
+		floater.style.left = "0";
+		floater.style.top = "0";
+		floater.style.zIndex = "35";
+		floater.style.pointerEvents = "none";
+		floater.style.objectFit = "cover";
+		floater.style.objectPosition = "50% 26%";
+		floater.style.opacity = "0";
+		floater.style.willChange = "transform,width,height,opacity";
+		document.body.appendChild(floater);
+
+		const applyFrame = (index: number) => {
+			if (!frames.length || index === currentFrame) return;
+			const frame = frames[Math.max(0, Math.min(index, frames.length - 1))];
+			currentFrame = index;
+			floater.src = frame.src;
+			floater.className = frame.className;
+		};
+
+		const setRect = (rect: { left: number; top: number; width: number; height: number }) => {
+			gsap.set(floater, {
+				x: rect.left,
+				y: rect.top,
+				width: rect.width,
+				height: rect.height,
+			});
+		};
+
+		const updateRects = (self: ScrollTrigger) => {
+			const scrollY = window.scrollY;
+			const sourceBounds = source.getBoundingClientRect();
+			const targetBounds = target.getBoundingClientRect();
+
+			const sourceDocumentTop = sourceBounds.top + scrollY;
+			const targetDocumentTop = targetBounds.top + scrollY;
+
+			startRect = {
+				left: sourceBounds.left,
+				top: sourceDocumentTop - self.start,
+				width: sourceBounds.width,
+				height: sourceBounds.height,
+				right: sourceBounds.right,
+				bottom: sourceDocumentTop - self.start + sourceBounds.height,
+				x: sourceBounds.x,
+				y: sourceDocumentTop - self.start,
+				toJSON: sourceBounds.toJSON.bind(sourceBounds),
+			} as DOMRect;
+
+			endRect = {
+				left: targetBounds.left,
+				top: targetDocumentTop - self.end,
+				width: targetBounds.width,
+				height: targetBounds.height,
+				right: targetBounds.right,
+				bottom: targetDocumentTop - self.end + targetBounds.height,
+				x: targetBounds.x,
+				y: targetDocumentTop - self.end,
+				toJSON: targetBounds.toJSON.bind(targetBounds),
+			} as DOMRect;
+		};
+
+		const renderMorph = (progress: number) => {
+			const easedProgress = gsap.parseEase("power1.inOut")(progress);
+			const frameIndex = Math.floor(progress * frames.length);
+			applyFrame(frameIndex);
+			setRect({
+				left: gsap.utils.interpolate(startRect.left, endRect.left, easedProgress),
+				top: gsap.utils.interpolate(startRect.top, endRect.top, easedProgress),
+				width: gsap.utils.interpolate(startRect.width, endRect.width, easedProgress),
+				height: gsap.utils.interpolate(startRect.height, endRect.height, easedProgress),
+			});
+		};
+
+		applyFrame(0);
+		setRect(startRect);
+
+		ScrollTrigger.create({
+			trigger: section,
+			start: "top bottom",
+			end: "top top-=14%",
+			scrub: 0.65,
+			invalidateOnRefresh: true,
+			onRefresh: (self) => {
+				updateRects(self);
+				renderMorph(self.progress);
+			},
+			onUpdate: (self) => renderMorph(self.progress),
+			onEnter: () => {
+				source.style.opacity = "0";
+				target.style.opacity = "0";
+				gsap.set(floater, { autoAlpha: 1 });
+			},
+			onEnterBack: () => {
+				source.style.opacity = "0";
+				target.style.opacity = "0";
+				gsap.set(floater, { autoAlpha: 1 });
+			},
+			onLeave: () => {
+				source.style.opacity = "";
+				target.style.opacity = "";
+				gsap.set(floater, { autoAlpha: 0 });
+			},
+			onLeaveBack: () => {
+				source.style.opacity = "";
+				target.style.opacity = "";
+				gsap.set(floater, { autoAlpha: 0 });
+			},
+		});
+	}
+</script>

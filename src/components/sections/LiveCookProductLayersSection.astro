@@ -1,0 +1,284 @@
+---
+import assetExperience from "../../assets/livecook-product-page/section_layers/asset-01.png";
+import assetContent from "../../assets/livecook-product-page/section_layers/asset-02.png";
+import assetOperation from "../../assets/livecook-product-page/section_layers/asset-03.png";
+import assetCommunity from "../../assets/livecook-product-page/section_layers/asset-04.png";
+import assetTechnology from "../../assets/livecook-product-page/section_layers/asset-05.png";
+
+const intro =
+	"LiveCook reúne cinco capas que se prueban en cada clase: experiencia, contenido, comunidad, operación y tecnología.";
+---
+
+<section
+	id="capas-livecook"
+	class="relative bg-surface-light px-[var(--frame-inset)] text-foreground"
+	aria-labelledby="livecook-layers-title"
+	data-livecook-layers-section
+>
+	<div class="border-x border-t border-foreground px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(4rem,8vw,7rem)]">
+		<header class="max-w-[65rem]">
+			<h2
+				id="livecook-layers-title"
+				class="text-[clamp(2.4rem,5.2vw,5.25rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
+				data-livecook-layers-reveal-text
+			>
+				Una app para cocinar. Y todo lo necesario para que funcione bien.
+			</h2>
+			<p class="mt-[clamp(1.25rem,2vw,1.75rem)] max-w-[40rem] text-description font-normal text-foreground" data-livecook-layers-reveal-text>
+				{intro}
+			</p>
+		</header>
+
+		<div class="relative mx-auto mt-[clamp(4rem,8vw,7rem)] grid max-w-[70rem] grid-cols-1 gap-[clamp(2rem,4vw,4rem)] lg:grid-cols-[minmax(0,1.08fr)_minmax(0,1fr)] lg:gap-5">
+			<article class="lg:col-start-1 lg:row-start-1" data-livecook-layer-card data-livecook-layer-from-x="-12" data-livecook-layer-from-y="72">
+				<p class="mb-1 text-right text-[clamp(1.5rem,2.15vw,2rem)] font-normal uppercase leading-none tracking-[-0.06em]" data-livecook-layers-reveal-text>
+					Experiencia
+				</p>
+				<figure class="aspect-square overflow-hidden" data-livecook-layers-reveal-fade>
+					<img
+						src={assetExperience.src}
+						width={assetExperience.width}
+						height={assetExperience.height}
+						alt="Tarjeta de una clase en vivo dentro de LiveCook."
+						class="h-full w-full object-cover"
+						loading="lazy"
+						decoding="async"
+					/>
+				</figure>
+				<p class="mt-2 max-w-[38rem] text-right text-description font-normal text-muted-foreground" data-livecook-layers-reveal-text>
+					Pantallas claras para chefs y personas que cocinan desde casa.
+				</p>
+			</article>
+
+			<article class="lg:col-start-2 lg:row-start-1 lg:grid lg:h-full lg:grid-cols-[minmax(0,21rem)_minmax(12rem,1fr)] lg:content-end lg:items-start lg:gap-5" data-livecook-layer-card data-livecook-layer-from-x="18" data-livecook-layer-from-y="52">
+				<figure class="lg:max-w-[21rem]" data-livecook-layers-reveal-fade>
+					<img
+						src={assetContent.src}
+						width={assetContent.width}
+						height={assetContent.height}
+						alt="Plato de sushi usado como contenido de receta."
+						class="w-full"
+						loading="lazy"
+						decoding="async"
+					/>
+				</figure>
+				<div class="mt-2 lg:mt-0 lg:pt-0">
+					<h3 class="text-[clamp(1.7rem,2.45vw,2.25rem)] font-normal uppercase leading-none tracking-[-0.06em]" data-livecook-layers-reveal-text>
+						Contenido
+					</h3>
+					<p class="mt-2 max-w-[19rem] text-description font-normal text-muted-foreground" data-livecook-layers-reveal-text>
+						Recetas, clases y sesiones diseñadas para aprender mientras se cocina.
+					</p>
+				</div>
+			</article>
+
+			<article class="lg:col-start-1 lg:row-start-2 lg:ml-auto lg:w-[55%]" data-livecook-layer-card data-livecook-layer-from-x="-24" data-livecook-layer-from-y="64">
+				<figure data-livecook-layers-reveal-fade>
+					<img
+						src={assetCommunity.src}
+						width={assetCommunity.width}
+						height={assetCommunity.height}
+						alt="Dos personas cocinando juntas mientras miran un teléfono."
+						class="w-full"
+						loading="lazy"
+						decoding="async"
+					/>
+				</figure>
+				<div class="mt-3">
+					<h3 class="text-[clamp(1.7rem,2.45vw,2.25rem)] font-normal uppercase leading-none tracking-[-0.06em]" data-livecook-layers-reveal-text>
+						Comunidad
+					</h3>
+					<p class="mt-2 max-w-[26rem] text-description font-normal text-muted-foreground" data-livecook-layers-reveal-text>
+						Chefs y personas conectadas por una acción concreta: preparar algo juntos.
+					</p>
+				</div>
+			</article>
+
+			<article class="lg:col-start-2 lg:row-start-2" data-livecook-layer-card data-livecook-layer-from-x="26" data-livecook-layer-from-y="70">
+				<figure data-livecook-layers-reveal-fade>
+					<img
+						src={assetOperation.src}
+						width={assetOperation.width}
+						height={assetOperation.height}
+						alt="Chef cortando vegetales con un teléfono en la mesa."
+						class="w-full"
+						loading="lazy"
+						decoding="async"
+					/>
+				</figure>
+				<div class="mt-3">
+					<h3 class="text-[clamp(1.7rem,2.45vw,2.25rem)] font-normal uppercase leading-none tracking-[-0.06em]" data-livecook-layers-reveal-text>
+						Operación
+					</h3>
+					<p class="mt-2 max-w-[37rem] text-description font-normal text-muted-foreground" data-livecook-layers-reveal-text>
+						Reservas, pagos, perfiles y gestión de clases en un solo lugar.
+					</p>
+				</div>
+			</article>
+
+			<article class="lg:col-start-1 lg:row-start-3 lg:ml-auto lg:w-[55%]" data-livecook-layer-card data-livecook-layer-from-x="-12" data-livecook-layer-from-y="82">
+				<figure data-livecook-layers-reveal-fade data-livecook-tech-source>
+					<img
+						src={assetTechnology.src}
+						width={assetTechnology.width}
+						height={assetTechnology.height}
+						alt="Teléfono iluminado sostenido en una mano."
+						class="w-full"
+						loading="lazy"
+						decoding="async"
+					/>
+				</figure>
+				<div class="mt-3">
+					<h3 class="text-[clamp(1.7rem,2.45vw,2.25rem)] font-normal uppercase leading-none tracking-[-0.06em]" data-livecook-layers-reveal-text>
+						Tecnología
+					</h3>
+					<p class="mt-2 max-w-[27rem] text-description font-normal text-muted-foreground" data-livecook-layers-reveal-text>
+						La base que permite emitir, coordinar, medir y mejorar la plataforma.
+					</p>
+				</div>
+			</article>
+		</div>
+	</div>
+</section>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const splitLiveCookLayerRows = (element: HTMLElement) => {
+		if (element.dataset.livecookLayersPrepared === "true") return;
+
+		const text = element.textContent?.replace(/\s+/g, " ").trim();
+		if (!text) return;
+
+		const tokens = text.split(" ");
+		element.textContent = "";
+
+		const measureFragment = document.createDocumentFragment();
+		tokens.forEach((token, index) => {
+			const word = document.createElement("span");
+			word.dataset.livecookLayersWord = "";
+			word.textContent = token;
+			word.style.display = "inline-block";
+			measureFragment.appendChild(word);
+
+			if (index < tokens.length - 1) {
+				measureFragment.appendChild(document.createTextNode(" "));
+			}
+		});
+		element.appendChild(measureFragment);
+
+		const words = Array.from(element.querySelectorAll<HTMLElement>("[data-livecook-layers-word]"));
+		const rows: HTMLElement[][] = [];
+
+		words.forEach((word) => {
+			const rowTop = Math.round(word.offsetTop);
+			const currentRow = rows.at(-1);
+			const currentTop = currentRow?.[0] ? Math.round(currentRow[0].offsetTop) : null;
+
+			if (!currentRow || currentTop === null || Math.abs(rowTop - currentTop) > 2) {
+				rows.push([word]);
+			} else {
+				currentRow.push(word);
+			}
+		});
+
+		element.textContent = "";
+
+		rows.forEach((row, index) => {
+			const line = document.createElement("span");
+			line.className = "relative block overflow-hidden";
+
+			const lineText = document.createElement("span");
+			lineText.className = "inline-block";
+			lineText.dataset.livecookLayersLineText = "";
+			lineText.textContent = row.map((word) => word.textContent).join(" ");
+
+			const lineBar = document.createElement("span");
+			lineBar.className = "pointer-events-none absolute inset-0 z-10 block bg-reveal-bar";
+			lineBar.dataset.livecookLayersLineBar = "";
+			lineBar.setAttribute("aria-hidden", "true");
+
+			line.append(lineText, lineBar);
+			element.appendChild(line);
+
+			if (index < rows.length - 1) {
+				element.appendChild(document.createTextNode(" "));
+			}
+		});
+
+		element.dataset.livecookLayersPrepared = "true";
+	};
+
+	const prepareLiveCookLayers = (section: HTMLElement) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-layers-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-layers-line-bar]"));
+		const fadeItems = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-layers-reveal-fade]"));
+		const cards = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-layer-card]"));
+
+		gsap.set(lineText, { autoAlpha: 1, yPercent: 104 });
+		gsap.set(lineBars, { autoAlpha: 1, xPercent: 0, scaleX: 1, transformOrigin: "left center" });
+		gsap.set(fadeItems, { autoAlpha: 0, y: 18 });
+		cards.forEach((card, index) => {
+			gsap.set(card, {
+				autoAlpha: 0,
+				x: Number(card.dataset.livecookLayerFromX || 0),
+				y: Number(card.dataset.livecookLayerFromY || 40),
+				scale: 0.96,
+				rotate: index % 2 === 0 ? -0.6 : 0.6,
+			});
+		});
+	};
+
+	const revealLiveCookLayers = (section: HTMLElement) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-layers-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-layers-line-bar]"));
+		const cards = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-layer-card]"));
+		const fadeItems = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-layers-reveal-fade]"));
+		const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+		timeline
+			.to(lineText, { yPercent: 0, duration: 0.74, stagger: 0.035 })
+			.to(lineBars, { xPercent: 104, duration: 0.8, stagger: 0.035 }, "<")
+			.set(lineBars, { autoAlpha: 0 });
+
+		timeline.to(cards, { autoAlpha: 1, x: 0, y: 0, scale: 1, rotate: 0, duration: 0.9, stagger: 0.12 }, "-=0.35");
+		timeline.to(fadeItems, { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.06 }, "<");
+	};
+
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	document.querySelectorAll<HTMLElement>("[data-livecook-layers-reveal-text]").forEach(splitLiveCookLayerRows);
+
+	document.querySelectorAll<HTMLElement>("[data-livecook-layers-section]").forEach((section) => {
+		prepareLiveCookLayers(section);
+
+		if (reduceMotion) {
+			gsap.set(section.querySelectorAll("[data-livecook-layers-line-text], [data-livecook-layers-reveal-fade], [data-livecook-layer-card]"), { clearProps: "all" });
+			gsap.set(section.querySelectorAll("[data-livecook-layers-line-bar]"), { autoAlpha: 0 });
+			return;
+		}
+
+		ScrollTrigger.create({
+			trigger: section,
+			start: "top 70%",
+			once: true,
+			onEnter: () => revealLiveCookLayers(section),
+		});
+
+		gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-layer-card]")).forEach((card) => {
+			gsap.to(card, {
+				yPercent: -4,
+				ease: "none",
+				scrollTrigger: {
+					trigger: card,
+					start: "top bottom",
+					end: "bottom top",
+					scrub: 0.7,
+				},
+			});
+		});
+	});
+</script>

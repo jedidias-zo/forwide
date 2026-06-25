@@ -1,0 +1,272 @@
+---
+import asset00 from "../../assets/vision/zoom-out-animation/asset-00.png";
+import asset01 from "../../assets/vision/zoom-out-animation/asset-01.png";
+import asset03 from "../../assets/vision/zoom-out-animation/asset-03.png";
+import asset04 from "../../assets/vision/zoom-out-animation/asset-04.png";
+import asset05 from "../../assets/vision/zoom-out-animation/asset-05.png";
+import asset06 from "../../assets/vision/zoom-out-animation/asset-06.png";
+import asset07 from "../../assets/vision/zoom-out-animation/asset-07.png";
+
+const stages = [
+	{
+		label: "[ Qué es Forwide ]",
+		word: "Una compañía diseñada para construir con continuidad.",
+		copy: "Forwide no busca lanzar por volumen. Busca crear productos digitales con propósito, sistemas reutilizables y capacidad de evolucionar.",
+	},
+	{
+		label: "",
+		word: "Clara",
+		copy: "Cada producto debe ser fácil de entender.",
+	},
+	{
+		label: "",
+		word: "Sistémica",
+		copy: "Cada decisión debe aportar a una estructura mayor.",
+	},
+	{
+		label: "",
+		word: "Adaptable",
+		copy: "La base debe evolucionar con el mercado.",
+	},
+	{
+		label: "",
+		word: "Escalable",
+		copy: "Un producto bien construido debe facilitar el siguiente.",
+	},
+];
+
+const zoomImages = [
+	{
+		image: asset00,
+		alt: "",
+		className: "left-[9%] top-[2%] w-[min(28vw,24rem)]",
+		origin: "left top",
+	},
+	{
+		image: asset03,
+		alt: "",
+		className: "left-[72%] top-[60%] w-[min(28vw,24rem)]",
+		origin: "right bottom",
+	},
+	{
+		image: asset01,
+		alt: "",
+		className: "left-[14%] top-[72%] w-[min(22vw,16rem)]",
+		origin: "left bottom",
+	},
+	{
+		image: asset04,
+		alt: "",
+		className: "left-[81%] top-[-23%] w-[min(32vw,28rem)]",
+		origin: "right top",
+	},
+	{
+		image: asset05,
+		alt: "",
+		className: "left-[98%] top-[82%] w-[min(28vw,24rem)]",
+		origin: "center bottom",
+	},
+	{
+		image: asset06,
+		alt: "",
+		className: "left-[-32%] top-[78%] w-[min(28vw,24rem)]",
+		origin: "center top",
+	},
+	{
+		image: asset07,
+		alt: "",
+		className: "left-[76%] top-[10%] w-[min(16vw,10rem)]",
+		origin: "right center",
+	},
+];
+---
+
+<section
+	id="vision-zoom-out"
+	class="relative bg-surface-menu px-[var(--frame-inset)] text-foreground"
+	aria-labelledby="vision-zoom-title"
+	data-vision-zoom-section
+>
+	<div class="border-x border-t border-foreground">
+		<div class="relative min-h-[100svh] overflow-hidden" data-vision-zoom-pin>
+			<div class="relative z-10 grid min-h-[100svh] place-items-center px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(3rem,6vw,5rem)]">
+				<div class="relative z-20 mx-auto flex w-full max-w-[58rem] flex-col items-center text-center">
+					<div class="relative mb-[clamp(1rem,2vw,1.5rem)] min-h-[1.4em] w-full uppercase">
+						{
+							stages.map((stage, index) => (
+								<p
+									class="absolute inset-x-0 text-[clamp(1rem,1.35vw,1.25rem)] font-normal leading-none tracking-[-0.05em] text-muted-foreground"
+									data-vision-zoom-label
+									data-vision-zoom-stage={index}
+								>
+									{stage.label}
+								</p>
+							))
+						}
+					</div>
+
+					<h2
+						id="vision-zoom-title"
+						class="relative w-full text-[clamp(2rem,3.4vw,3rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
+						style="min-height: 6rem;"
+						data-vision-zoom-title
+					>
+						{
+							stages.map((stage, index) => (
+								<span
+									class="absolute inset-x-0 top-0 block"
+									data-vision-zoom-word
+									data-vision-zoom-stage={index}
+								>
+									{stage.word}
+								</span>
+							))
+						}
+					</h2>
+
+					<div class="relative mt-[clamp(0.75rem,1.4vw,1.1rem)] min-h-[clamp(4.5rem,7vw,6rem)] w-full">
+						{
+							stages.map((stage, index) => (
+								<p
+									class="absolute inset-x-0 mx-auto max-w-[50rem] text-[clamp(1.1rem,1.7vw,1.55rem)] font-normal uppercase leading-[1.05] tracking-[-0.045em] text-muted-foreground"
+									data-vision-zoom-copy
+									data-vision-zoom-stage={index}
+								>
+									{stage.copy}
+								</p>
+							))
+						}
+					</div>
+				</div>
+			</div>
+
+			<div class="absolute inset-0 z-0 overflow-hidden">
+				<div class="absolute inset-0 h-[100svh] w-full will-change-transform" data-vision-zoom-camera>
+					{
+						zoomImages.map((item, index) => (
+							<figure
+								class:list={[
+									"absolute overflow-hidden bg-surface-soft will-change-transform",
+									item.className,
+								]}
+								style={`transform-origin:${item.origin};`}
+								data-vision-zoom-image
+								data-vision-zoom-image-index={index}
+							>
+								<img
+									src={item.image.src}
+									width={item.image.width}
+									height={item.image.height}
+									alt={item.alt}
+									class="h-full w-full object-cover"
+									loading={index < 2 ? "eager" : "lazy"}
+									decoding="async"
+								/>
+							</figure>
+						))
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	document.querySelectorAll<HTMLElement>("[data-vision-zoom-section]").forEach((section) => {
+		const pin = section.querySelector<HTMLElement>("[data-vision-zoom-pin]");
+		const camera = section.querySelector<HTMLElement>("[data-vision-zoom-camera]");
+		const title = section.querySelector<HTMLElement>("[data-vision-zoom-title]");
+		const words = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-vision-zoom-word]"));
+		const labels = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-vision-zoom-label]"));
+		const copies = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-vision-zoom-copy]"));
+		const images = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-vision-zoom-image]"));
+		const stageCount = Math.max(words.length, 1);
+
+		if (!pin || !camera || !title) return;
+
+		if (reduceMotion) {
+			gsap.set([...words, ...labels, ...copies], { autoAlpha: 0 });
+			gsap.set([words[0], labels[0], copies[0]], { autoAlpha: 1 });
+			gsap.set(images, { autoAlpha: 1, scale: 1 });
+			return;
+		}
+
+		gsap.set([...words, ...labels, ...copies], { autoAlpha: 0, y: 18 });
+		gsap.set([words[0], labels[0], copies[0]], { autoAlpha: 1, y: 0 });
+		gsap.set(images, { autoAlpha: 0, scale: 1.12 });
+		gsap.set(images.slice(0, 2), { autoAlpha: 1, scale: 1 });
+		gsap.set(camera, { scale: 1, xPercent: 0, yPercent: 0, transformOrigin: "50% 50%" });
+		gsap.set(title, { minHeight: "6rem" });
+		const titleHeights = words.map((_, index) => (index === 0 ? "6rem" : "3.25rem"));
+
+		const showStage = (timeline: gsap.core.Timeline, stage: number, position: number) => {
+			const previousStage = Math.max(stage - 1, 0);
+			timeline
+				.to(title, {
+					minHeight: titleHeights[stage],
+					duration: 0.3,
+					ease: "power2.out",
+				}, position)
+				.to([words[previousStage], labels[previousStage], copies[previousStage]], {
+					autoAlpha: 0,
+					y: -18,
+					duration: 0.24,
+					ease: "power2.out",
+				}, position)
+				.fromTo(
+					[words[stage], labels[stage], copies[stage]],
+					{ autoAlpha: 0, y: 18 },
+					{ autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" },
+					position + 0.08,
+				);
+		};
+
+		const timeline = gsap.timeline({
+			defaults: { ease: "none" },
+			scrollTrigger: {
+				trigger: section,
+				start: "top top",
+				end: "+=650%",
+				pin,
+				scrub: 0.85,
+				anticipatePin: 1,
+				snap: {
+					snapTo: 1 / Math.max(stageCount - 1, 1),
+					duration: { min: 0.12, max: 0.35 },
+					ease: "power2.out",
+				},
+			},
+		});
+
+		timeline
+			.to(camera, { scale: 0.84, xPercent: 0, yPercent: 0, duration: 1 })
+			.to(images.slice(0, 2), { scale: 0.84, duration: 1 }, 0)
+			.to(images[2], { autoAlpha: 1, scale: 1, duration: 0.42 }, 0.16);
+		showStage(timeline, 1, 0.78);
+
+		timeline
+			.to(camera, { scale: 0.68, xPercent: 0, yPercent: 0, duration: 1 }, 1)
+			.to(images.slice(0, 2), { scale: 0.72, duration: 1 }, 1)
+			.to(images.slice(3, 6), { autoAlpha: 1, scale: 1, duration: 0.42, stagger: 0.08 }, 1.16);
+		showStage(timeline, 2, 1.78);
+
+		timeline
+			.to(camera, { scale: 0.56, xPercent: 0, yPercent: 0, duration: 1 }, 2)
+			.to(images.slice(0, 2), { scale: 0.64, duration: 1 }, 2)
+			.to(images.slice(5, 6), { autoAlpha: 1, scale: 1, duration: 0.42 }, 2.16);
+		showStage(timeline, 3, 2.78);
+
+		timeline
+			.to(camera, { scale: 0.48, xPercent: 0, yPercent: 0, duration: 1 }, 3)
+			.to(images.slice(0, 2), { scale: 0.56, duration: 1 }, 3)
+			.to(images.slice(6), { autoAlpha: 1, scale: 1, duration: 0.42 }, 3.16);
+		showStage(timeline, 4, 3.78);
+	});
+</script>

@@ -109,6 +109,7 @@
 	--frame-line: var(--foreground);
 	--hero-title-size: clamp(2rem, calc(0.515rem + 6.095vw), 6rem);
 	--hero-intro-size: clamp(1rem, calc(0.714rem + 0.952vw), 1.5rem);
+	--vision-hero-title-size: clamp(3rem, 7vw, 6.25rem);
 	--hero-threads: var(--primary);
 	--hero-threads-light: var(--brand-50);
 	--reveal-bar: var(--primary);
@@ -451,6 +452,72 @@
 	line-height: 1.12;
 	letter-spacing: -0.035em;
 	text-wrap: pretty;
+}
+
+@layer components {
+	.cta-button {
+		display: inline-flex;
+		min-height: 4rem;
+		align-items: center;
+		justify-content: center;
+		padding-inline: clamp(1rem, 1.6vw, 1.5rem);
+		font-size: clamp(1rem, 1.35vw, 1.25rem);
+		font-weight: 400;
+		line-height: 1;
+		letter-spacing: -0.04em;
+		text-transform: uppercase;
+		transition:
+			background-color var(--duration-normal) var(--motion-ease-standard),
+			color var(--duration-normal) var(--motion-ease-standard);
+	}
+
+	.cta-button-dark {
+		background: var(--foreground);
+		color: var(--background);
+	}
+
+	.cta-button-dark:hover,
+	.cta-button-dark:focus-visible {
+		background: var(--primary);
+		color: var(--primary-foreground);
+	}
+
+	.cta-button-light {
+		background: var(--background);
+		color: var(--foreground);
+	}
+
+	.cta-button-light:hover,
+	.cta-button-light:focus-visible {
+		background: var(--primary);
+		color: var(--primary-foreground);
+	}
+
+	.livecook-product-title {
+		font-size: clamp(2rem, 8vw, 2.35rem);
+		font-weight: 400;
+		line-height: 0.98;
+		letter-spacing: -0.065em;
+		text-transform: uppercase;
+	}
+
+	.livecook-product-label {
+		font-size: clamp(0.9rem, 3.4vw, 1rem);
+		font-weight: 400;
+		line-height: 1;
+		letter-spacing: -0.05em;
+		text-transform: uppercase;
+	}
+
+	@media (min-width: 64rem) {
+		.livecook-product-title {
+			font-size: clamp(3rem, 6.7vw, 6.375rem);
+		}
+
+		.livecook-product-label {
+			font-size: clamp(1.25rem, 1.8vw, 1.75rem);
+		}
+	}
 }
 
 @media (prefers-reduced-motion: no-preference) {

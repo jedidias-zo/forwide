@@ -1,0 +1,55 @@
+---
+import fullWidthImage from "../../assets/vision/full-width.png";
+import CtaButton from "../ui/CtaButton.astro";
+
+type Props = {
+	title?: string;
+	body?: string;
+	ctaLabel?: string;
+	ctaHref?: string;
+	imageAlt?: string;
+};
+
+const {
+	title = "Una estructura compartida para productos que evolucionan.",
+	body = "Forwide está construyendo una forma más clara de lanzar, operar y escalar productos digitales. LiveCook es la primera prueba visible; la visión es más amplia.",
+	ctaLabel = "Contáctanos",
+	ctaHref = "#contacto",
+	imageAlt = "Estructura arquitectónica de vidrio y metal vista desde abajo.",
+} = Astro.props;
+---
+
+<section
+	id="estructura-compartida"
+	class="relative -mt-px bg-surface-light text-foreground"
+	aria-labelledby="vision-shared-structure-title"
+>
+	<figure class="border-y border-foreground">
+		<img
+			src={fullWidthImage.src}
+			alt={imageAlt}
+			class="h-[clamp(20rem,45vw,43rem)] w-full object-cover object-center"
+			loading="lazy"
+		/>
+	</figure>
+
+	<div class="px-[var(--frame-inset)]">
+		<div class="border-x border-foreground px-[clamp(1.25rem,1.6vw,1.5rem)] py-[clamp(4.5rem,7vw,6.5rem)]">
+			<div class="max-w-[78rem]">
+				<h2
+					id="vision-shared-structure-title"
+					class="text-[clamp(2.65rem,5vw,4.75rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
+					data-reveal-heading
+				>
+					{title}
+				</h2>
+
+				<p class="mt-[clamp(1.75rem,2.7vw,2.5rem)] max-w-[43rem] text-description font-normal text-muted-foreground" data-reveal-copy>
+					{body}
+				</p>
+
+				<CtaButton href={ctaHref} label={ctaLabel} class="mt-[clamp(2.5rem,4.5vw,4rem)] min-w-[clamp(11.5rem,14vw,14rem)]" />
+			</div>
+		</div>
+	</div>
+</section>

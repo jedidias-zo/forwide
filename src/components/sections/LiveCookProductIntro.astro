@@ -1,0 +1,231 @@
+---
+import asset01 from "../../assets/livecook-product-page/section_02/asset-01.png";
+import asset02 from "../../assets/livecook-product-page/section_02/asset-02.png";
+import asset03 from "../../assets/livecook-product-page/section_02/asset-03.png";
+
+const cards = [
+	{
+		image: asset01,
+		alt: "Chef cocinando en una cocina durante una clase en vivo.",
+		title: "Un chef presente, en tiempo real",
+		body: "Cada sesión ocurre mientras la gente cocina. El chef guía, responde, ajusta y acompaña el ritmo para que la clase se sienta viva, no como una grabación.",
+	},
+	{
+		image: asset02,
+		alt: "Tarta recién horneada sobre una mesa.",
+		title: "Recetas para hacer, no para guardar",
+		body: "Cada receta está pensada para prepararse durante la clase, paso a paso y con margen para resolver dudas.",
+	},
+	{
+		image: asset03,
+		alt: "Persona rallando queso sobre un plato de pasta.",
+		title: "Una comunidad, no una audiencia",
+		body: "Las personas no miran desde fuera. Cocinan al mismo tiempo y comparten progreso, errores y resultado.",
+	},
+];
+---
+
+<section
+	id="que-es-livecook"
+	class="relative px-[var(--frame-inset)] text-foreground"
+	aria-labelledby="livecook-intro-title"
+	data-livecook-intro-section
+>
+	<div class="border-x border-foreground px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(4rem,8vw,7rem)]">
+		<div class="grid gap-[clamp(2rem,4vw,3.5rem)] lg:grid-cols-[0.7fr_1fr_0.7fr] lg:items-end">
+			<p class="order-2 text-[clamp(1rem,1.35vw,1.35rem)] font-normal uppercase leading-none tracking-[-0.05em] text-muted-foreground lg:order-1" data-livecook-intro-reveal-text>
+				[ Qué es LiveCook ]
+			</p>
+
+			<div class="order-1 text-center lg:order-2">
+				<h2
+					id="livecook-intro-title"
+					class="mx-auto max-w-[72rem] text-[clamp(2rem,4.75vw,4.25rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
+					data-livecook-intro-reveal-text
+				>
+					Una clase en vivo para cocinar de verdad.
+				</h2>
+				<p class="mx-auto mt-[clamp(1.75rem,3vw,2.75rem)] max-w-[38rem] text-description font-normal text-foreground" data-livecook-intro-reveal-text>
+					LiveCook no está hecho para mirar cocina desde fuera. Está hecho para que la gente cocine en ese momento: con un chef presente, preguntas reales, ritmo compartido y un plato que se termina durante la sesión.
+				</p>
+			</div>
+
+			<p class="order-3 text-left text-[clamp(1rem,1.35vw,1.35rem)] font-normal uppercase leading-none tracking-[-0.05em] text-muted-foreground lg:text-right" data-livecook-intro-reveal-text>
+				[ Qué lo hace diferente ]
+			</p>
+		</div>
+
+		<div class="mt-[clamp(3rem,5.5vw,5rem)] grid gap-[clamp(1rem,1.25vw,1.25rem)] lg:grid-cols-3">
+			{
+				cards.map((card) => (
+					<article class="grid gap-[clamp(1rem,1.35vw,1.35rem)]" data-livecook-intro-card>
+						<figure class="overflow-hidden bg-surface-soft" data-livecook-intro-reveal-fade>
+							<img
+								src={card.image.src}
+								width={card.image.width}
+								height={card.image.height}
+								alt={card.alt}
+								class="aspect-square w-full object-cover"
+								loading="lazy"
+								decoding="async"
+							/>
+						</figure>
+						<div>
+							<h3 class="max-w-[29rem] text-[clamp(1.75rem,2.8vw,2.65rem)] font-normal uppercase leading-[0.95] tracking-[-0.065em]" data-livecook-intro-reveal-text>
+								{card.title}
+							</h3>
+							<p class="mt-3 max-w-[32rem] text-description font-normal text-muted-foreground" data-livecook-intro-reveal-text>
+								{card.body}
+							</p>
+						</div>
+					</article>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const splitLiveCookIntroRows = (element: HTMLElement) => {
+		if (element.dataset.livecookIntroPrepared === "true") return;
+
+		const text = element.textContent?.replace(/\s+/g, " ").trim();
+		if (!text) return;
+
+		const tokens = text.split(" ");
+		element.textContent = "";
+
+		const measureFragment = document.createDocumentFragment();
+		tokens.forEach((token, index) => {
+			const word = document.createElement("span");
+			word.dataset.livecookIntroWord = "";
+			word.textContent = token;
+			word.style.display = "inline-block";
+			measureFragment.appendChild(word);
+
+			if (index < tokens.length - 1) {
+				measureFragment.appendChild(document.createTextNode(" "));
+			}
+		});
+		element.appendChild(measureFragment);
+
+		const words = Array.from(element.querySelectorAll<HTMLElement>("[data-livecook-intro-word]"));
+		const rows: HTMLElement[][] = [];
+
+		words.forEach((word) => {
+			const rowTop = Math.round(word.offsetTop);
+			const currentRow = rows.at(-1);
+			const currentTop = currentRow?.[0] ? Math.round(currentRow[0].offsetTop) : null;
+
+			if (!currentRow || currentTop === null || Math.abs(rowTop - currentTop) > 2) {
+				rows.push([word]);
+			} else {
+				currentRow.push(word);
+			}
+		});
+
+		element.textContent = "";
+
+		rows.forEach((row, index) => {
+			const line = document.createElement("span");
+			line.className = "relative block overflow-hidden";
+
+			const lineText = document.createElement("span");
+			lineText.className = "inline-block";
+			lineText.dataset.livecookIntroLineText = "";
+			lineText.textContent = row.map((word) => word.textContent).join(" ");
+
+			const lineBar = document.createElement("span");
+			lineBar.className = "pointer-events-none absolute inset-0 z-10 block bg-reveal-bar";
+			lineBar.dataset.livecookIntroLineBar = "";
+			lineBar.setAttribute("aria-hidden", "true");
+
+			line.append(lineText, lineBar);
+			element.appendChild(line);
+
+			if (index < rows.length - 1) {
+				element.appendChild(document.createTextNode(" "));
+			}
+		});
+
+		element.dataset.livecookIntroPrepared = "true";
+	};
+
+	const prepareLiveCookIntro = (section: HTMLElement) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-intro-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-intro-line-bar]"));
+		const fadeItems = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-intro-reveal-fade]"));
+
+		gsap.set(lineText, { autoAlpha: 1, yPercent: 104 });
+		gsap.set(lineBars, {
+			autoAlpha: 1,
+			xPercent: 0,
+			scaleX: 1,
+			transformOrigin: "left center",
+		});
+		gsap.set(fadeItems, { autoAlpha: 0, y: 18 });
+	};
+
+	const revealLiveCookIntro = (section: HTMLElement) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-intro-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-intro-line-bar]"));
+		const fadeItems = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-intro-reveal-fade]"));
+		const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+		timeline
+			.to(lineText, {
+				yPercent: 0,
+				duration: 0.74,
+				stagger: 0.035,
+			})
+			.to(
+				lineBars,
+				{
+					xPercent: 104,
+					duration: 0.8,
+					stagger: 0.035,
+				},
+				"<",
+			)
+			.set(lineBars, { autoAlpha: 0 });
+
+		if (fadeItems.length) {
+			timeline.to(
+				fadeItems,
+				{
+					autoAlpha: 1,
+					y: 0,
+					duration: 0.62,
+					stagger: 0.08,
+				},
+				"-=0.42",
+			);
+		}
+	};
+
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	document.querySelectorAll<HTMLElement>("[data-livecook-intro-reveal-text]").forEach(splitLiveCookIntroRows);
+
+	document.querySelectorAll<HTMLElement>("[data-livecook-intro-section]").forEach((section) => {
+		prepareLiveCookIntro(section);
+
+		if (reduceMotion) {
+			gsap.set(section.querySelectorAll("[data-livecook-intro-line-text], [data-livecook-intro-reveal-fade]"), { clearProps: "all" });
+			gsap.set(section.querySelectorAll("[data-livecook-intro-line-bar]"), { autoAlpha: 0 });
+			return;
+		}
+
+		ScrollTrigger.create({
+			trigger: section,
+			start: "top 72%",
+			once: true,
+			onEnter: () => revealLiveCookIntro(section),
+		});
+	});
+</script>

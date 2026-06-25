@@ -1,6 +1,7 @@
 ---
 import NavLink from '../ui/NavLink.astro';
 import forwideLogoStroke from '../../assets/logos/forwide-logo-stroke.svg';
+import ForwideLogo from '../brand/ForwideLogo.astro';
 
 type NavItem = {
 	label: string;
@@ -11,6 +12,7 @@ type NavItem = {
 type Props = {
 	homeLabel?: string;
 	homeHref?: string;
+	homeVariant?: "label" | "logo";
 	navItems?: NavItem[];
 	contactHref?: string;
 };
@@ -18,16 +20,39 @@ type Props = {
 const {
 	homeLabel = "[HOME]",
 	homeHref = "/",
+	homeVariant = "label",
 	navItems = [
-		{ label: "HOME", href: "/", isActive: true },
-		{ label: "VISION", href: "#vision" },
-		{ label: "MANIFIESTO", href: "#manifiesto" },
-		{ label: "PRODUCTOS", href: "#productos" },
-		{ label: "RESPONSABILIDAD", href: "#responsabilidad" },
+		{ label: "HOME", href: "/" },
+		{ label: "VISION", href: "/vision" },
+		{ label: "PRODUCTOS", href: "/productos/livecook/" },
+		{ label: "RESPONSABILIDAD", href: "/#responsabilidad" },
 		{ label: "CONTÁCTANOS", href: "#contacto" },
 	],
 	contactHref = "mailto:hola@forwide.com",
 } = Astro.props;
+
+const stripTrailingSlash = (path: string) =>
+	path === "/" ? "/" : path.replace(/\/+$/, "");
+
+const currentPath = stripTrailingSlash(Astro.url.pathname);
+const homeIsActive = currentPath === "/";
+
+const getNavPath = (href: string) => {
+	if (href.startsWith("#") || href.startsWith("mailto:")) return null;
+
+	const url = new URL(href, Astro.url);
+	if (url.hash) return null;
+
+	return stripTrailingSlash(url.pathname);
+};
+
+const isNavItemActive = (href: string) => {
+	const navPath = getNavPath(href);
+	if (!navPath) return false;
+	if (navPath.startsWith("/productos")) return currentPath.startsWith("/productos");
+
+	return currentPath === navPath;
+};
 
 /*
  * Menu open/close styles use data-open on #site-menu.
@@ -47,9 +72,15 @@ const menuOverlayClasses = [
 	<div class="mx-auto flex h-full max-w-none items-center justify-between px-[var(--frame-inset)]">
 		<a
 			href={homeHref}
-			class="text-[0.875rem] font-normal leading-none text-foreground line-through decoration-1 underline-offset-2 [letter-spacing:0] transition-colors duration-fast hover:text-primary focus-visible:text-primary md:text-[1rem]"
+			class:list={[
+				"transition-colors duration-fast hover:text-primary focus-visible:text-primary",
+				homeVariant === "logo"
+					? "block w-[min(9rem,34vw)] text-foreground"
+					: "text-[0.875rem] font-normal leading-none text-foreground underline-offset-2 [letter-spacing:0] md:text-[1rem]",
+				homeVariant === "label" && homeIsActive && "line-through decoration-1",
+			]}
 		>
-			{homeLabel}
+			{homeVariant === "logo" ? <ForwideLogo class="h-auto w-full" /> : homeLabel}
 		</a>
 
 		<div class="flex items-center gap-7">
@@ -79,6 +110,11 @@ const menuOverlayClasses = [
 			</button>
 		</div>
 	</div>
+	<span
+		data-header-rule
+		class="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left scale-x-100 bg-foreground transition-transform duration-500 ease-standard"
+		aria-hidden="true"
+	></span>
 </header>
 
 <div
@@ -122,7 +158,7 @@ const menuOverlayClasses = [
 						<NavLink
 							label={item.label}
 							href={item.href}
-							isActive={item.isActive}
+							isActive={item.isActive ?? isNavItemActive(item.href)}
 							class="text-foreground"
 						/>
 					</li>
@@ -159,4 +195,22 @@ const menuOverlayClasses = [
 	document.addEventListener("keydown", (event) => {
 		if (event.key === "Escape") setMenuOpen(false);
 	});
+
+	const headerRule = document.querySelector<HTMLElement>("[data-header-rule]");
+	let headerRuleFrame = 0;
+
+	const syncHeaderRule = () => {
+		headerRuleFrame = 0;
+		if (!headerRule) return;
+
+		headerRule.style.transform = window.scrollY > 4 ? "scaleX(0)" : "scaleX(1)";
+	};
+
+	const requestHeaderRuleSync = () => {
+		if (headerRuleFrame) return;
+		headerRuleFrame = window.requestAnimationFrame(syncHeaderRule);
+	};
+
+	syncHeaderRule();
+	window.addEventListener("scroll", requestHeaderRuleSync, { passive: true });
 </script>

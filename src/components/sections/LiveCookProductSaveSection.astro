@@ -1,0 +1,290 @@
+---
+import livecookIcon from "../../assets/livecook-product-page/livecook-icon.png";
+import asciiLeft from "../../assets/livecook-product-page/section_03/ascii-bg-left.png";
+import asciiRight from "../../assets/livecook-product-page/section_03/ascii-bg-right.png";
+import phoneBezel from "../../assets/livecook-product-page/section_03/phone-bezzels.png";
+import image01 from "../../assets/livecook-product-page/section_03/image-01.png";
+import image02 from "../../assets/livecook-product-page/section_03/image-02.png";
+import image03 from "../../assets/livecook-product-page/section_03/image-03.png";
+
+const phoneBody = [
+	"Hoy sobran videos, posts y recetas guardadas. La intención está ahí, pero falta el momento, la guía y la confianza para empezar.",
+	"LiveCook convierte esa intención en acción: una clase en vivo, un chef presente, otras personas cocinando contigo y un plato terminado al final. Por eso LiveCook no compite con otro video de cocina. Crea una situación real para cocinar, aprender y compartir en el mismo momento.",
+	"LiveCook convierte esa intención en acción: una clase en vivo, un chef presente, otras personas cocinando contigo y un plato terminado al final. Por eso LiveCook no compite con otro video de cocina. Crea una situación real para cocinar, aprender y compartir en el mismo momento.",
+];
+---
+
+<section
+	id="guardar-recetas"
+	class="relative bg-surface-light px-[var(--frame-inset)] text-foreground"
+	aria-labelledby="livecook-save-title"
+	data-livecook-save-section
+>
+	<div class="border-x border-t border-foreground">
+		<div class="relative overflow-hidden px-[clamp(1rem,1.25vw,1.25rem)] pt-[clamp(3.5rem,6vw,5.5rem)]">
+			<h2
+				id="livecook-save-title"
+				class="mx-auto max-w-[64rem] text-center text-[clamp(2rem,4.7vw,4.5rem)] font-normal uppercase leading-[0.96] tracking-[-0.065em]"
+				aria-label="Todos guardan recetas. LiveCook ayuda a cocinarlas."
+			>
+				<span class="relative block overflow-hidden" data-livecook-save-manual-line>
+					<span class="block" data-livecook-save-line-text>Todos guardan recetas.</span>
+					<span class="pointer-events-none absolute inset-0 z-10 block bg-reveal-bar" data-livecook-save-line-bar aria-hidden="true"></span>
+				</span>
+				<span class="relative block overflow-hidden" data-livecook-save-manual-line>
+					<span class="block" data-livecook-save-line-text><span class="text-foreground/50">LiveCook</span> ayuda a cocinarlas.</span>
+					<span class="pointer-events-none absolute inset-0 z-10 block bg-reveal-bar" data-livecook-save-line-bar aria-hidden="true"></span>
+				</span>
+			</h2>
+
+			<img
+				src={asciiLeft.src}
+				width={asciiLeft.width}
+				height={asciiLeft.height}
+				alt=""
+				class="pointer-events-none absolute bottom-0 left-0 z-0 hidden h-[64%] w-auto max-w-none object-contain object-left-bottom opacity-70 lg:block"
+				loading="lazy"
+				decoding="async"
+				data-livecook-save-reveal-fade
+			/>
+			<img
+				src={asciiRight.src}
+				width={asciiRight.width}
+				height={asciiRight.height}
+				alt=""
+				class="pointer-events-none absolute bottom-0 right-0 z-0 hidden h-[66%] w-auto max-w-none object-contain object-right-bottom opacity-70 lg:block"
+				loading="lazy"
+				decoding="async"
+				data-livecook-save-reveal-fade
+			/>
+
+			<div class="relative mx-auto mt-[clamp(2rem,4vw,3rem)] w-full max-w-[54rem]">
+				<div class="relative z-10 mx-auto aspect-[891/807] w-[min(48rem,96vw)] max-w-full" data-livecook-save-reveal-fade>
+					<img
+						src={phoneBezel.src}
+						width={phoneBezel.width}
+						height={phoneBezel.height}
+						alt=""
+						class="pointer-events-none absolute inset-0 z-20 h-full w-full object-contain"
+						loading="lazy"
+						decoding="async"
+					/>
+					<div class="absolute left-[23%] top-[24%] z-30 flex w-[54%] flex-col items-center">
+						<img
+							src={livecookIcon.src}
+							width={livecookIcon.width}
+							height={livecookIcon.height}
+							alt="LiveCook"
+							class="h-auto w-[clamp(4rem,7vw,6.75rem)] drop-shadow-[0_1rem_2rem_rgba(0,0,0,0.15)]"
+							loading="lazy"
+							decoding="async"
+							data-livecook-save-reveal-fade
+						/>
+						<div class="mt-[clamp(1.25rem,2.2vw,2.25rem)] w-full space-y-[clamp(0.9rem,1.3vw,1.35rem)] text-left text-[clamp(0.78rem,1.22vw,1.25rem)] font-normal leading-[1.08] tracking-[-0.045em] text-foreground">
+							{phoneBody.map((paragraph) => <p data-livecook-save-reveal-text>{paragraph}</p>)}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="grid border-y border-foreground px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(1.75rem,3vw,2.25rem)] lg:grid-cols-[1fr_auto] lg:items-center lg:gap-8" data-livecook-save-row>
+			<h3 class="max-w-[42rem] text-[clamp(1.8rem,3vw,3rem)] font-normal uppercase leading-[0.95] tracking-[-0.065em]" data-livecook-save-reveal-text>
+				De guardar recetas, a encender la cocina.
+			</h3>
+			<img
+				src={image01.src}
+				width={image01.width}
+				height={image01.height}
+				alt="Mesa con comida preparada durante una clase de cocina."
+				class="mt-6 w-full max-w-[14.75rem] justify-self-start object-cover lg:mt-0 lg:justify-self-end"
+				loading="lazy"
+				decoding="async"
+				data-livecook-save-reveal-fade
+			/>
+		</div>
+
+		<div class="border-b border-foreground bg-surface-soft px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(2rem,3.2vw,3rem)]" data-livecook-save-row>
+			<h3 class="text-[clamp(1.8rem,3vw,3rem)] font-normal uppercase leading-[0.95] tracking-[-0.065em]" data-livecook-save-reveal-text>
+				De mirar el resultado a cocinarlo paso a paso.
+			</h3>
+		</div>
+
+		<figure class="border-b border-foreground" data-livecook-save-reveal-fade>
+			<img
+				src={image02.src}
+				width={image02.width}
+				height={image02.height}
+				alt="Vegetales siendo cortados en una cocina."
+				class="h-[clamp(13rem,18vw,15.75rem)] w-full object-cover"
+				loading="lazy"
+				decoding="async"
+			/>
+		</figure>
+
+		<div class="grid px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(1.75rem,3vw,2.25rem)] lg:grid-cols-[1fr_auto] lg:items-center lg:gap-8" data-livecook-save-row>
+			<h3 class="max-w-[46rem] text-[clamp(1.8rem,3vw,3rem)] font-normal uppercase leading-[0.95] tracking-[-0.065em]" data-livecook-save-reveal-text>
+				De seguidores a personas cocinando en la misma clase.
+			</h3>
+			<img
+				src={image03.src}
+				width={image03.width}
+				height={image03.height}
+				alt="Plato terminado servido en una mesa."
+				class="mt-6 w-full max-w-[14.75rem] justify-self-start object-cover lg:mt-0 lg:justify-self-end"
+				loading="lazy"
+				decoding="async"
+				data-livecook-save-reveal-fade
+			/>
+		</div>
+	</div>
+</section>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const splitLiveCookSaveRows = (element: HTMLElement) => {
+		if (element.dataset.livecookSavePrepared === "true") return;
+		if (element.querySelector("[data-livecook-save-line-text]")) {
+			element.dataset.livecookSavePrepared = "true";
+			return;
+		}
+
+		const text = element.textContent?.replace(/\s+/g, " ").trim();
+		if (!text) return;
+
+		const tokens = text.split(" ");
+		element.textContent = "";
+
+		const measureFragment = document.createDocumentFragment();
+		tokens.forEach((token, index) => {
+			const word = document.createElement("span");
+			word.dataset.livecookSaveWord = "";
+			word.textContent = token;
+			word.style.display = "inline-block";
+			measureFragment.appendChild(word);
+
+			if (index < tokens.length - 1) {
+				measureFragment.appendChild(document.createTextNode(" "));
+			}
+		});
+		element.appendChild(measureFragment);
+
+		const words = Array.from(element.querySelectorAll<HTMLElement>("[data-livecook-save-word]"));
+		const rows: HTMLElement[][] = [];
+
+		words.forEach((word) => {
+			const rowTop = Math.round(word.offsetTop);
+			const currentRow = rows.at(-1);
+			const currentTop = currentRow?.[0] ? Math.round(currentRow[0].offsetTop) : null;
+
+			if (!currentRow || currentTop === null || Math.abs(rowTop - currentTop) > 2) {
+				rows.push([word]);
+			} else {
+				currentRow.push(word);
+			}
+		});
+
+		element.textContent = "";
+
+		rows.forEach((row, index) => {
+			const line = document.createElement("span");
+			line.className = "relative block overflow-hidden";
+
+			const lineText = document.createElement("span");
+			lineText.className = "inline-block";
+			lineText.dataset.livecookSaveLineText = "";
+			lineText.textContent = row.map((word) => word.textContent).join(" ");
+
+			const lineBar = document.createElement("span");
+			lineBar.className = "pointer-events-none absolute inset-0 z-10 block bg-reveal-bar";
+			lineBar.dataset.livecookSaveLineBar = "";
+			lineBar.setAttribute("aria-hidden", "true");
+
+			line.append(lineText, lineBar);
+			element.appendChild(line);
+
+			if (index < rows.length - 1) {
+				element.appendChild(document.createTextNode(" "));
+			}
+		});
+
+		element.dataset.livecookSavePrepared = "true";
+	};
+
+	const prepareLiveCookSave = (section: HTMLElement) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-save-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-save-line-bar]"));
+		const fadeItems = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-save-reveal-fade]"));
+
+		gsap.set(lineText, { autoAlpha: 1, yPercent: 104 });
+		gsap.set(lineBars, {
+			autoAlpha: 1,
+			xPercent: 0,
+			scaleX: 1,
+			transformOrigin: "left center",
+		});
+		gsap.set(fadeItems, { autoAlpha: 0, y: 18 });
+	};
+
+	const revealLiveCookSave = (section: HTMLElement) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-save-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-save-line-bar]"));
+		const fadeItems = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-save-reveal-fade]"));
+		const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+		timeline
+			.to(lineText, {
+				yPercent: 0,
+				duration: 0.74,
+				stagger: 0.035,
+			})
+			.to(
+				lineBars,
+				{
+					xPercent: 104,
+					duration: 0.8,
+					stagger: 0.035,
+				},
+				"<",
+			)
+			.set(lineBars, { autoAlpha: 0 });
+
+		if (fadeItems.length) {
+			timeline.to(
+				fadeItems,
+				{
+					autoAlpha: 1,
+					y: 0,
+					duration: 0.62,
+					stagger: 0.08,
+				},
+				"-=0.42",
+			);
+		}
+	};
+
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	document.querySelectorAll<HTMLElement>("[data-livecook-save-reveal-text]").forEach(splitLiveCookSaveRows);
+
+	document.querySelectorAll<HTMLElement>("[data-livecook-save-section]").forEach((section) => {
+		prepareLiveCookSave(section);
+
+		if (reduceMotion) {
+			gsap.set(section.querySelectorAll("[data-livecook-save-line-text], [data-livecook-save-reveal-fade]"), { clearProps: "all" });
+			gsap.set(section.querySelectorAll("[data-livecook-save-line-bar]"), { autoAlpha: 0 });
+			return;
+		}
+
+		ScrollTrigger.create({
+			trigger: section,
+			start: "top 72%",
+			once: true,
+			onEnter: () => revealLiveCookSave(section),
+		});
+	});
+</script>

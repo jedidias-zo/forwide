@@ -1,5 +1,8 @@
 <script>
 	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
 
 	const splitTextRows = (element: HTMLElement, kind: "heading" | "copy") => {
 		if (element.dataset.revealPrepared === "true") return;
@@ -199,5 +202,27 @@
 				)
 				.set(copyBars, { autoAlpha: 0 });
 		}
+	}
+
+	const darkFrameSections = gsap.utils.toArray<HTMLElement>("[data-dark-frame-section]");
+
+	if (darkFrameSections.length) {
+		const root = document.documentElement;
+		const defaultFrameLine = getComputedStyle(root).getPropertyValue("--foreground").trim() || "var(--foreground)";
+		const darkFrameLine = getComputedStyle(root).getPropertyValue("--surface-dark-foreground").trim() || "#fcfcfc";
+		const setDarkFrame = () => root.style.setProperty("--frame-line", darkFrameLine);
+		const resetFrame = () => root.style.setProperty("--frame-line", defaultFrameLine);
+
+		darkFrameSections.forEach((section) => {
+			ScrollTrigger.create({
+				trigger: section,
+				start: "top center",
+				end: "bottom top",
+				onEnter: setDarkFrame,
+				onEnterBack: setDarkFrame,
+				onLeave: resetFrame,
+				onLeaveBack: resetFrame,
+			});
+		});
 	}
 </script>

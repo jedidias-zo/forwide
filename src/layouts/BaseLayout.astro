@@ -5,6 +5,16 @@ import Footer from "../components/layout/Footer.astro";
 import PageReveals from "../components/animations/PageReveals.astro";
 import SmoothScroll from "../components/animations/SmoothScroll.astro";
 import CursorDot from "../components/animations/CursorDot.astro";
+
+type Props = {
+	title?: string;
+	headerHomeVariant?: "label" | "logo";
+};
+
+const {
+	title = "Forwide",
+	headerHomeVariant = "label",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -15,11 +25,11 @@ import CursorDot from "../components/animations/CursorDot.astro";
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Forwide</title>
+		<title>{title}</title>
 	</head>
 
 	<body>
-		<Header />
+		<Header homeVariant={headerHomeVariant} />
 		<main>
 			<slot />
 		</main>

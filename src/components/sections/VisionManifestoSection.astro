@@ -1,0 +1,46 @@
+---
+type Props = {
+	title?: string;
+	paragraphs?: string[];
+};
+
+const {
+	title = "Manifiesto Forwide",
+	paragraphs = [
+		"No nos interesa una colección de logos.\nNos interesa una compañía donde cada producto hace mejor al siguiente.",
+		"Construimos desde oportunidades concretas.\nProbamos con personas reales, operación y datos.\nLo que funciona se convierte en base.\nLo que no funciona se convierte en criterio.\nLiveCook es el primer producto visible. Forwide es la estructura para lo que viene.",
+		"La visión es construir una compañía capaz de lanzar, operar y escalar productos digitales con coherencia.\nForwide existe para convertir ideas en sistemas.\nY sistemas en productos capaces de crecer.",
+	],
+} = Astro.props;
+---
+
+<section
+	id="manifiesto"
+	class="relative -mt-px bg-surface-light px-[var(--frame-inset)] text-foreground"
+	aria-labelledby="vision-manifesto-title"
+>
+	<div
+		class="pointer-events-none absolute inset-x-0 top-0 h-[clamp(8rem,18vh,14rem)] bg-[linear-gradient(to_bottom,var(--surface-menu),var(--surface-light))]"
+		aria-hidden="true"
+	></div>
+
+	<div class="relative border-x border-t border-foreground">
+		<div class="mx-auto flex min-h-[100svh] w-full max-w-[36rem] flex-col justify-center px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(7rem,12vw,11rem)]">
+			<h2
+				id="vision-manifesto-title"
+				class="text-[clamp(2.25rem,3.4vw,3rem)] font-normal uppercase leading-none tracking-[-0.065em]"
+				data-reveal-heading
+			>
+				{title}
+			</h2>
+
+			<div class="mt-[clamp(2rem,3.2vw,3rem)] space-y-[clamp(1.35rem,2vw,1.75rem)] text-[clamp(1.125rem,1.45vw,1.5rem)] font-normal leading-[1.12] tracking-[-0.045em] text-muted-foreground">
+				{
+					paragraphs.map((paragraph) => (
+						<p data-reveal-copy set:html={paragraph.replaceAll("\n", "<br />")} />
+					))
+				}
+			</div>
+		</div>
+	</div>
+</section>

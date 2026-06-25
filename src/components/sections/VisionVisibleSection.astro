@@ -1,0 +1,272 @@
+---
+import grid001 from "../../assets/livecook-product-page/grid-001.png";
+import grid02 from "../../assets/livecook-product-page/grid-02.png";
+import grid03 from "../../assets/livecook-product-page/grid-03.png";
+import livecookIcon from "../../assets/livecook-product-page/livecook-icon.png";
+
+type Props = {
+	title?: string;
+	body?: string;
+};
+
+const {
+	title = "Lo visible es el producto. Lo que sostiene el crecimiento es la base.",
+	body = "Cada producto de Forwide puede tener identidad, propósito y dinámica propios. Debajo, todos comparten una estructura de tecnología, operación, marca, aprendizaje y pensamiento de sistema.",
+} = Astro.props;
+
+const systemLabels = ["[ Sistema ]", "[ Tecnología ]", "[ Producto ]"];
+const communityLabels = ["[ Marca ]", "[ Comunidad ]", "[ Operación ]"];
+---
+
+<section
+	id="lo-visible"
+	class="relative -mt-px bg-surface-light px-[var(--frame-inset)] text-foreground"
+	aria-labelledby="vision-visible-title"
+	data-visible-section
+>
+	<div class="border-x border-t border-foreground">
+		<div class="flex min-h-[clamp(30rem,48vw,45rem)] flex-col items-center justify-center border-b border-foreground px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(4rem,7vw,6rem)] text-center" data-visible-reveal-group>
+			<h2
+				id="vision-visible-title"
+				class="mx-auto max-w-[77rem] text-[clamp(3rem,5.8vw,6rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
+				aria-label={title}
+				data-visible-reveal-text
+			>
+				{title}
+			</h2>
+
+			<p class="mt-[clamp(1.5rem,3vw,2.5rem)] max-w-[40rem] text-description font-normal text-foreground" data-visible-reveal-text>
+				{body}
+			</p>
+
+			<div class="mt-[clamp(2.5rem,5vw,4rem)] flex w-full max-w-[54rem] items-center justify-center gap-[clamp(0.75rem,2vw,1.5rem)]" aria-hidden="true" data-visible-reveal-fade>
+				{Array.from({ length: 3 }).map(() => (
+					<div class="h-[clamp(4.25rem,7vw,6rem)] w-[clamp(4.25rem,7vw,6rem)] rounded-xl bg-surface-soft/70"></div>
+				))}
+				<div class="grid h-[clamp(5.75rem,9vw,7.25rem)] w-[clamp(5.75rem,9vw,7.25rem)] place-items-center rounded-[1.35rem] bg-[#e8d0a5] shadow-[0_1.5rem_3rem_rgba(0,0,0,0.14)]">
+					<img src={livecookIcon.src} alt="" class="h-[78%] w-[78%] object-contain" loading="lazy" />
+				</div>
+				{Array.from({ length: 3 }).map(() => (
+					<div class="h-[clamp(4.25rem,7vw,6rem)] w-[clamp(4.25rem,7vw,6rem)] rounded-xl bg-surface-soft/70"></div>
+				))}
+			</div>
+		</div>
+
+		<div class="grid lg:grid-cols-3">
+			<figure class="relative min-h-[24rem] overflow-hidden border-b border-foreground lg:aspect-square lg:border-b-0" data-visible-reveal-group>
+				<img
+					src={grid001.src}
+					width={grid001.width}
+					height={grid001.height}
+					alt=""
+					class="absolute inset-0 h-full w-full object-cover grayscale"
+					loading="lazy"
+					decoding="async"
+					data-visible-reveal-fade
+				/>
+			</figure>
+
+			<div class="grid min-h-[24rem] place-items-center border-b border-foreground px-[clamp(1rem,2vw,2rem)] text-center lg:aspect-square lg:border-l" data-visible-reveal-group>
+				<div class="space-y-[clamp(1rem,2vw,1.75rem)] uppercase">
+					{systemLabels.map((label, index) => (
+						<p
+							class:list={[
+								"font-normal leading-none tracking-[-0.06em]",
+								index === 1
+									? "text-[clamp(2rem,3.6vw,3.75rem)] text-foreground"
+									: "text-[clamp(1.55rem,2.6vw,2.6rem)] text-muted-foreground",
+							]}
+							data-visible-reveal-text
+						>
+							{label}
+						</p>
+					))}
+				</div>
+			</div>
+
+			<figure class="relative min-h-[24rem] overflow-hidden border-b border-foreground lg:aspect-square lg:border-b-0 lg:border-l" data-visible-reveal-group>
+				<img
+					src={grid02.src}
+					width={grid02.width}
+					height={grid02.height}
+					alt=""
+					class="absolute inset-0 h-full w-full object-cover grayscale"
+					loading="lazy"
+					decoding="async"
+					data-visible-reveal-fade
+				/>
+			</figure>
+
+			<div class="grid min-h-[24rem] place-items-center border-b border-foreground px-[clamp(1rem,2vw,2rem)] text-center lg:aspect-square lg:border-b-0" data-visible-reveal-group>
+				<div class="space-y-[clamp(1rem,2vw,1.75rem)] uppercase">
+					{communityLabels.map((label, index) => (
+						<p
+							class:list={[
+								"font-normal leading-none tracking-[-0.06em]",
+								index === 1
+									? "text-[clamp(2rem,3.6vw,3.75rem)] text-foreground"
+									: "text-[clamp(1.55rem,2.6vw,2.6rem)] text-muted-foreground",
+							]}
+							data-visible-reveal-text
+						>
+							{label}
+						</p>
+					))}
+				</div>
+			</div>
+
+			<figure class="relative min-h-[24rem] overflow-hidden border-b border-foreground lg:aspect-square lg:border-b-0 lg:border-l" data-visible-reveal-group>
+				<img
+					src={grid03.src}
+					width={grid03.width}
+					height={grid03.height}
+					alt=""
+					class="absolute inset-0 h-full w-full object-cover"
+					loading="lazy"
+					decoding="async"
+					data-visible-reveal-fade
+				/>
+			</figure>
+
+			<div class="grid min-h-[24rem] place-items-center border-l border-t border-foreground px-[clamp(1rem,2vw,2rem)] text-center lg:aspect-square" data-visible-reveal-group>
+				<p class="text-[clamp(2rem,3.2vw,3.25rem)] font-normal uppercase leading-none tracking-[-0.06em]" data-visible-reveal-text>
+					Aprendizaje
+				</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const splitVisibleRows = (element: HTMLElement) => {
+		if (element.dataset.visiblePrepared === "true") return;
+
+		const text = element.textContent?.replace(/\s+/g, " ").trim();
+		if (!text) return;
+
+		const tokens = text.split(" ");
+		element.textContent = "";
+
+		const measureFragment = document.createDocumentFragment();
+		tokens.forEach((token, index) => {
+			const word = document.createElement("span");
+			word.dataset.visibleWord = "";
+			word.textContent = token;
+			word.style.display = "inline-block";
+			measureFragment.appendChild(word);
+
+			if (index < tokens.length - 1) {
+				measureFragment.appendChild(document.createTextNode(" "));
+			}
+		});
+		element.appendChild(measureFragment);
+
+		const words = Array.from(element.querySelectorAll<HTMLElement>("[data-visible-word]"));
+		const rows: HTMLElement[][] = [];
+
+		words.forEach((word) => {
+			const rowTop = Math.round(word.offsetTop);
+			const currentRow = rows.at(-1);
+			const currentTop = currentRow?.[0] ? Math.round(currentRow[0].offsetTop) : null;
+
+			if (!currentRow || currentTop === null || Math.abs(rowTop - currentTop) > 2) {
+				rows.push([word]);
+			} else {
+				currentRow.push(word);
+			}
+		});
+
+		element.textContent = "";
+
+		rows.forEach((row) => {
+			const line = document.createElement("span");
+			line.className = "relative block overflow-hidden";
+
+			const lineText = document.createElement("span");
+			lineText.className = "inline-block";
+			lineText.dataset.visibleLineText = "";
+			lineText.textContent = row.map((word) => word.textContent).join(" ");
+
+			const lineBar = document.createElement("span");
+			lineBar.className = "pointer-events-none absolute inset-0 z-10 block bg-reveal-bar";
+			lineBar.dataset.visibleLineBar = "";
+			lineBar.setAttribute("aria-hidden", "true");
+
+			line.append(lineText, lineBar);
+			element.appendChild(line);
+		});
+
+		element.dataset.visiblePrepared = "true";
+	};
+
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	document.querySelectorAll<HTMLElement>("[data-visible-reveal-text]").forEach(splitVisibleRows);
+
+	document.querySelectorAll<HTMLElement>("[data-visible-section]").forEach((section) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-visible-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-visible-line-bar]"));
+		const fadeItems = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-visible-reveal-fade]"));
+
+		if (reduceMotion) {
+			gsap.set([...lineText, ...fadeItems], { clearProps: "all" });
+			gsap.set(lineBars, { autoAlpha: 0 });
+			return;
+		}
+
+		gsap.set(lineText, { autoAlpha: 1, yPercent: 104 });
+		gsap.set(lineBars, {
+			autoAlpha: 1,
+			xPercent: 0,
+			scaleX: 1,
+			transformOrigin: "left center",
+		});
+		gsap.set(fadeItems, { autoAlpha: 0, y: 18 });
+
+		section.querySelectorAll<HTMLElement>("[data-visible-reveal-group]").forEach((group) => {
+			ScrollTrigger.create({
+				trigger: group,
+				start: "top 86%",
+				once: true,
+				onEnter: () => {
+					const groupLineText = gsap.utils.toArray<HTMLElement>(group.querySelectorAll("[data-visible-line-text]"));
+					const groupLineBars = gsap.utils.toArray<HTMLElement>(group.querySelectorAll("[data-visible-line-bar]"));
+					const groupFadeItems = gsap.utils.toArray<HTMLElement>(group.querySelectorAll("[data-visible-reveal-fade]"));
+					const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+					timeline
+						.to(groupLineText, {
+							yPercent: 0,
+							duration: 0.72,
+							stagger: 0.02,
+						})
+						.to(
+							groupLineBars,
+							{
+								xPercent: 104,
+								duration: 0.78,
+								stagger: 0.02,
+							},
+							"<",
+						)
+						.set(groupLineBars, { autoAlpha: 0 })
+						.to(
+							groupFadeItems,
+							{
+								autoAlpha: 1,
+								y: 0,
+								duration: 0.62,
+								stagger: 0.07,
+							},
+							"-=0.54",
+						);
+				},
+			});
+		});
+	});
+</script>

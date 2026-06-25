@@ -1,0 +1,292 @@
+---
+import assetTechnology from "../../assets/livecook-product-page/section_layers/asset-05.png";
+
+const proofCards = [
+	{
+		index: "01",
+		title: "Un producto real",
+		copy: "No una maqueta. Una plataforma en uso, con hábitos, datos y decisiones visibles.",
+	},
+	{
+		index: "02",
+		title: "Se prueba en la práctica",
+		copy: "Cada sesión muestra qué parte del modelo funciona y qué debe ajustarse.",
+	},
+	{
+		index: "03",
+		title: "Lo que queda después",
+		copy: "Los aciertos y límites de LiveCook se convierten en criterio para futuros productos.",
+	},
+];
+---
+
+<section
+	id="livecook-prueba"
+	class="relative bg-surface-dark px-[var(--frame-inset)] text-surface-dark-foreground"
+	aria-labelledby="livecook-proof-title"
+	data-livecook-proof-section
+	data-dark-frame-section
+>
+	<div class="border-x border-surface-dark-foreground">
+		<div class="relative min-h-[clamp(40rem,78vw,50rem)] overflow-hidden px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(4rem,8vw,6rem)]">
+			<div class="relative z-10 max-w-[68rem]">
+				<h2
+					id="livecook-proof-title"
+					class="max-w-[73rem] text-[clamp(2.65rem,6vw,5.7rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
+					data-livecook-proof-reveal-text
+				>
+					<span class="text-surface-dark-muted">LiveCook</span> es el primer caso activo donde Forwide prueba cómo construye.
+				</h2>
+
+				<div class="mt-[clamp(2rem,4vw,3.75rem)] max-w-[41rem] space-y-[clamp(1.25rem,2vw,1.75rem)] text-description font-normal text-surface-dark-muted">
+					<p data-livecook-proof-reveal-text>
+						Cada clase deja señales: qué entiende la persona que cocina, dónde se atasca, qué reserva, qué repite y qué pide después.
+					</p>
+					<p data-livecook-proof-reveal-text>
+						Para Forwide, LiveCook es una prueba en condiciones reales. No valida una idea en una presentación: la valida con sesiones, chefs, pagos, personas cocinando y operación.
+					</p>
+				</div>
+			</div>
+
+			<figure
+				class="pointer-events-none absolute bottom-[clamp(1.5rem,4vw,3rem)] right-[clamp(1rem,7vw,7rem)] z-0 w-[min(30vw,24rem)] min-w-[12rem]"
+				data-livecook-proof-target
+			>
+				<img
+					src={assetTechnology.src}
+					width={assetTechnology.width}
+					height={assetTechnology.height}
+					alt="Teléfono iluminado sostenido en una mano."
+					class="w-full"
+					loading="lazy"
+					decoding="async"
+				/>
+			</figure>
+		</div>
+
+		<div class="grid border-t border-surface-dark-foreground lg:grid-cols-3" data-livecook-proof-grid>
+			{
+				proofCards.map((card, index) => (
+					<article
+						class:list={[
+							"min-h-[12rem] border-surface-dark-foreground px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(1.5rem,2.5vw,2rem)]",
+							index > 0 && "border-t lg:border-l lg:border-t-0",
+						]}
+						data-livecook-proof-card
+					>
+						<p class="text-[clamp(0.9rem,1.1vw,1rem)] font-normal uppercase leading-none text-surface-dark-muted" data-livecook-proof-reveal-text>
+							[ {card.index} ]
+						</p>
+						<h3 class="mt-[clamp(1rem,2vw,1.5rem)] max-w-[23rem] text-[clamp(1.65rem,2.8vw,2.65rem)] font-normal uppercase leading-none tracking-[-0.055em]" data-livecook-proof-reveal-text>
+							{card.title}
+						</h3>
+						<p class="mt-[clamp(0.75rem,1.4vw,1rem)] max-w-[26rem] text-description font-normal text-surface-dark-muted" data-livecook-proof-reveal-text>
+							{card.copy}
+						</p>
+					</article>
+				))
+			}
+		</div>
+
+		<div class="border-t border-surface-dark-foreground px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(2rem,4vw,3.25rem)] text-right">
+			<p class="ml-auto max-w-[58rem] text-[clamp(1.65rem,3vw,3rem)] font-normal uppercase leading-none tracking-[-0.055em]" data-livecook-proof-reveal-text>
+				Lo que aprendemos aquí no se queda <span class="text-surface-dark-muted">aquí.</span>
+			</p>
+		</div>
+	</div>
+</section>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const splitProofRows = (element: HTMLElement) => {
+		if (element.dataset.livecookProofPrepared === "true") return;
+
+		const text = element.textContent?.replace(/\s+/g, " ").trim();
+		if (!text) return;
+
+		const tokens = text.split(" ");
+		element.textContent = "";
+
+		const fragment = document.createDocumentFragment();
+		tokens.forEach((token, index) => {
+			const word = document.createElement("span");
+			word.dataset.livecookProofWord = "";
+			word.textContent = token;
+			word.style.display = "inline-block";
+			fragment.appendChild(word);
+
+			if (index < tokens.length - 1) {
+				fragment.appendChild(document.createTextNode(" "));
+			}
+		});
+		element.appendChild(fragment);
+
+		const words = Array.from(element.querySelectorAll<HTMLElement>("[data-livecook-proof-word]"));
+		const rows: HTMLElement[][] = [];
+
+		words.forEach((word) => {
+			const rowTop = Math.round(word.offsetTop);
+			const currentRow = rows.at(-1);
+			const currentTop = currentRow?.[0] ? Math.round(currentRow[0].offsetTop) : null;
+
+			if (!currentRow || currentTop === null || Math.abs(rowTop - currentTop) > 2) {
+				rows.push([word]);
+			} else {
+				currentRow.push(word);
+			}
+		});
+
+		element.textContent = "";
+
+		rows.forEach((row, index) => {
+			const line = document.createElement("span");
+			line.className = "relative block overflow-hidden";
+
+			const lineText = document.createElement("span");
+			lineText.className = "inline-block";
+			lineText.dataset.livecookProofLineText = "";
+			lineText.textContent = row.map((word) => word.textContent).join(" ");
+
+			const lineBar = document.createElement("span");
+			lineBar.className = "pointer-events-none absolute inset-0 z-10 block bg-surface-dark-foreground";
+			lineBar.dataset.livecookProofLineBar = "";
+			lineBar.setAttribute("aria-hidden", "true");
+
+			line.append(lineText, lineBar);
+			element.appendChild(line);
+
+			if (index < rows.length - 1) {
+				element.appendChild(document.createTextNode(" "));
+			}
+		});
+
+		element.dataset.livecookProofPrepared = "true";
+	};
+
+	const prepareProof = (section: HTMLElement) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-proof-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-proof-line-bar]"));
+		const cards = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-proof-card]"));
+
+		gsap.set(lineText, { autoAlpha: 1, yPercent: 104 });
+		gsap.set(lineBars, { autoAlpha: 1, xPercent: 0, scaleX: 1, transformOrigin: "left center" });
+		gsap.set(cards, { autoAlpha: 0, y: 24 });
+	};
+
+	const revealProof = (section: HTMLElement) => {
+		const lineText = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-proof-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-proof-line-bar]"));
+		const cards = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-livecook-proof-card]"));
+		const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+		timeline
+			.to(lineText, { yPercent: 0, duration: 0.74, stagger: 0.035 })
+			.to(lineBars, { xPercent: 104, duration: 0.8, stagger: 0.035 }, "<")
+			.set(lineBars, { autoAlpha: 0 });
+
+		timeline.to(cards, { autoAlpha: 1, y: 0, duration: 0.75, stagger: 0.08 }, "-=0.4");
+	};
+
+	const animateTechnologyTransfer = (section: HTMLElement) => {
+		const source = document.querySelector<HTMLElement>("[data-livecook-tech-source] img");
+		const target = section.querySelector<HTMLElement>("[data-livecook-proof-target] img");
+
+		if (!source || !target) return;
+
+		let hasPlayed = false;
+
+		const createClone = () => {
+			const sourceRect = source.getBoundingClientRect();
+			const targetRect = target.getBoundingClientRect();
+
+			if (sourceRect.width < 2 || targetRect.width < 2) return null;
+
+			const clone = source.cloneNode(true) as HTMLImageElement;
+			clone.removeAttribute("loading");
+			clone.setAttribute("aria-hidden", "true");
+			clone.style.position = "fixed";
+			clone.style.left = `${sourceRect.left}px`;
+			clone.style.top = `${sourceRect.top}px`;
+			clone.style.width = `${sourceRect.width}px`;
+			clone.style.height = `${sourceRect.height}px`;
+			clone.style.objectFit = "contain";
+			clone.style.pointerEvents = "none";
+			clone.style.zIndex = "80";
+			clone.style.willChange = "transform, opacity, left, top, width, height";
+			document.body.appendChild(clone);
+
+			return { clone, sourceRect, targetRect };
+		};
+
+		gsap.set(target, { autoAlpha: 0 });
+
+		ScrollTrigger.create({
+			trigger: section,
+			start: "top 88%",
+			once: true,
+			onEnter: () => {
+				if (hasPlayed) return;
+				hasPlayed = true;
+
+				const transition = createClone();
+
+				if (!transition) {
+					gsap.set(target, { autoAlpha: 1 });
+					return;
+				}
+
+				const { clone, targetRect } = transition;
+
+				gsap.set(source, { autoAlpha: 0.12 });
+
+				gsap.timeline({
+					defaults: {
+						ease: "power3.inOut",
+					},
+					onComplete: () => {
+						gsap.set(target, { autoAlpha: 1 });
+						gsap.to(source, { autoAlpha: 1, duration: 0.45, ease: "power2.out" });
+						clone.remove();
+					},
+				})
+					.to(clone, {
+						left: targetRect.left,
+						top: targetRect.top,
+						width: targetRect.width,
+						height: targetRect.height,
+						duration: 1.35,
+					})
+					.to(clone, { autoAlpha: 0.92, duration: 0.3, ease: "power2.out" }, 0)
+					.to(target, { autoAlpha: 1, duration: 0.35, ease: "power2.out" }, "-=0.28")
+					.to(clone, { autoAlpha: 0, duration: 0.32, ease: "power2.out" }, "-=0.25");
+			},
+		});
+	};
+
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	document.querySelectorAll<HTMLElement>("[data-livecook-proof-reveal-text]").forEach(splitProofRows);
+
+	document.querySelectorAll<HTMLElement>("[data-livecook-proof-section]").forEach((section) => {
+		prepareProof(section);
+
+		if (reduceMotion) {
+			gsap.set(section.querySelectorAll("[data-livecook-proof-line-text], [data-livecook-proof-card], [data-livecook-proof-target] img"), { clearProps: "all" });
+			gsap.set(section.querySelectorAll("[data-livecook-proof-line-bar]"), { autoAlpha: 0 });
+			return;
+		}
+
+		ScrollTrigger.create({
+			trigger: section,
+			start: "top 66%",
+			once: true,
+			onEnter: () => revealProof(section),
+		});
+
+		animateTechnologyTransfer(section);
+	});
+</script>

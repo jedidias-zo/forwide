@@ -1,0 +1,32 @@
+---
+type Props = {
+	href?: string;
+	label: string;
+	variant?: "dark" | "light";
+	class?: string;
+};
+
+const {
+	href = "#",
+	label,
+	variant = "dark",
+	class: className = "",
+} = Astro.props;
+
+const variantClasses = {
+	dark: "cta-button-dark",
+	light: "cta-button-light",
+};
+---
+
+<a
+	href={href}
+	class:list={[
+		"cta-button",
+		variantClasses[variant],
+		className,
+	]}
+>
+	<span>{label}</span>
+	<slot />
+</a>
