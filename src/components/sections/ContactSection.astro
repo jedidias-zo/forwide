@@ -1,0 +1,126 @@
+---
+import CtaButton from "../ui/CtaButton.astro";
+
+const contactGroups = [
+	{
+		title: "Global",
+		items: [
+			{ label: "General", value: "hola@forwide.com", href: "mailto:hola@forwide.com" },
+			{ label: "Legal", value: "legal@forwide.com", href: "mailto:legal@forwide.com" },
+		],
+	},
+	{
+		title: "Media",
+		items: [
+			{ label: "Prensa", value: "press@forwide.com", href: "mailto:press@forwide.com" },
+			{ label: "", value: "Consultas directas solamente" },
+		],
+	},
+];
+
+const socialLinks = [
+	{ label: "LinkedIn", href: "#" },
+	{ label: "Twitter", href: "#" },
+	{ label: "Instagram", href: "#" },
+];
+
+const fieldClass =
+	"w-full border-0 border-b border-foreground bg-transparent px-0 pb-3 text-[clamp(1.15rem,1.55vw,1.5rem)] font-normal leading-none tracking-[-0.04em] text-foreground placeholder:text-muted-foreground/45 focus:border-foreground focus:outline-none";
+const labelClass =
+	"block text-[clamp(0.75rem,0.9vw,0.9rem)] font-normal uppercase leading-none tracking-[-0.035em] text-foreground";
+---
+
+<section
+	id="contactanos"
+	class="relative bg-surface-light px-[var(--frame-inset)] pt-header text-foreground"
+	aria-labelledby="contact-title"
+>
+	<div class="border-x border-foreground px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(4rem,8vw,8rem)]">
+		<div class="grid min-h-[calc(100svh-var(--header-height)-6rem)] gap-[clamp(3rem,7vw,7rem)] xl:grid-cols-[1.45fr_1fr] xl:items-end">
+			<div>
+				<h1
+					id="contact-title"
+					class="max-w-[56rem] text-[clamp(4.5rem,12vw,12rem)] font-normal leading-[0.86] tracking-[-0.08em]"
+					data-reveal-heading
+				>
+					Contacto & consultas
+				</h1>
+
+				<form
+					action="mailto:hola@forwide.com"
+					method="post"
+					enctype="text/plain"
+					class="mt-[clamp(4rem,8vw,7rem)] grid gap-[clamp(2rem,4vw,3.75rem)]"
+					data-reveal-fade
+				>
+					<div class="grid gap-[clamp(2rem,4vw,3.75rem)] md:grid-cols-2">
+						<label class="grid gap-8">
+							<span class={labelClass}>Nombre completo</span>
+							<input class={fieldClass} type="text" name="nombre" placeholder="John Doe" autocomplete="name" />
+						</label>
+
+						<label class="grid gap-8">
+							<span class={labelClass}>Email</span>
+							<input class={fieldClass} type="email" name="email" placeholder="john@example.com" autocomplete="email" />
+						</label>
+					</div>
+
+					<label class="grid gap-8">
+						<span class={labelClass}>Asunto</span>
+						<input class={fieldClass} type="text" name="asunto" placeholder="Consulta general" />
+					</label>
+
+					<label class="grid gap-[clamp(5rem,10vw,8rem)]">
+						<span class={labelClass}>Mensaje</span>
+						<textarea class={`${fieldClass} min-h-[8rem] resize-y`} name="mensaje" placeholder="¿Cómo podemos ayudarte?"></textarea>
+					</label>
+
+					<div class="flex justify-start md:justify-end">
+						<button type="submit" class="cta-button cta-button-dark min-w-[clamp(13rem,16vw,17rem)]">
+							<span>Enviar mensaje</span>
+						</button>
+					</div>
+				</form>
+			</div>
+
+			<aside class="grid gap-[clamp(2rem,4vw,3.5rem)] pb-[clamp(0rem,2vw,2rem)]" aria-label="Información de contacto" data-reveal-fade>
+				{
+					contactGroups.map((group) => (
+						<section class="grid gap-5 border-b border-foreground/20 pb-[clamp(1.75rem,3vw,2.5rem)] md:grid-cols-[0.72fr_1fr]">
+							<h2 class="text-[clamp(1.75rem,2.25vw,2.5rem)] font-normal leading-none tracking-[-0.055em]">
+								{group.title}
+							</h2>
+
+							<div class="grid gap-4 text-[clamp(1rem,1.35vw,1.35rem)] font-normal leading-[1.15] tracking-[-0.045em]">
+								{group.items.map((item) => (
+									item.href ? (
+										<a href={item.href} class="transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
+											{item.label ? `${item.label}: ` : ""}
+											{item.value}
+										</a>
+									) : (
+										<p>{item.value}</p>
+									)
+								))}
+							</div>
+						</section>
+					))
+				}
+
+				<nav aria-label="Redes sociales">
+					<ul class="flex flex-wrap gap-x-8 gap-y-3 text-[clamp(1rem,1.1vw,1.125rem)] font-normal leading-none tracking-[-0.04em]">
+						{
+							socialLinks.map((link) => (
+								<li>
+									<a href={link.href} class="underline underline-offset-4 transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
+										{link.label}
+									</a>
+								</li>
+							))
+						}
+					</ul>
+				</nav>
+			</aside>
+		</div>
+	</div>
+</section>

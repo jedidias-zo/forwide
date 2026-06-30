@@ -9,11 +9,13 @@ import CursorDot from "../components/animations/CursorDot.astro";
 type Props = {
 	title?: string;
 	headerHomeVariant?: "label" | "logo";
+	headerTheme?: "light" | "dark";
 };
 
 const {
 	title = "Forwide",
 	headerHomeVariant = "label",
+	headerTheme = "light",
 } = Astro.props;
 ---
 
@@ -29,7 +31,7 @@ const {
 	</head>
 
 	<body>
-		<Header homeVariant={headerHomeVariant} />
+		<Header homeVariant={headerHomeVariant} theme={headerTheme} />
 		<main>
 			<slot />
 		</main>

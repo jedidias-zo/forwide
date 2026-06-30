@@ -1,6 +1,8 @@
 ---
-import heroImage from "../../assets/sections/logo-grid/asset-001.png";
-import structureImage from "../../assets/sections/logo-grid/asset-002.png";
+import heroImage from "../../assets/vision/zoom-out-animation/asset-00.png";
+import structureImage from "../../assets/vision/hero/asset-001.png";
+import systemImage from "../../assets/vision/hero/asset-002.png";
+import productImage from "../../assets/vision/hero/asset-003.png";
 
 type HeadlineSegment = {
 	text: string;
@@ -45,11 +47,11 @@ const morphFrames = [
 		className: "grayscale contrast-150 brightness-110",
 	},
 	{
-		src: structureImage.src,
+		src: systemImage.src,
 		className: "grayscale contrast-110 brightness-105",
 	},
 	{
-		src: heroImage.src,
+		src: productImage.src,
 		className: "grayscale contrast-125 blur-[1px]",
 	},
 	{
@@ -101,7 +103,7 @@ const morphFrames = [
 					width={structureImage.width}
 					height={structureImage.height}
 					alt=""
-					class="absolute inset-0 h-full w-full object-contain p-[clamp(2.5rem,6vw,5.5rem)] grayscale"
+					class="absolute inset-0 h-full w-full object-cover grayscale"
 					loading="lazy"
 					decoding="async"
 					data-vision-morph-target

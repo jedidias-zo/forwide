@@ -1,0 +1,94 @@
+---
+import fullWidthImage from "../../assets/responsabilidad-page/asset-04-full-w.png";
+import CtaButton from "../ui/CtaButton.astro";
+
+type Props = {
+	title?: string;
+	body?: string;
+	imageAlt?: string;
+};
+
+const {
+	title = "Mejor tecnología no es más tecnología.",
+	body = "Es tecnología con propósito, límites y responsabilidad. Forwide quiere construir productos que funcionen bien y se expliquen mejor.",
+	imageAlt = "Persona con visor translúcido y trazos de luz en movimiento.",
+} = Astro.props;
+---
+
+<section
+	id="responsabilidad-tecnologia"
+	class="relative -mt-px bg-surface-light text-foreground"
+	aria-labelledby="responsabilidad-tecnologia-title"
+	data-responsabilidad-cta-section
+>
+	<figure class="relative overflow-hidden" data-reveal-fade>
+		<img
+			src={fullWidthImage.src}
+			width={fullWidthImage.width}
+			height={fullWidthImage.height}
+			alt={imageAlt}
+			class="h-auto w-full"
+			loading="lazy"
+			decoding="async"
+		/>
+	</figure>
+
+	<div class="px-[var(--frame-inset)]">
+		<div class="relative min-h-[clamp(26rem,38vw,34rem)] overflow-hidden">
+			<span class="pointer-events-none absolute left-0 top-0 z-20 h-px w-full origin-left bg-foreground" data-responsabilidad-cta-line="horizontal" aria-hidden="true"></span>
+			<span class="pointer-events-none absolute bottom-0 left-0 z-20 h-px w-full origin-left bg-foreground" data-responsabilidad-cta-line="horizontal" aria-hidden="true"></span>
+
+			<div class="relative z-10 flex min-h-[inherit] flex-col items-start justify-start px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(3.5rem,6vw,6rem)]">
+				<h2
+					id="responsabilidad-tecnologia-title"
+					class="max-w-[62rem] text-[clamp(2.75rem,5vw,5rem)] font-normal uppercase leading-[0.96] tracking-[-0.065em]"
+					data-reveal-heading
+				>
+					{title}
+				</h2>
+
+				<p class="mt-[clamp(1.25rem,2vw,1.75rem)] max-w-[39rem] text-description font-normal text-muted-foreground" data-reveal-copy>
+					{body}
+				</p>
+
+				<div class="mt-[clamp(2rem,3vw,2.75rem)] flex flex-col gap-3 sm:flex-row">
+					<CtaButton href="/vision" label="Explora la visión de Forwide" variant="dark" />
+					<CtaButton href="/productos/livecook" label="Conoce LiveCook" variant="light" class="border border-foreground" />
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	document.querySelectorAll<HTMLElement>("[data-responsabilidad-cta-section]").forEach((section) => {
+		const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		const lines = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-responsabilidad-cta-line]"));
+		const horizontalLines = lines.filter((line) => line.dataset.responsabilidadCtaLine === "horizontal");
+		const verticalLines = lines.filter((line) => line.dataset.responsabilidadCtaLine === "vertical");
+
+		if (reduceMotion) {
+			gsap.set(lines, { clearProps: "all" });
+			return;
+		}
+
+		gsap.set(horizontalLines, { scaleX: 0, transformOrigin: "left center" });
+		gsap.set(verticalLines, { scaleY: 0, transformOrigin: "top center" });
+
+		gsap.timeline({
+			defaults: { ease: "power3.out" },
+			scrollTrigger: {
+				trigger: section,
+				start: "top 70%",
+				once: true,
+			},
+		})
+			.to(horizontalLines, { scaleX: 1, duration: 0.9, stagger: 0.08 })
+			.to(verticalLines, { scaleY: 1, duration: 0.95, stagger: 0.08 }, "-=0.72");
+	});
+</script>

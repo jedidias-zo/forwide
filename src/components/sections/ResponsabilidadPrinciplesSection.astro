@@ -1,0 +1,93 @@
+---
+import sectionImage from "../../assets/responsabilidad-page/asset-02.png";
+
+type Principle = {
+	index: string;
+	title: string;
+	body: string;
+};
+
+type Props = {
+	title?: string;
+	intro?: string;
+	principles?: Principle[];
+	imageAlt?: string;
+};
+
+const {
+	title = "Construir productos también es decidir cómo deben comportarse.",
+	intro = "Antes de incorporar una función, preguntamos qué mejora, qué dato requiere, qué riesgo introduce y cómo se lo explicamos al usuario.",
+	principles = [
+		{
+			index: "01",
+			title: "IA con criterio humano",
+			body: "La IA recomienda. No quita las decisiones importantes ni reemplaza el criterio cuando el usuario necesita control.",
+		},
+		{
+			index: "02",
+			title: "Datos con respeto",
+			body: "Los datos deben mejorar la experiencia, no invadirla. Recolectamos lo necesario, explicamos su uso y diseñamos con confianza como requisito.",
+		},
+		{
+			index: "03",
+			title: "Comunidades con reglas claras",
+			body: "Una comunidad valiosa necesita utilidad, moderación e incentivos sanos. Forwide construye herramientas para participar, aprender y conectar sin depender de manipulación o ruido.",
+		},
+	],
+	imageAlt = "Dos personas caminando en un campo abierto con un camino dividido.",
+} = Astro.props;
+---
+
+<section
+	id="criterios"
+	class="relative -mt-px bg-surface-soft px-[var(--frame-inset)] text-foreground"
+	aria-labelledby="responsabilidad-principles-title"
+>
+	<div class="border-x border-t border-foreground px-[clamp(1.25rem,1.6vw,1.5rem)] py-[clamp(4.5rem,8vw,7rem)]">
+		<div class="max-w-[80rem]">
+			<h2
+				id="responsabilidad-principles-title"
+				class="max-w-[72rem] text-[clamp(3rem,6vw,6rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
+				data-reveal-heading
+			>
+				{title}
+			</h2>
+
+			<p class="mt-[clamp(2rem,3vw,2.75rem)] max-w-[46rem] text-description font-normal text-muted-foreground" data-reveal-copy>
+				{intro}
+			</p>
+		</div>
+
+		<div class="mt-[clamp(5rem,11vw,10rem)] grid gap-[clamp(2.5rem,5vw,4.5rem)] lg:grid-cols-[0.94fr_1fr] lg:items-end">
+			<div class="flex flex-col">
+				{
+					principles.map((principle) => (
+						<article class="border-b border-foreground py-[clamp(1.25rem,2vw,1.75rem)] first:pt-0" data-reveal-fade>
+							<p class="text-[clamp(0.95rem,1.1vw,1.125rem)] font-normal leading-none tracking-[-0.035em] text-muted-foreground">
+								[ {principle.index} ]
+							</p>
+							<h3 class="mt-[clamp(0.8rem,1.2vw,1rem)] text-[clamp(2rem,3vw,3rem)] font-normal uppercase leading-[0.98] tracking-[-0.06em]" data-reveal-heading>
+								{principle.title}
+							</h3>
+							<p class="mt-[clamp(0.5rem,0.8vw,0.75rem)] max-w-[45rem] text-description font-normal text-muted-foreground" data-reveal-copy>
+								{principle.body}
+							</p>
+						</article>
+					))
+				}
+			</div>
+
+			<figure class="overflow-hidden" data-reveal-fade>
+				<img
+					src={sectionImage.src}
+					width={sectionImage.width}
+					height={sectionImage.height}
+					alt={imageAlt}
+					class="h-auto w-full object-cover"
+					loading="lazy"
+					decoding="async"
+				/>
+			</figure>
+		</div>
+	</div>
+</section>

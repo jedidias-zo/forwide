@@ -1,0 +1,191 @@
+---
+import sectionImage from "../../assets/responsabilidad-page/asset-03.png";
+
+type Props = {
+	title?: string;
+	body?: string;
+	imageAlt?: string;
+};
+
+const {
+	title = "Responsabilidad desde la primera prueba.",
+	body = "LiveCook aplica esta postura al mundo culinario: descubrir ingredientes, practicar recetas, seguir a chefs y participar en clases en vivo sin perder de vista lo importante: cocinar, aprender y compartir.",
+	imageAlt = "Tetera, taza e ingredientes secos sobre una mesa.",
+} = Astro.props;
+---
+
+<section
+	id="responsabilidad-livecook"
+	class="relative -mt-px bg-surface-menu px-[var(--frame-inset)] text-foreground"
+	aria-labelledby="responsabilidad-livecook-title"
+	data-responsabilidad-livecook-section
+>
+	<div class="relative min-h-[clamp(52rem,96vw,75rem)] overflow-hidden">
+		<span class="pointer-events-none absolute left-0 top-0 z-20 h-full w-px bg-foreground" data-responsabilidad-livecook-line="vertical" aria-hidden="true"></span>
+		<span class="pointer-events-none absolute right-0 top-0 z-20 h-full w-px bg-foreground" data-responsabilidad-livecook-line="vertical" aria-hidden="true"></span>
+		<span class="pointer-events-none absolute left-0 top-0 z-20 h-px w-full bg-foreground" data-responsabilidad-livecook-line="horizontal" aria-hidden="true"></span>
+		<span class="pointer-events-none absolute bottom-0 left-0 z-20 h-px w-full bg-foreground" data-responsabilidad-livecook-line="horizontal" aria-hidden="true"></span>
+
+		<div class="relative h-[clamp(5.5rem,9vw,7.5rem)]">
+			<span class="pointer-events-none absolute bottom-0 left-0 z-20 h-px w-full bg-foreground" data-responsabilidad-livecook-line="horizontal" aria-hidden="true"></span>
+			<span class="pointer-events-none absolute left-[27%] top-0 z-20 h-full w-px bg-foreground" data-responsabilidad-livecook-line="vertical" aria-hidden="true"></span>
+			<span class="pointer-events-none absolute left-[72%] top-0 z-20 h-full w-px bg-foreground" data-responsabilidad-livecook-line="vertical" aria-hidden="true"></span>
+			<span class="pointer-events-none absolute left-[88%] top-0 z-20 h-full w-px bg-foreground" data-responsabilidad-livecook-line="vertical" aria-hidden="true"></span>
+		</div>
+
+		<div class="relative grid min-h-[clamp(42rem,76vw,62rem)] grid-cols-1 lg:grid-cols-[27%_45%_16%_12%]">
+			<span class="pointer-events-none absolute bottom-0 left-0 z-20 h-px w-full bg-foreground" data-responsabilidad-livecook-line="horizontal" aria-hidden="true"></span>
+			<span class="pointer-events-none absolute left-[27%] top-0 z-20 hidden h-full w-px bg-foreground lg:block" data-responsabilidad-livecook-line="vertical" aria-hidden="true"></span>
+			<span class="pointer-events-none absolute left-[72%] top-0 z-20 hidden h-full w-px bg-foreground lg:block" data-responsabilidad-livecook-line="vertical" aria-hidden="true"></span>
+			<span class="pointer-events-none absolute left-[88%] top-0 z-20 hidden h-full w-px bg-foreground lg:block" data-responsabilidad-livecook-line="vertical" aria-hidden="true"></span>
+
+			<div class="hidden lg:block" aria-hidden="true"></div>
+
+			<article class="relative z-10 bg-surface-dark px-[clamp(1.25rem,1.6vw,1.5rem)] py-[clamp(2.5rem,4vw,4rem)] text-surface-dark-foreground [--reveal-bar:var(--surface-dark-foreground)]">
+				<h2
+					id="responsabilidad-livecook-title"
+					class="max-w-[39rem] text-[clamp(2.75rem,4.4vw,4.95rem)] font-normal uppercase leading-[0.98] tracking-[-0.06em]"
+					data-responsabilidad-livecook-reveal-text
+				>
+					{title}
+				</h2>
+
+				<p class="mt-[clamp(0.9rem,1.4vw,1.25rem)] max-w-[42rem] text-description font-normal text-surface-dark-foreground" data-responsabilidad-livecook-reveal-text>
+					{body}
+				</p>
+
+				<figure class="relative mt-[clamp(0.9rem,1.3vw,1.1rem)] overflow-hidden" data-responsabilidad-livecook-image>
+					<img
+						src={sectionImage.src}
+						width={sectionImage.width}
+						height={sectionImage.height}
+						alt={imageAlt}
+						class="h-auto w-full object-cover"
+						loading="lazy"
+						decoding="async"
+					/>
+				</figure>
+			</article>
+
+			<div class="hidden lg:block" aria-hidden="true"></div>
+			<div class="hidden lg:block" aria-hidden="true"></div>
+		</div>
+
+		<div class="relative h-[clamp(5.5rem,9vw,7.5rem)]">
+			<span class="pointer-events-none absolute left-[27%] top-0 z-20 h-full w-px bg-foreground" data-responsabilidad-livecook-line="vertical" aria-hidden="true"></span>
+			<span class="pointer-events-none absolute left-[72%] top-0 z-20 h-full w-px bg-foreground" data-responsabilidad-livecook-line="vertical" aria-hidden="true"></span>
+			<span class="pointer-events-none absolute left-[88%] top-0 z-20 h-full w-px bg-foreground" data-responsabilidad-livecook-line="vertical" aria-hidden="true"></span>
+		</div>
+	</div>
+</section>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const splitRows = (element: HTMLElement) => {
+		if (element.dataset.responsabilidadLivecookPrepared === "true") return;
+
+		const text = element.textContent?.replace(/\s+/g, " ").trim();
+		if (!text) return;
+
+		const tokens = text.split(" ");
+		element.textContent = "";
+
+		const fragment = document.createDocumentFragment();
+		tokens.forEach((token, index) => {
+			const word = document.createElement("span");
+			word.dataset.responsabilidadLivecookWord = "";
+			word.textContent = token;
+			word.style.display = "inline-block";
+			fragment.appendChild(word);
+
+			if (index < tokens.length - 1) {
+				fragment.appendChild(document.createTextNode(" "));
+			}
+		});
+		element.appendChild(fragment);
+
+		const words = Array.from(element.querySelectorAll<HTMLElement>("[data-responsabilidad-livecook-word]"));
+		const rows: HTMLElement[][] = [];
+
+		words.forEach((word) => {
+			const rowTop = Math.round(word.offsetTop);
+			const currentRow = rows.at(-1);
+			const currentTop = currentRow?.[0] ? Math.round(currentRow[0].offsetTop) : null;
+
+			if (!currentRow || currentTop === null || Math.abs(rowTop - currentTop) > 2) {
+				rows.push([word]);
+			} else {
+				currentRow.push(word);
+			}
+		});
+
+		element.textContent = "";
+
+		rows.forEach((row) => {
+			const line = document.createElement("span");
+			line.className = "relative block overflow-hidden";
+
+			const lineText = document.createElement("span");
+			lineText.className = "inline-block";
+			lineText.dataset.responsabilidadLivecookLineText = "";
+			lineText.textContent = row.map((word) => word.textContent).join(" ");
+
+			const lineBar = document.createElement("span");
+			lineBar.className = "pointer-events-none absolute inset-0 z-10 block bg-reveal-bar";
+			lineBar.dataset.responsabilidadLivecookLineBar = "";
+			lineBar.setAttribute("aria-hidden", "true");
+
+			line.append(lineText, lineBar);
+			element.appendChild(line);
+		});
+
+		element.dataset.responsabilidadLivecookPrepared = "true";
+	};
+
+	document.querySelectorAll<HTMLElement>("[data-responsabilidad-livecook-section]").forEach((section) => {
+		const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		const lines = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-responsabilidad-livecook-line]"));
+		const textBlocks = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-responsabilidad-livecook-reveal-text]"));
+		const image = section.querySelector<HTMLElement>("[data-responsabilidad-livecook-image]");
+
+		textBlocks.forEach(splitRows);
+
+		const lineText = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-responsabilidad-livecook-line-text]"));
+		const lineBars = gsap.utils.toArray<HTMLElement>(section.querySelectorAll("[data-responsabilidad-livecook-line-bar]"));
+		const horizontalLines = lines.filter((line) => line.dataset.responsabilidadLivecookLine === "horizontal");
+		const verticalLines = lines.filter((line) => line.dataset.responsabilidadLivecookLine === "vertical");
+
+		if (reduceMotion) {
+			gsap.set([...lines, ...lineText, image].filter(Boolean), { clearProps: "all" });
+			gsap.set(lineBars, { autoAlpha: 0 });
+			return;
+		}
+
+		gsap.set(horizontalLines, { scaleX: 0, transformOrigin: "left center" });
+		gsap.set(verticalLines, { scaleY: 0, transformOrigin: "top center" });
+		gsap.set(lineText, { autoAlpha: 1, yPercent: 104 });
+		gsap.set(lineBars, { xPercent: 0, scaleX: 1, transformOrigin: "left center" });
+		if (image) gsap.set(image, { autoAlpha: 0, y: 18 });
+
+		const timeline = gsap.timeline({
+			defaults: { ease: "power3.out" },
+			scrollTrigger: {
+				trigger: section,
+				start: "top 68%",
+				once: true,
+			},
+		});
+
+		timeline
+			.to(horizontalLines, { scaleX: 1, duration: 0.9, stagger: 0.06 })
+			.to(verticalLines, { scaleY: 1, duration: 0.95, stagger: 0.045 }, "-=0.72")
+			.to(lineText, { yPercent: 0, duration: 0.75, stagger: 0.035 }, "-=0.45")
+			.to(lineBars, { xPercent: 104, duration: 0.82, stagger: 0.035 }, "<")
+			.set(lineBars, { autoAlpha: 0 })
+			.to(image, { autoAlpha: 1, y: 0, duration: 0.75 }, "-=0.45");
+	});
+</script>

@@ -1,0 +1,83 @@
+---
+import heroImage from "../../assets/responsabilidad-page/hero.png";
+import forwideLogoStroke from "../../assets/logos/forwide-logo-stroke.svg";
+
+type Props = {
+	title?: string;
+	headlineLines?: string[];
+	body?: string;
+	imageAlt?: string;
+};
+
+const {
+	title = "Tecnología útil. Datos tratados con respeto. IA bajo criterio humano.",
+	headlineLines = ["Tecnología útil. Datos", "tratados con respeto. IA", "bajo criterio humano."],
+	body = "Forwide construye productos digitales para contextos donde las personas aprenden, deciden, compran y participan. Cada función debe tener un propósito claro, límites visibles y valor real para el usuario.",
+	imageAlt = "Persona en movimiento sobre líneas de luz en un fondo verde azulado.",
+} = Astro.props;
+---
+
+<section
+	id="responsabilidad"
+	class="relative isolate min-h-[100svh] bg-surface-dark px-[var(--frame-inset)] pt-header text-surface-dark-foreground [--reveal-bar:var(--surface-dark-foreground)]"
+	aria-labelledby="responsabilidad-hero-title"
+	data-dark-frame-section
+>
+	<div class="relative min-h-[calc(100svh-var(--header-height))] overflow-hidden border-x border-surface-dark-foreground/80">
+		<div class="grid min-h-[calc(100svh-var(--header-height))] content-between">
+			<div class="relative z-10 flex flex-col lg:min-h-[clamp(26rem,49svh,33rem)] lg:flex-row lg:items-start">
+				<figure class="relative aspect-[1006/1092] w-full max-w-[min(29rem,88vw)] shrink-0 overflow-hidden lg:w-[34%] lg:max-w-[31rem]" data-reveal-fade>
+					<img
+						src={heroImage.src}
+						width={heroImage.width}
+						height={heroImage.height}
+						alt={imageAlt}
+						class="h-full w-full object-cover object-left-top"
+						loading="eager"
+						decoding="async"
+					/>
+					<span
+						class="pointer-events-none absolute left-[44%] top-[7.5%] block aspect-square w-[17%] border border-surface-dark-foreground/85"
+						aria-hidden="true"
+					></span>
+				</figure>
+
+				<div class="flex min-h-[clamp(21rem,41vw,32rem)] flex-1 flex-col px-[clamp(1.25rem,3vw,3.25rem)] py-[clamp(2rem,4vw,3.25rem)]">
+					<img
+						src={forwideLogoStroke.src}
+						alt="Forwide"
+						class="ml-auto h-auto w-[min(16rem,48vw)] invert"
+						loading="eager"
+						decoding="async"
+						data-reveal-fade
+					/>
+
+					<p class="mt-auto ml-auto max-w-[34rem] text-right text-description font-normal text-surface-dark-foreground" data-reveal-copy>
+						{body}
+					</p>
+				</div>
+			</div>
+
+			<h1
+				id="responsabilidad-hero-title"
+				class="relative z-20 ml-auto max-w-[74rem] px-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)] pt-[clamp(1.5rem,3vw,2.5rem)] text-right text-[clamp(2.6rem,4.35vw,4.65rem)] font-normal uppercase leading-[1.02] tracking-normal"
+				aria-label={title}
+			>
+				{
+					headlineLines.map((line) => (
+						<span class="relative block overflow-hidden" data-reveal-heading-line>
+							<span class="block" data-reveal-heading-text>
+								{line}
+							</span>
+							<span
+								class="pointer-events-none absolute inset-0 z-10 block bg-reveal-bar"
+								data-reveal-heading-bar
+								aria-hidden="true"
+							/>
+						</span>
+					))
+				}
+			</h1>
+		</div>
+	</div>
+</section>

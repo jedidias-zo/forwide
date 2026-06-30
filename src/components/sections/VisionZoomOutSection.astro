@@ -39,43 +39,43 @@ const zoomImages = [
 	{
 		image: asset00,
 		alt: "",
-		className: "left-[9%] top-[2%] w-[min(28vw,24rem)]",
+		className: "left-[8%] top-[4rem] w-[9.5rem] lg:left-[9%] lg:top-[2%] lg:w-[min(28vw,24rem)]",
 		origin: "left top",
 	},
 	{
 		image: asset03,
 		alt: "",
-		className: "left-[72%] top-[60%] w-[min(28vw,24rem)]",
+		className: "left-[66%] top-[62%] w-[9.5rem] lg:left-[72%] lg:top-[60%] lg:w-[min(28vw,24rem)]",
 		origin: "right bottom",
 	},
 	{
 		image: asset01,
 		alt: "",
-		className: "left-[14%] top-[72%] w-[min(22vw,16rem)]",
+		className: "left-[6%] top-[72%] w-[8.5rem] lg:left-[14%] lg:top-[72%] lg:w-[min(22vw,16rem)]",
 		origin: "left bottom",
 	},
 	{
 		image: asset04,
 		alt: "",
-		className: "left-[81%] top-[-23%] w-[min(32vw,28rem)]",
+		className: "left-[62%] top-[2%] w-[11rem] lg:left-[81%] lg:top-[-23%] lg:w-[min(32vw,28rem)]",
 		origin: "right top",
 	},
 	{
 		image: asset05,
 		alt: "",
-		className: "left-[98%] top-[82%] w-[min(28vw,24rem)]",
+		className: "left-[78%] top-[82%] w-[9.5rem] lg:left-[98%] lg:top-[82%] lg:w-[min(28vw,24rem)]",
 		origin: "center bottom",
 	},
 	{
 		image: asset06,
 		alt: "",
-		className: "left-[-32%] top-[78%] w-[min(28vw,24rem)]",
+		className: "left-[-20%] top-[78%] w-[9.5rem] lg:left-[-32%] lg:top-[78%] lg:w-[min(28vw,24rem)]",
 		origin: "center top",
 	},
 	{
 		image: asset07,
 		alt: "",
-		className: "left-[76%] top-[10%] w-[min(16vw,10rem)]",
+		className: "left-[66%] top-[10%] w-[7rem] lg:left-[76%] lg:top-[10%] lg:w-[min(16vw,10rem)]",
 		origin: "right center",
 	},
 ];
@@ -107,8 +107,8 @@ const zoomImages = [
 
 					<h2
 						id="vision-zoom-title"
-						class="relative w-full text-[clamp(2rem,3.4vw,3rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
-						style="min-height: 6rem;"
+						class="relative w-full text-[clamp(1.55rem,7.2vw,3rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
+						style="min-height: 7.5rem;"
 						data-vision-zoom-title
 					>
 						{
@@ -128,7 +128,7 @@ const zoomImages = [
 						{
 							stages.map((stage, index) => (
 								<p
-									class="absolute inset-x-0 mx-auto max-w-[50rem] text-[clamp(1.1rem,1.7vw,1.55rem)] font-normal uppercase leading-[1.05] tracking-[-0.045em] text-muted-foreground"
+									class="absolute inset-x-0 mx-auto max-w-[50rem] text-[clamp(0.8125rem,1.7vw,1.55rem)] font-normal uppercase leading-[1.05] tracking-[-0.045em] text-muted-foreground"
 									data-vision-zoom-copy
 									data-vision-zoom-stage={index}
 								>
@@ -203,8 +203,12 @@ const zoomImages = [
 		gsap.set(images, { autoAlpha: 0, scale: 1.12 });
 		gsap.set(images.slice(0, 2), { autoAlpha: 1, scale: 1 });
 		gsap.set(camera, { scale: 1, xPercent: 0, yPercent: 0, transformOrigin: "50% 50%" });
-		gsap.set(title, { minHeight: "6rem" });
-		const titleHeights = words.map((_, index) => (index === 0 ? "6rem" : "3.25rem"));
+		const isMobile = window.matchMedia("(max-width: 767px)").matches;
+		const titleHeights = words.map((_, index) => {
+			if (isMobile) return index === 0 ? "7.5rem" : "2.25rem";
+			return index === 0 ? "6rem" : "3.25rem";
+		});
+		gsap.set(title, { minHeight: titleHeights[0] });
 
 		const showStage = (timeline: gsap.core.Timeline, stage: number, position: number) => {
 			const previousStage = Math.max(stage - 1, 0);
