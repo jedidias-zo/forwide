@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LegalDocumentSection from "../components/sections/LegalDocumentSection.astro";
+
+const blocks = [
+	{
+		text: "Finalidades: responder a sus solicitudes y remitirle información comercial de nuestros productos y servicios, incluso por medios electrónicos.",
+	},
+	{
+		text: "Legitimación: consentimiento del interesado.",
+	},
+	{
+		text: "Destinatarios: no están previstas cesiones de datos.",
+	},
+	{
+		text: "Derechos: puede retirar su consentimiento en cualquier momento, así como ejercer su derecho de acceso, rectificación, supresión, oposición, limitación y portabilidad de sus datos y demás derechos en Admin@forwide.com.",
+	},
+	{
+		text: "Información adicional: Política de privacidad.",
+	},
+	{ type: "heading", text: "Consentimientos" },
+	{
+		text: "[   ] Acepto recibir información comercial, incluso por medios electrónicos.",
+	},
+	{
+		text: "[   ] He leído y acepto la Política de Privacidad.",
+	},
+];
+---
+
+<BaseLayout title="Protección de datos | Forwide" headerHomeVariant="logo">
+	<LegalDocumentSection title="Protección de datos" eyebrow="Formularios" blocks={blocks} />
+</BaseLayout>

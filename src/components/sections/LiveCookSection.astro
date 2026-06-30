@@ -16,6 +16,7 @@ type Props = {
 	proof?: string;
 	cta?: string;
 	ctaLabel?: string;
+	ctaHref?: string;
 };
 
 const {
@@ -27,6 +28,7 @@ const {
 	proof = "LiveCook demuestra el método de Forwide en condiciones reales: sesiones, personas cocinando, reservas, contenido y ajustes continuos.",
 	cta = "Forwide no depende de una sola app. Usa LiveCook para probar una base que puede sostener futuros verticales.",
 	ctaLabel = "Explorar Livecook",
+	ctaHref = "/productos/livecook/",
 } = Astro.props;
 
 const ctaCardClass =
@@ -122,7 +124,7 @@ const ctaCardClass =
 			</div>
 
 			<a
-				href="#contacto"
+				href={ctaHref}
 				class:list={[ctaCardClass, "mt-8 min-h-[26rem]"]}
 				data-livecook-item
 				data-livecook-transition-card
@@ -221,7 +223,7 @@ const ctaCardClass =
 				</figure>
 
 				<a
-					href="#contacto"
+					href={ctaHref}
 					class:list={[ctaCardClass, "h-[clamp(34rem,72vh,52rem)] w-[clamp(34rem,42vw,52rem)] shrink-0 self-center"]}
 					data-livecook-item
 					data-livecook-transition-card

@@ -1,0 +1,48 @@
+---
+type LegalBlock = {
+	type?: "paragraph" | "heading";
+	text: string;
+};
+
+type Props = {
+	title: string;
+	eyebrow?: string;
+	blocks: LegalBlock[];
+};
+
+const { title, eyebrow = "Legal", blocks } = Astro.props;
+---
+
+<section class="bg-background px-[var(--frame-inset)] pt-header text-foreground">
+	<div class="min-h-[100svh] border-x border-foreground">
+		<article class="mx-auto w-full max-w-[48rem] px-[clamp(1.25rem,3vw,2rem)] py-[clamp(5rem,9vw,8rem)]">
+			<p
+				class="mb-[clamp(2rem,4vw,3rem)] text-center text-[clamp(0.9rem,1vw,1rem)] font-normal uppercase leading-none tracking-[-0.03em] text-muted-foreground"
+				data-reveal-copy
+			>
+				{eyebrow}
+			</p>
+
+			<h1
+				class="mx-auto mb-[clamp(3.5rem,7vw,6rem)] max-w-[42rem] text-center text-[clamp(3rem,6vw,5.75rem)] font-normal uppercase leading-[0.95] tracking-[-0.075em]"
+				data-reveal-heading
+			>
+				{title}
+			</h1>
+
+			<div class="space-y-[clamp(1.1rem,1.6vw,1.45rem)] text-[clamp(0.95rem,1.1vw,1.125rem)] font-normal leading-[1.5] tracking-[-0.025em] text-muted-foreground">
+				{
+					blocks.map((block) =>
+						block.type === "heading" ? (
+							<h2 class="pt-[clamp(1.2rem,2vw,1.8rem)] text-[clamp(1.05rem,1.25vw,1.25rem)] font-normal uppercase leading-[1.1] tracking-[-0.045em] text-foreground">
+								{block.text}
+							</h2>
+						) : (
+							<p>{block.text}</p>
+						),
+					)
+				}
+			</div>
+		</article>
+	</div>
+</section>
