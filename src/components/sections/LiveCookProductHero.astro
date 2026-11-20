@@ -44,7 +44,7 @@ const {
 		</div>
 	</div>
 
-	<figure class="border-y border-foreground">
+	<figure class="overflow-hidden border-y border-foreground" data-reveal-fade>
 		<slot name="image-0"><img
 			src={image.src}
 			width={image.width}
@@ -59,11 +59,11 @@ const {
 
 	<div class="px-[var(--frame-inset)]">
 		<div class="border-x border-foreground px-[clamp(1rem,1.25vw,1.25rem)] pb-[clamp(2rem,3vw,3rem)] pt-[clamp(1.75rem,3vw,2.5rem)]">
-			<p class="product-intro max-w-[68rem]" data-reveal-fade>
+			<p class="product-intro max-w-[68rem]" data-reveal-scroll-fade>
 				<slot name="intro">{intro}</slot>
 			</p>
 
-			<div class="mt-[clamp(2rem,4vw,3rem)] grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-[clamp(1rem,2.5vw,1.75rem)] gap-y-6 md:grid-cols-[auto_minmax(0,1fr)_auto]" data-reveal-fade>
+			<div class="mt-[clamp(2rem,4vw,3rem)] grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-[clamp(1rem,2.5vw,1.75rem)] gap-y-6 md:grid-cols-[auto_minmax(0,1fr)_auto]" data-reveal-scroll-fade>
 				<LottieLogo fallback={icon} class="w-[clamp(6rem,12vw,9rem)] self-center" />
 				<p class="paragraph max-w-[44ch]">
 					<slot name="body">{body}</slot>

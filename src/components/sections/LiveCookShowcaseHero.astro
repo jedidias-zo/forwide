@@ -34,12 +34,12 @@ const {
 	aria-labelledby="livecook-showcase-title"
 >
 	<div class="border-x border-foreground px-[clamp(1rem,1.25vw,1.25rem)] pt-[clamp(3.5rem,7vw,6rem)]">
-		<h2 id="livecook-showcase-title" class="heading-h2 text-right" data-reveal-fade>
+		<h2 id="livecook-showcase-title" class="heading-h2 text-right" data-reveal-scroll-fade>
 			<slot name="title">{title}</slot>
 		</h2>
 
 		<div class="mt-[clamp(3rem,6vw,6rem)] grid gap-[clamp(2.5rem,7vw,7rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-end">
-			<figure class="relative isolate mx-auto w-full max-w-[33rem] self-end lg:mx-0" data-reveal-fade>
+			<figure class="relative isolate mx-auto w-full max-w-[33rem] self-end lg:mx-0" data-reveal-scroll-fade>
 				<img
 					src={waves.src}
 					alt=""
@@ -59,7 +59,7 @@ const {
 				/></slot>
 			</figure>
 
-			<div class="relative z-10 flex flex-col items-start gap-6 pb-[clamp(3rem,4vw,4rem)] lg:gap-8" data-reveal-fade>
+			<div class="relative z-10 flex flex-col items-start gap-6 pb-[clamp(3rem,4vw,4rem)] lg:gap-8" data-reveal-scroll-fade>
 				<p class="eyebrow"><slot name="label">{label}</slot></p>
 				<p class="paragraph max-w-[44ch]"><slot name="body">{body}</slot></p>
 				<CtaButton href={ctaHref} label={ctaLabel} ><slot name="cta-label">{ctaLabel}</slot></CtaButton>

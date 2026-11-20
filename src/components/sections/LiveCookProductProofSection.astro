@@ -34,6 +34,7 @@ import assetTechnology from "../../assets/livecook-product-page/section_layers/a
 			<figure
 				class="pointer-events-none absolute bottom-0 right-[clamp(1rem,7vw,7rem)] z-0 w-[min(30vw,24rem)] min-w-[12rem]"
 				data-livecook-proof-target
+				data-reveal-scroll-fade
 			>
 				<slot name="image-0"><img
 					src={assetTechnology.src}
@@ -146,82 +147,6 @@ import assetTechnology from "../../assets/livecook-product-page/section_layers/a
 		timeline.to(cards, { autoAlpha: 1, y: 0, duration: 0.75, stagger: 0.08 }, "-=0.4");
 	};
 
-	const animateTechnologyTransfer = (section: HTMLElement) => {
-		const source = document.querySelector<HTMLElement>("[data-livecook-tech-source] img");
-		const target = section.querySelector<HTMLElement>("[data-livecook-proof-target] img");
-
-		if (!source || !target) return;
-
-		let hasPlayed = false;
-
-		const createClone = () => {
-			const sourceRect = source.getBoundingClientRect();
-			const targetRect = target.getBoundingClientRect();
-
-			if (sourceRect.width < 2 || targetRect.width < 2) return null;
-
-			const clone = source.cloneNode(true) as HTMLImageElement;
-			clone.removeAttribute("loading");
-			clone.setAttribute("aria-hidden", "true");
-			clone.style.position = "fixed";
-			clone.style.left = `${sourceRect.left}px`;
-			clone.style.top = `${sourceRect.top}px`;
-			clone.style.width = `${sourceRect.width}px`;
-			clone.style.height = `${sourceRect.height}px`;
-			clone.style.objectFit = "contain";
-			clone.style.pointerEvents = "none";
-			clone.style.zIndex = "80";
-			clone.style.willChange = "transform, opacity, left, top, width, height";
-			document.body.appendChild(clone);
-
-			return { clone, sourceRect, targetRect };
-		};
-
-		gsap.set(target, { autoAlpha: 0 });
-
-		ScrollTrigger.create({
-			trigger: section,
-			start: "top 88%",
-			once: true,
-			onEnter: () => {
-				if (hasPlayed) return;
-				hasPlayed = true;
-
-				const transition = createClone();
-
-				if (!transition) {
-					gsap.set(target, { autoAlpha: 1 });
-					return;
-				}
-
-				const { clone, targetRect } = transition;
-
-				gsap.set(source, { autoAlpha: 0.12 });
-
-				gsap.timeline({
-					defaults: {
-						ease: "power3.inOut",
-					},
-					onComplete: () => {
-						gsap.set(target, { autoAlpha: 1 });
-						gsap.to(source, { autoAlpha: 1, duration: 0.45, ease: "power2.out" });
-						clone.remove();
-					},
-				})
-					.to(clone, {
-						left: targetRect.left,
-						top: targetRect.top,
-						width: targetRect.width,
-						height: targetRect.height,
-						duration: 1.35,
-					})
-					.to(clone, { autoAlpha: 0.92, duration: 0.3, ease: "power2.out" }, 0)
-					.to(target, { autoAlpha: 1, duration: 0.35, ease: "power2.out" }, "-=0.28")
-					.to(clone, { autoAlpha: 0, duration: 0.32, ease: "power2.out" }, "-=0.25");
-			},
-		});
-	};
-
 	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 	document.querySelectorAll<HTMLElement>("[data-livecook-proof-reveal-text]").forEach(splitProofRows);
@@ -242,6 +167,5 @@ import assetTechnology from "../../assets/livecook-product-page/section_layers/a
 			onEnter: () => revealProof(section),
 		});
 
-		animateTechnologyTransfer(section);
 	});
 </script>

@@ -84,6 +84,22 @@
 	});
 
 	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	// Below-the-fold product content should reveal when reached, not on page load.
+	document.querySelectorAll<HTMLElement>("[data-reveal-scroll-fade]").forEach((element) => {
+		if (reduceMotion) return;
+		gsap.fromTo(element, { autoAlpha: 0, y: 18 }, {
+			autoAlpha: 1,
+			y: 0,
+			duration: 0.7,
+			ease: "power3.out",
+			clearProps: "opacity,visibility,transform",
+			scrollTrigger: {
+				trigger: element,
+				start: "top 92%",
+				once: true,
+			},
+		});
+	});
 	const headers = gsap.utils.toArray<HTMLElement>("[data-reveal-header]");
 	const fadeItems = gsap.utils.toArray<HTMLElement>("[data-reveal-fade]");
 	const logos = gsap.utils.toArray<HTMLElement>("[data-reveal-logo]");
