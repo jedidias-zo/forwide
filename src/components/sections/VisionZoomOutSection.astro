@@ -93,7 +93,7 @@ const zoomImages = [
 	<div class="border-x border-t border-foreground">
 		<div class="relative min-h-[100svh] overflow-hidden" data-vision-zoom-pin>
 			<div class="relative z-10 grid min-h-[100svh] place-items-center px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(3rem,6vw,5rem)]">
-				<div class="relative z-20 mx-auto flex w-full max-w-[58rem] flex-col items-center text-center">
+				<div class="relative z-20 mx-auto flex w-full max-w-[58rem] flex-col items-center text-center" data-vision-zoom-content>
 					<div class="relative mb-[clamp(1rem,2vw,1.5rem)] min-h-[1.4em] w-full uppercase">
 						{
 							stages.map((stage, index) => (
@@ -230,6 +230,31 @@ const zoomImages = [
 	</div>
 </section>
 
+<style>
+	@media (max-width: 1023px) {
+		[data-vision-zoom-image] {
+			width: min(34vw, 23svh);
+			aspect-ratio: 1;
+			top: auto;
+			bottom: calc(50% + var(--zoom-text-half, 8rem) + 1rem);
+			left: 5%;
+		}
+		[data-vision-zoom-image-index="3"] { left: 59%; }
+		[data-vision-zoom-image-index="6"] { left: 34%; bottom: calc(50% + var(--zoom-text-half, 8rem) + 3rem); }
+		[data-vision-zoom-image-index="1"],
+		[data-vision-zoom-image-index="2"],
+		[data-vision-zoom-image-index="4"],
+		[data-vision-zoom-image-index="5"] {
+			top: calc(50% + var(--zoom-text-half, 8rem) + 1rem);
+			bottom: auto;
+		}
+		[data-vision-zoom-image-index="1"] { left: 59%; }
+		[data-vision-zoom-image-index="2"] { left: 5%; }
+		[data-vision-zoom-image-index="4"] { left: 63%; top: calc(50% + var(--zoom-text-half, 8rem) + 3rem); }
+		[data-vision-zoom-image-index="5"] { left: 9%; top: calc(50% + var(--zoom-text-half, 8rem) + 3rem); }
+	}
+</style>
+
 <script>
 	import { gsap } from "gsap";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -238,6 +263,9 @@ const zoomImages = [
 
 	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+	const media = gsap.matchMedia();
+	media.add({ mobile: "(max-width: 1023px)", desktop: "(min-width: 1024px)" }, (context) => {
+	const mobile = Boolean(context.conditions?.mobile);
 	document.querySelectorAll<HTMLElement>("[data-vision-zoom-section]").forEach((section) => {
 		const pin = section.querySelector<HTMLElement>("[data-vision-zoom-pin]");
 		const camera = section.querySelector<HTMLElement>("[data-vision-zoom-camera]");
@@ -250,6 +278,16 @@ const zoomImages = [
 
 		if (!pin || !camera || !title) return;
 
+		if (mobile) {
+			const content = section.querySelector<HTMLElement>("[data-vision-zoom-content]");
+			const tallestTitle = Math.max(...words.map((word) => word.offsetHeight));
+			const tallestCopy = Math.max(...copies.map((copy) => copy.offsetHeight));
+			// Reserve enough space for every translated stage before placing the photos.
+			const reservedHeight = tallestTitle + tallestCopy + 80;
+			gsap.set(content, { minHeight: reservedHeight, justifyContent: "center" });
+			gsap.set(camera, { "--zoom-text-half": `${reservedHeight / 2}px` });
+		}
+
 		if (reduceMotion) {
 			gsap.set([...words, ...labels, ...copies], { autoAlpha: 0 });
 			gsap.set([words[0], labels[0], copies[0]], { autoAlpha: 1 });
@@ -259,7 +297,7 @@ const zoomImages = [
 
 		gsap.set([...words, ...labels, ...copies], { autoAlpha: 0, y: 18 });
 		gsap.set([words[0], labels[0], copies[0]], { autoAlpha: 1, y: 0 });
-		gsap.set(images, { autoAlpha: 0, scale: 1.12 });
+		gsap.set(images, { autoAlpha: 0, scale: mobile ? 1 : 1.12 });
 		gsap.set(images.slice(0, 2), { autoAlpha: 1, scale: 1 });
 		gsap.set(camera, { scale: 1, xPercent: 0, yPercent: 0, transformOrigin: "50% 50%" });
 		const titleHeights = words.map((word) => `${word.offsetHeight}px`);
@@ -305,27 +343,28 @@ const zoomImages = [
 		});
 
 		timeline
-			.to(camera, { scale: 0.84, xPercent: 0, yPercent: 0, duration: 1 })
-			.to(images.slice(0, 2), { scale: 0.84, duration: 1 }, 0)
+			.to(camera, { scale: mobile ? 1 : 0.84, xPercent: 0, yPercent: 0, duration: 1 })
+			.to(images.slice(0, 2), { scale: mobile ? 1 : 0.84, duration: 1 }, 0)
 			.to(images[2], { autoAlpha: 1, scale: 1, duration: 0.42 }, 0.16);
 		showStage(timeline, 1, 0.78);
 
 		timeline
-			.to(camera, { scale: 0.68, xPercent: 0, yPercent: 0, duration: 1 }, 1)
-			.to(images.slice(0, 2), { scale: 0.72, duration: 1 }, 1)
+			.to(camera, { scale: mobile ? 1 : 0.68, xPercent: 0, yPercent: 0, duration: 1 }, 1)
+			.to(images.slice(0, 2), { scale: mobile ? 1 : 0.72, duration: 1 }, 1)
 			.to(images.slice(3, 6), { autoAlpha: 1, scale: 1, duration: 0.42, stagger: 0.08 }, 1.16);
 		showStage(timeline, 2, 1.78);
 
 		timeline
-			.to(camera, { scale: 0.56, xPercent: 0, yPercent: 0, duration: 1 }, 2)
-			.to(images.slice(0, 2), { scale: 0.64, duration: 1 }, 2)
+			.to(camera, { scale: mobile ? 1 : 0.56, xPercent: 0, yPercent: 0, duration: 1 }, 2)
+			.to(images.slice(0, 2), { scale: mobile ? 1 : 0.64, duration: 1 }, 2)
 			.to(images.slice(5, 6), { autoAlpha: 1, scale: 1, duration: 0.42 }, 2.16);
 		showStage(timeline, 3, 2.78);
 
 		timeline
-			.to(camera, { scale: 0.48, xPercent: 0, yPercent: 0, duration: 1 }, 3)
-			.to(images.slice(0, 2), { scale: 0.56, duration: 1 }, 3)
+			.to(camera, { scale: mobile ? 1 : 0.48, xPercent: 0, yPercent: 0, duration: 1 }, 3)
+			.to(images.slice(0, 2), { scale: mobile ? 1 : 0.56, duration: 1 }, 3)
 			.to(images.slice(6), { autoAlpha: 1, scale: 1, duration: 0.42 }, 3.16);
 		showStage(timeline, 4, 3.78);
+	});
 	});
 </script>
