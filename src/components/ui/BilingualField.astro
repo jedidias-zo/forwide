@@ -1,0 +1,24 @@
+---
+import { getLocale } from "../../i18n";
+
+interface Props {
+	/** Placeholder shown in Spanish. */
+	spanish: string;
+	/** Placeholder shown in English. */
+	english: string;
+	tag?: "input" | "textarea";
+	type?: string;
+	name?: string;
+	autocomplete?: string;
+	class?: string;
+}
+
+const { spanish, english, tag = "input", ...attributes } = Astro.props;
+const placeholder = getLocale(Astro.url.pathname) === "en" ? english : spanish;
+---
+
+{tag === "textarea" ? (
+	<textarea {...attributes} placeholder={placeholder}></textarea>
+) : (
+	<input {...attributes} placeholder={placeholder} />
+)}

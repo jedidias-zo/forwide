@@ -1,15 +1,18 @@
 ---
+import { createTranslator, getLocale } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 type Props = {
 	title?: string;
 	paragraphs?: string[];
 };
 
 const {
-	title = "Manifiesto Forwide",
+	title = t("Manifiesto Forwide"),
 	paragraphs = [
-		"No nos interesa una colección de logos.\nNos interesa una compañía donde cada producto hace mejor al siguiente.",
-		"Construimos desde oportunidades concretas.\nProbamos con personas reales, operación y datos.\nLo que funciona se convierte en base.\nLo que no funciona se convierte en criterio.\nLiveCook es el primer producto visible. Forwide es la estructura para lo que viene.",
-		"La visión es construir una compañía capaz de lanzar, operar y escalar productos digitales con coherencia.\nForwide existe para convertir ideas en sistemas.\nY sistemas en productos capaces de crecer.",
+		t("No nos interesa una colección de logos.\nNos interesa una compañía donde cada producto hace mejor al siguiente."),
+		t("Construimos desde oportunidades concretas.\nProbamos con personas reales, operación y datos.\nLo que funciona se convierte en base.\nLo que no funciona se convierte en criterio.\nLiveCook es el primer producto visible. Forwide es la estructura para lo que viene."),
+		t("La visión es construir una compañía capaz de lanzar, operar y escalar productos digitales con coherencia.\nForwide existe para convertir ideas en sistemas.\nY sistemas en productos capaces de crecer."),
 	],
 } = Astro.props;
 ---
@@ -28,16 +31,16 @@ const {
 		<div class="mx-auto flex min-h-[100svh] w-full max-w-[36rem] flex-col justify-center px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(7rem,12vw,11rem)]">
 			<h2
 				id="vision-manifesto-title"
-				class="text-[clamp(2.25rem,3.4vw,3rem)] font-normal uppercase leading-none tracking-[-0.065em]"
+				class="heading-h2"
 				data-reveal-heading
 			>
-				{title}
+				<slot name="title">{title}</slot>
 			</h2>
 
-			<div class="mt-[clamp(2rem,3.2vw,3rem)] space-y-[clamp(1.35rem,2vw,1.75rem)] text-[clamp(1.125rem,1.45vw,1.5rem)] font-normal leading-[1.12] tracking-[-0.045em] text-muted-foreground">
+			<div class="mt-[clamp(2rem,3.2vw,3rem)] space-y-[clamp(1.35rem,2vw,1.75rem)] paragraph text-description-foreground">
 				{
-					paragraphs.map((paragraph) => (
-						<p data-reveal-copy set:html={paragraph.replaceAll("\n", "<br />")} />
+					paragraphs.map((paragraph, index) => (
+						<p data-reveal-copy>{index === 0 ? (<slot name="paragraph-0"><span style="white-space: pre-line;">{paragraph}</span></slot>) : index === 1 ? (<slot name="paragraph-1"><span style="white-space: pre-line;">{paragraph}</span></slot>) : index === 2 ? (<slot name="paragraph-2"><span style="white-space: pre-line;">{paragraph}</span></slot>) : (<><span style="white-space: pre-line;">{paragraph}</span></>)}</p>
 					))
 				}
 			</div>

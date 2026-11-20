@@ -1,14 +1,15 @@
 ---
+import { getLocale, localisePath } from "../../i18n";
 type Props = {
 	href?: string;
-	label: string;
+	label?: string;
 	variant?: "dark" | "light";
 	class?: string;
 };
 
 const {
 	href = "#",
-	label,
+	label = "",
 	variant = "dark",
 	class: className = "",
 } = Astro.props;
@@ -20,13 +21,12 @@ const variantClasses = {
 ---
 
 <a
-	href={href}
+	href={localisePath(href, getLocale(Astro.url.pathname))}
 	class:list={[
 		"cta-button",
 		variantClasses[variant],
 		className,
 	]}
 >
-	<span>{label}</span>
-	<slot />
+	<span><slot>{label}</slot></span>
 </a>

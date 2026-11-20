@@ -1,4 +1,7 @@
 ---
+import { createTranslator, getLocale } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import assetExperience from "../../assets/livecook-product-page/section_layers/asset-01.png";
 import assetContent from "../../assets/livecook-product-page/section_layers/asset-02.png";
 import assetOperation from "../../assets/livecook-product-page/section_layers/asset-03.png";
@@ -6,7 +9,7 @@ import assetCommunity from "../../assets/livecook-product-page/section_layers/as
 import assetTechnology from "../../assets/livecook-product-page/section_layers/asset-05.png";
 
 const intro =
-	"LiveCook reúne cinco capas que se prueban en cada clase: experiencia, contenido, comunidad, operación y tecnología.";
+	t("LiveCook reúne cinco capas que se prueban en cada clase: experiencia, contenido, comunidad, operación y tecnología.");
 ---
 
 <section
@@ -19,34 +22,34 @@ const intro =
 		<header class="max-w-[65rem]">
 			<h2
 				id="livecook-layers-title"
-				class="text-[clamp(2.4rem,5.2vw,5.25rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
+				class="heading-h2"
 				data-livecook-layers-reveal-text
 			>
-				Una app para cocinar. Y todo lo necesario para que funcione bien.
+				{t("Una app para cocinar. Y todo lo necesario para que funcione bien.")}
 			</h2>
-			<p class="mt-[clamp(1.25rem,2vw,1.75rem)] max-w-[40rem] text-description font-normal text-foreground" data-livecook-layers-reveal-text>
+			<p class="mt-[clamp(1.25rem,2vw,1.75rem)] max-w-[40rem] paragraph text-description-foreground" data-livecook-layers-reveal-text>
 				{intro}
 			</p>
 		</header>
 
 		<div class="relative mx-auto mt-[clamp(4rem,8vw,7rem)] grid max-w-[70rem] grid-cols-1 gap-[clamp(2rem,4vw,4rem)] lg:grid-cols-[minmax(0,1.08fr)_minmax(0,1fr)] lg:gap-5">
 			<article class="lg:col-start-1 lg:row-start-1" data-livecook-layer-card data-livecook-layer-from-x="-12" data-livecook-layer-from-y="72">
-				<p class="mb-1 text-right text-[clamp(1.5rem,2.15vw,2rem)] font-normal uppercase leading-none tracking-[-0.06em]" data-livecook-layers-reveal-text>
-					Experiencia
+				<p class="mb-1 text-right text-[clamp(1.5rem,2.15vw,2rem)] font-normal uppercase leading-none tracking-normal" data-livecook-layers-reveal-text>
+					{t("Experiencia")}
 				</p>
 				<figure class="aspect-square overflow-hidden" data-livecook-layers-reveal-fade>
 					<img
 						src={assetExperience.src}
 						width={assetExperience.width}
 						height={assetExperience.height}
-						alt="Tarjeta de una clase en vivo dentro de LiveCook."
+						alt={t("Tarjeta de una clase en vivo dentro de LiveCook.")}
 						class="h-full w-full object-cover"
 						loading="lazy"
 						decoding="async"
 					/>
 				</figure>
-				<p class="mt-2 max-w-[38rem] text-right text-description font-normal text-muted-foreground" data-livecook-layers-reveal-text>
-					Pantallas claras para chefs y personas que cocinan desde casa.
+				<p class="mt-2 max-w-[38rem] text-right paragraph text-description-foreground" data-livecook-layers-reveal-text>
+					{t("Pantallas claras para chefs y personas que cocinan desde casa.")}
 				</p>
 			</article>
 
@@ -56,18 +59,18 @@ const intro =
 						src={assetContent.src}
 						width={assetContent.width}
 						height={assetContent.height}
-						alt="Plato de sushi usado como contenido de receta."
+						alt={t("Plato de sushi usado como contenido de receta.")}
 						class="w-full"
 						loading="lazy"
 						decoding="async"
 					/>
 				</figure>
 				<div class="mt-2 lg:mt-0 lg:pt-0">
-					<h3 class="text-[clamp(1.7rem,2.45vw,2.25rem)] font-normal uppercase leading-none tracking-[-0.06em]" data-livecook-layers-reveal-text>
-						Contenido
+					<h3 class="heading-h3" data-livecook-layers-reveal-text>
+						{t("Contenido")}
 					</h3>
-					<p class="mt-2 max-w-[19rem] text-description font-normal text-muted-foreground" data-livecook-layers-reveal-text>
-						Recetas, clases y sesiones diseñadas para aprender mientras se cocina.
+					<p class="mt-2 max-w-[19rem] paragraph text-description-foreground" data-livecook-layers-reveal-text>
+						{t("Recetas, clases y sesiones diseñadas para aprender mientras se cocina.")}
 					</p>
 				</div>
 			</article>
@@ -78,18 +81,18 @@ const intro =
 						src={assetCommunity.src}
 						width={assetCommunity.width}
 						height={assetCommunity.height}
-						alt="Dos personas cocinando juntas mientras miran un teléfono."
+						alt={t("Dos personas cocinando juntas mientras miran un teléfono.")}
 						class="w-full"
 						loading="lazy"
 						decoding="async"
 					/>
 				</figure>
 				<div class="mt-3">
-					<h3 class="text-[clamp(1.7rem,2.45vw,2.25rem)] font-normal uppercase leading-none tracking-[-0.06em]" data-livecook-layers-reveal-text>
-						Comunidad
+					<h3 class="heading-h3" data-livecook-layers-reveal-text>
+						{t("Comunidad")}
 					</h3>
-					<p class="mt-2 max-w-[26rem] text-description font-normal text-muted-foreground" data-livecook-layers-reveal-text>
-						Chefs y personas conectadas por una acción concreta: preparar algo juntos.
+					<p class="mt-2 max-w-[26rem] paragraph text-description-foreground" data-livecook-layers-reveal-text>
+						{t("Chefs y personas conectadas por una acción concreta: preparar algo juntos.")}
 					</p>
 				</div>
 			</article>
@@ -100,18 +103,18 @@ const intro =
 						src={assetOperation.src}
 						width={assetOperation.width}
 						height={assetOperation.height}
-						alt="Chef cortando vegetales con un teléfono en la mesa."
+						alt={t("Chef cortando vegetales con un teléfono en la mesa.")}
 						class="w-full"
 						loading="lazy"
 						decoding="async"
 					/>
 				</figure>
 				<div class="mt-3">
-					<h3 class="text-[clamp(1.7rem,2.45vw,2.25rem)] font-normal uppercase leading-none tracking-[-0.06em]" data-livecook-layers-reveal-text>
-						Operación
+					<h3 class="heading-h3" data-livecook-layers-reveal-text>
+						{t("Operación")}
 					</h3>
-					<p class="mt-2 max-w-[37rem] text-description font-normal text-muted-foreground" data-livecook-layers-reveal-text>
-						Reservas, pagos, perfiles y gestión de clases en un solo lugar.
+					<p class="mt-2 max-w-[37rem] paragraph text-description-foreground" data-livecook-layers-reveal-text>
+						{t("Reservas, pagos, perfiles y gestión de clases en un solo lugar.")}
 					</p>
 				</div>
 			</article>
@@ -122,18 +125,18 @@ const intro =
 						src={assetTechnology.src}
 						width={assetTechnology.width}
 						height={assetTechnology.height}
-						alt="Teléfono iluminado sostenido en una mano."
+						alt={t("Teléfono iluminado sostenido en una mano.")}
 						class="w-full"
 						loading="lazy"
 						decoding="async"
 					/>
 				</figure>
 				<div class="mt-3">
-					<h3 class="text-[clamp(1.7rem,2.45vw,2.25rem)] font-normal uppercase leading-none tracking-[-0.06em]" data-livecook-layers-reveal-text>
-						Tecnología
+					<h3 class="heading-h3" data-livecook-layers-reveal-text>
+						{t("Tecnología")}
 					</h3>
-					<p class="mt-2 max-w-[27rem] text-description font-normal text-muted-foreground" data-livecook-layers-reveal-text>
-						La base que permite emitir, coordinar, medir y mejorar la plataforma.
+					<p class="mt-2 max-w-[27rem] paragraph text-description-foreground" data-livecook-layers-reveal-text>
+						{t("La base que permite emitir, coordinar, medir y mejorar la plataforma.")}
 					</p>
 				</div>
 			</article>
@@ -143,11 +146,13 @@ const intro =
 
 <script>
 	import { gsap } from "gsap";
+	import { revealParagraph } from "../../scripts/revealParagraph";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	const splitLiveCookLayerRows = (element: HTMLElement) => {
+		if (revealParagraph(element)) return;
 		if (element.dataset.livecookLayersPrepared === "true") return;
 
 		const text = element.textContent?.replace(/\s+/g, " ").trim();

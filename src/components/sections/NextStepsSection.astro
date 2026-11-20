@@ -1,4 +1,7 @@
 ---
+import { createTranslator, getLocale } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import livecookNextSteps from "../../assets/livecook/livecook-next-steps.png";
 
 type Step = {
@@ -10,35 +13,33 @@ type Step = {
 };
 
 type Props = {
-	eyebrow?: string;
 	kicker?: string;
 	headline?: string;
 	steps?: Step[];
 };
 
 const {
-	eyebrow = "Siguientes pasos",
-	kicker = "[ Forwide como estructura de productos ]",
-	headline = "Forwide organiza presente y futuro bajo una misma capa de método, tecnología y marca.",
+	kicker = t("[ Forwide como estructura de productos ]"),
+	headline = t("Forwide organiza presente y futuro bajo una misma capa de método, tecnología y marca."),
 	steps = [
 		{
-			title: "[ Ayer ]",
-			body: "Antes de lanzar, Forwide observa, ordena y define qué vale la pena construir.",
+			title: t("[ Ayer ]"),
+			body: t("Antes de lanzar, Forwide observa, ordena y define qué vale la pena construir."),
 		},
 		{
-			title: "[ Hoy ] 2026",
+			title: t("[ Hoy ] 2026"),
 			body: "",
 			image: livecookNextSteps,
-			imageAlt: "Plato de LiveCook como primer caso activo.",
-			imageCaption: "Livecook avanza como primer caso activo dentro del ecosistema.",
+			imageAlt: t("Plato de LiveCook como primer caso activo."),
+			imageCaption: t("Livecook avanza como primer caso activo dentro del ecosistema."),
 		},
 		{
-			title: "[ Mañana ]",
-			body: "Nuevos verticales pueden nacer desde aprendizajes, herramientas y criterios ya probados.",
+			title: t("[ Mañana ]"),
+			body: t("Nuevos verticales pueden nacer desde aprendizajes, herramientas y criterios ya probados."),
 		},
 		{
-			title: "[ Siempre ]",
-			body: "Forwide mantiene una lógica común: lanzar, operar, medir y ajustar.",
+			title: t("[ Siempre ]"),
+			body: t("Forwide mantiene una lógica común: lanzar, operar, medir y ajustar."),
 		},
 	],
 } = Astro.props;
@@ -53,8 +54,8 @@ const {
 	<div class="pointer-events-none absolute inset-y-0 left-[var(--frame-inset)] z-20 w-px bg-surface-dark-foreground" aria-hidden="true"></div>
 	<div class="pointer-events-none absolute inset-y-0 right-[var(--frame-inset)] z-20 w-px bg-surface-dark-foreground" aria-hidden="true"></div>
 
-	<div class="relative h-[120svh] lg:h-[88svh]" data-next-steps-transition>
-		<div class="sticky top-0 h-[64svh] overflow-hidden bg-background lg:h-[72svh]">
+	<div class="relative" data-next-steps-transition>
+		<div class="relative overflow-hidden bg-background">
 			<div
 				class="absolute left-1/2 top-1/2 h-[26rem] w-[calc(100vw-(var(--frame-inset)*2))] -translate-x-1/2 -translate-y-1/2 overflow-hidden bg-surface-dark lg:h-[21rem] lg:w-[24rem]"
 				aria-hidden="true"
@@ -62,30 +63,26 @@ const {
 			></div>
 
 			<div
-				class="relative z-10 flex h-full flex-col justify-start gap-[clamp(1.25rem,5vw,2rem)] pl-[calc(var(--frame-inset)+1rem)] pr-[calc(var(--frame-inset)+1rem)] pb-[clamp(1rem,4vw,1.5rem)] pt-[clamp(3.75rem,13vw,5rem)] opacity-0 lg:grid lg:grid-cols-[18rem_1fr] lg:content-start lg:items-start lg:gap-[6rem] lg:pl-[calc(var(--frame-inset)+1.5rem)] lg:pr-[calc(var(--frame-inset)+1.5rem)] lg:pb-[clamp(2rem,4vw,3rem)] lg:pt-[clamp(5rem,9vw,7rem)]"
+				class="relative z-10 flex flex-col justify-start gap-[clamp(1.25rem,5vw,2rem)] pl-[calc(var(--frame-inset)+1rem)] pr-[calc(var(--frame-inset)+1rem)] pb-12 pt-[clamp(3.75rem,13vw,5rem)] opacity-0 lg:grid lg:grid-cols-[18rem_1fr] lg:content-start lg:items-start lg:gap-[6rem] lg:pl-[calc(var(--frame-inset)+1.5rem)] lg:pr-[calc(var(--frame-inset)+1.5rem)] lg:pb-16 lg:pt-[clamp(5rem,9vw,7rem)]"
 				data-next-steps-hero-content
 			>
-				<p class="text-[clamp(1rem,1.4vw,1.35rem)] font-normal uppercase leading-none tracking-[-0.05em]" data-next-reveal-text>
-					{eyebrow}
-				</p>
-
-				<div class="max-w-[70rem] uppercase">
-					<p class="mb-[clamp(1.15rem,4vw,1.75rem)] text-[clamp(1.4rem,2.2vw,2rem)] font-normal leading-none tracking-[-0.05em] lg:mb-[clamp(2rem,4vw,3rem)]" data-next-reveal-text>
-						{kicker}
+				<div class="max-w-[70rem] uppercase lg:col-start-2">
+					<p class="eyebrow mb-[clamp(1.15rem,4vw,1.75rem)] lg:mb-[clamp(2rem,4vw,3rem)]" data-next-reveal-text>
+						<slot name="kicker">{kicker}</slot>
 					</p>
 					<h2
 						id="next-steps-title"
-						class="text-[clamp(2rem,4.2vw,4.5rem)] font-normal leading-[0.98] tracking-[-0.065em]"
+						class="heading-h2"
 						data-next-reveal-text
 					>
-						{headline}
+						<slot name="headline">{headline}</slot>
 					</h2>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="px-[var(--frame-inset)] pb-[clamp(4rem,9vw,8rem)]">
+	{steps.length > 0 && <div class="px-[var(--frame-inset)] pb-[clamp(4rem,9vw,8rem)]">
 		<div class="mx-auto w-full border-x border-b border-surface-dark-foreground/70 lg:grid lg:grid-cols-4 lg:items-stretch" data-next-steps-timeline>
 			{
 				steps.map((step, index) => (
@@ -97,7 +94,7 @@ const {
 						]}
 						data-next-reveal-item
 					>
-						<h3 class="border-b border-surface-dark-foreground/70 px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.95rem,1.6vw,1.35rem)] text-[clamp(1.5rem,3.333vw,3rem)] font-normal uppercase leading-none tracking-[-0.06em] text-surface-dark-foreground" data-next-reveal-text>
+						<h3 class="heading-h3 border-b border-surface-dark-foreground/70 px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.95rem,1.6vw,1.35rem)] text-surface-dark-foreground" data-next-reveal-text>
 							{step.title}
 						</h3>
 
@@ -111,7 +108,7 @@ const {
 										loading="lazy"
 									/>
 									{step.imageCaption && (
-										<figcaption class="text-description font-normal text-surface-dark-muted" data-next-reveal-text>
+										<figcaption class="paragraph text-surface-dark-muted" data-next-reveal-text>
 											{step.imageCaption}
 										</figcaption>
 									)}
@@ -119,7 +116,7 @@ const {
 							)}
 
 							{step.body && (
-								<p class="max-w-[26rem] text-description font-normal text-surface-dark-muted" data-next-reveal-text>
+								<p class="max-w-[26rem] paragraph text-surface-dark-muted" data-next-reveal-text>
 									{step.body}
 								</p>
 							)}
@@ -128,16 +125,19 @@ const {
 				))
 			}
 		</div>
-	</div>
+	</div>}
+	<slot />
 </section>
 
 <script>
 	import { gsap } from "gsap";
+	import { revealParagraph } from "../../scripts/revealParagraph";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	const splitNextRows = (element: HTMLElement) => {
+		if (revealParagraph(element)) return;
 		if (element.dataset.nextPrepared === "true") return;
 
 		const text = element.textContent?.replace(/\s+/g, " ").trim();

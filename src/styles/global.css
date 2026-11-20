@@ -1,5 +1,6 @@
-@import "@fontsource-variable/mona-sans";
+@import "@fontsource-variable/onest";
 @import "tailwindcss";
+@import "./typography.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -107,24 +108,26 @@
 	--header-height: 4.5rem;
 	--frame-inset: clamp(1rem, 3.5vw, 3.5rem);
 	--frame-line: var(--foreground);
-	--hero-title-size: clamp(2rem, calc(0.515rem + 6.095vw), 6rem);
-	--hero-intro-size: clamp(1rem, calc(0.714rem + 0.952vw), 1.5rem);
-	--vision-hero-title-size: clamp(3rem, 7vw, 6.25rem);
+	--hero-title-size: var(--h1-font-size);
+	--hero-intro-size: var(--description-size);
+	--vision-hero-title-size: var(--h1-font-size);
 	--hero-threads: var(--primary);
 	--hero-threads-light: var(--brand-50);
 	--reveal-bar: var(--primary);
 	--pillar-visual-bg: var(--brand-50);
 	--livecook-bg-end: var(--surface-soft);
-	--description-size: clamp(0.8125rem, calc(0.65rem + 0.667vw), 1.25rem);
+	--description-size: var(--paragraph-font-size);
+	--description-foreground: var(--paragraph-color);
+	--body-line-height: var(--paragraph-line-height);
 	--hero-description-size: var(--description-size);
 	--section-heading-weight: 400;
-	--section-copy-weight: 400;
+	--section-copy-weight: var(--paragraph-font-weight);
 	--section-label-weight: 400;
 	/* Menu type: heading-lg min (28px) → display-md max (72px). */
 	--menu-link-size: clamp(1.75rem, 4.5vw, 4.5rem);
 	--menu-link-gap: clamp(0.5rem, 1.5vh, 1.75rem);
-	--what-title-size: clamp(2rem, 4vw, 4rem);
-	--what-card-title-size: clamp(1.5rem, 2.25vw, 2.25rem);
+	--what-title-size: var(--h2-font-size);
+	--what-card-title-size: var(--h3-font-size);
 	--pillar-card-aspect: 448 / 531;
 
 	--shadow-color: 220 40% 2%;
@@ -144,6 +147,7 @@
 
 .dark {
 	color-scheme: dark;
+	--paragraph-color: var(--neutral-50);
 
 	--background: var(--neutral-1000);
 	--foreground: var(--neutral-50);
@@ -189,7 +193,7 @@
 
 /* Tailwind v4 theme API. Prefer these semantic utilities in components. */
 @theme inline {
-	--font-sans: "Mona Sans Variable", "Mona Sans", ui-sans-serif, system-ui, sans-serif;
+	--font-sans: var(--type-font-family);
 
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
@@ -222,6 +226,7 @@
 
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
+	--color-description-foreground: var(--description-foreground);
 	--color-subtle-foreground: var(--subtle-foreground);
 	--color-border: var(--border);
 	--color-border-strong: var(--border-strong);
@@ -240,42 +245,42 @@
 
 	--text-display-xl: clamp(3.5rem, 7vw, 7rem);
 	--text-display-xl--line-height: 0.94;
-	--text-display-xl--letter-spacing: -0.055em;
+	--text-display-xl--letter-spacing: normal;
 	--text-display-lg: clamp(3rem, 5.5vw, 5.5rem);
 	--text-display-lg--line-height: 0.96;
-	--text-display-lg--letter-spacing: -0.045em;
+	--text-display-lg--letter-spacing: normal;
 	--text-display-md: clamp(2.5rem, 4.5vw, 4.5rem);
 	--text-display-md--line-height: 1;
-	--text-display-md--letter-spacing: -0.04em;
+	--text-display-md--letter-spacing: normal;
 	--text-menu-link: var(--menu-link-size);
 	--text-menu-link--line-height: 1;
 	--text-what-title: var(--what-title-size);
 	--text-what-title--line-height: 1;
-	--text-what-title--letter-spacing: -0.04em;
+	--text-what-title--letter-spacing: normal;
 	--text-what-card-title: var(--what-card-title-size);
 	--text-what-card-title--line-height: 1;
-	--text-what-card-title--letter-spacing: -0.04em;
+	--text-what-card-title--letter-spacing: normal;
 	--text-description: var(--description-size);
-	--text-description--line-height: 1.12;
-	--text-description--letter-spacing: -0.035em;
+	--text-description--line-height: var(--body-line-height);
+	--text-description--letter-spacing: normal;
 	--text-hero-intro: var(--hero-intro-size);
-	--text-hero-intro--line-height: 1.2;
+	--text-hero-intro--line-height: var(--body-line-height);
 	--text-heading-xl: clamp(2rem, 3.5vw, 3.5rem);
 	--text-heading-xl--line-height: 1.05;
-	--text-heading-xl--letter-spacing: -0.035em;
+	--text-heading-xl--letter-spacing: normal;
 	--text-heading-lg: clamp(1.75rem, 3vw, 2.75rem);
 	--text-heading-lg--line-height: 1.1;
-	--text-heading-lg--letter-spacing: -0.03em;
+	--text-heading-lg--letter-spacing: normal;
 	--text-heading-md: clamp(1.5rem, 2.25vw, 2.125rem);
 	--text-heading-md--line-height: 1.15;
-	--text-heading-md--letter-spacing: -0.025em;
+	--text-heading-md--letter-spacing: normal;
 	--text-heading-sm: 1.5rem;
 	--text-heading-sm--line-height: 1.25;
-	--text-heading-sm--letter-spacing: -0.02em;
+	--text-heading-sm--letter-spacing: normal;
 	--text-body-lg: 1.125rem;
 	--text-body-lg--line-height: 1.65;
 	--text-body-md: 1rem;
-	--text-body-md--line-height: 1.6;
+	--text-body-md--line-height: var(--body-line-height);
 	--text-body-sm: 0.875rem;
 	--text-body-sm--line-height: 1.5;
 	--text-label: 0.8125rem;
@@ -332,7 +337,7 @@
 		background: var(--background);
 		color: var(--foreground);
 		font-size: 1rem;
-		line-height: 1.6;
+		line-height: var(--body-line-height);
 	}
 
 	body.menu-open {
@@ -435,22 +440,22 @@
 @utility text-section-heading {
 	font-weight: var(--section-heading-weight);
 	text-transform: uppercase;
-	letter-spacing: -0.04em;
+	letter-spacing: normal;
 	line-height: 1;
 }
 
 @utility text-section-label {
 	font-weight: var(--section-label-weight);
 	line-height: 1;
-	letter-spacing: -0.04em;
+	letter-spacing: normal;
 	color: color-mix(in oklab, var(--foreground) 50%, transparent);
 }
 
 @utility text-section-copy {
 	font-size: var(--description-size);
 	font-weight: var(--section-copy-weight);
-	line-height: 1.12;
-	letter-spacing: -0.035em;
+	line-height: var(--body-line-height);
+	letter-spacing: normal;
 	text-wrap: pretty;
 }
 
@@ -464,7 +469,7 @@
 		font-size: clamp(1rem, 1.35vw, 1.25rem);
 		font-weight: 400;
 		line-height: 1;
-		letter-spacing: -0.04em;
+		letter-spacing: normal;
 		text-transform: uppercase;
 		transition:
 			background-color var(--duration-normal) var(--motion-ease-standard),
@@ -497,7 +502,7 @@
 		font-size: clamp(2rem, 8vw, 2.35rem);
 		font-weight: 400;
 		line-height: 0.98;
-		letter-spacing: -0.065em;
+		letter-spacing: normal;
 		text-transform: uppercase;
 	}
 
@@ -505,7 +510,7 @@
 		font-size: clamp(0.9rem, 3.4vw, 1rem);
 		font-weight: 400;
 		line-height: 1;
-		letter-spacing: -0.05em;
+		letter-spacing: normal;
 		text-transform: uppercase;
 	}
 

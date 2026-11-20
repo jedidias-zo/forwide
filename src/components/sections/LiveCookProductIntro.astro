@@ -1,4 +1,7 @@
 ---
+import { createTranslator, getLocale } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import asset01 from "../../assets/livecook-product-page/section_02/asset-01.png";
 import asset02 from "../../assets/livecook-product-page/section_02/asset-02.png";
 import asset03 from "../../assets/livecook-product-page/section_02/asset-03.png";
@@ -6,21 +9,21 @@ import asset03 from "../../assets/livecook-product-page/section_02/asset-03.png"
 const cards = [
 	{
 		image: asset01,
-		alt: "Chef cocinando en una cocina durante una clase en vivo.",
-		title: "Un chef presente, en tiempo real",
-		body: "Cada sesión ocurre mientras la gente cocina. El chef guía, responde, ajusta y acompaña el ritmo para que la clase se sienta viva, no como una grabación.",
+		alt: t("Chef cocinando en una cocina durante una clase en vivo."),
+		title: t("Un chef presente, en tiempo real"),
+		body: t("Cada sesión ocurre mientras la gente cocina. El chef guía, responde, ajusta y acompaña el ritmo para que la clase se sienta viva, no como una grabación."),
 	},
 	{
 		image: asset02,
-		alt: "Tarta recién horneada sobre una mesa.",
-		title: "Recetas para hacer, no para guardar",
-		body: "Cada receta está pensada para prepararse durante la clase, paso a paso y con margen para resolver dudas.",
+		alt: t("Tarta recién horneada sobre una mesa."),
+		title: t("Recetas para hacer, no para guardar"),
+		body: t("Cada receta está pensada para prepararse durante la clase, paso a paso y con margen para resolver dudas."),
 	},
 	{
 		image: asset03,
-		alt: "Persona rallando queso sobre un plato de pasta.",
-		title: "Una comunidad, no una audiencia",
-		body: "Las personas no miran desde fuera. Cocinan al mismo tiempo y comparten progreso, errores y resultado.",
+		alt: t("Persona rallando queso sobre un plato de pasta."),
+		title: t("Una comunidad, no una audiencia"),
+		body: t("Las personas no miran desde fuera. Cocinan al mismo tiempo y comparten progreso, errores y resultado."),
 	},
 ];
 ---
@@ -33,25 +36,25 @@ const cards = [
 >
 	<div class="border-x border-foreground px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(4rem,8vw,7rem)]">
 		<div class="grid gap-[clamp(2rem,4vw,3.5rem)] lg:grid-cols-[0.7fr_1fr_0.7fr] lg:items-end">
-			<p class="order-2 text-[clamp(1rem,1.35vw,1.35rem)] font-normal uppercase leading-none tracking-[-0.05em] text-muted-foreground lg:order-1" data-livecook-intro-reveal-text>
-				[ Qué es LiveCook ]
+			<p class="order-2 text-[clamp(1rem,1.35vw,1.35rem)] font-normal uppercase leading-none tracking-normal text-muted-foreground lg:order-1" data-livecook-intro-reveal-text>
+				{t("[ Qué es LiveCook ]")}
 			</p>
 
 			<div class="order-1 text-center lg:order-2">
 				<h2
 					id="livecook-intro-title"
-					class="mx-auto max-w-[72rem] text-[clamp(2rem,4.75vw,4.25rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
+					class="heading-h2 mx-auto max-w-[72rem]"
 					data-livecook-intro-reveal-text
 				>
-					Una clase en vivo para cocinar de verdad.
+					{t("Una clase en vivo para cocinar de verdad.")}
 				</h2>
-				<p class="mx-auto mt-[clamp(1.75rem,3vw,2.75rem)] max-w-[38rem] text-description font-normal text-foreground" data-livecook-intro-reveal-text>
-					LiveCook no está hecho para mirar cocina desde fuera. Está hecho para que la gente cocine en ese momento: con un chef presente, preguntas reales, ritmo compartido y un plato que se termina durante la sesión.
+				<p class="mx-auto mt-[clamp(1.75rem,3vw,2.75rem)] max-w-[38rem] paragraph text-description-foreground" data-livecook-intro-reveal-text>
+					{t("LiveCook no está hecho para mirar cocina desde fuera. Está hecho para que la gente cocine en ese momento: con un chef presente, preguntas reales, ritmo compartido y un plato que se termina durante la sesión.")}
 				</p>
 			</div>
 
-			<p class="order-3 text-left text-[clamp(1rem,1.35vw,1.35rem)] font-normal uppercase leading-none tracking-[-0.05em] text-muted-foreground lg:text-right" data-livecook-intro-reveal-text>
-				[ Qué lo hace diferente ]
+			<p class="order-3 text-left text-[clamp(1rem,1.35vw,1.35rem)] font-normal uppercase leading-none tracking-normal text-muted-foreground lg:text-right" data-livecook-intro-reveal-text>
+				{t("[ Qué lo hace diferente ]")}
 			</p>
 		</div>
 
@@ -71,10 +74,10 @@ const cards = [
 							/>
 						</figure>
 						<div>
-							<h3 class="max-w-[29rem] text-[clamp(1.75rem,2.8vw,2.65rem)] font-normal uppercase leading-[0.95] tracking-[-0.065em]" data-livecook-intro-reveal-text>
+							<h3 class="heading-h3 max-w-[29rem]" data-livecook-intro-reveal-text>
 								{card.title}
 							</h3>
-							<p class="mt-3 max-w-[32rem] text-description font-normal text-muted-foreground" data-livecook-intro-reveal-text>
+							<p class="mt-3 max-w-[32rem] paragraph text-description-foreground" data-livecook-intro-reveal-text>
 								{card.body}
 							</p>
 						</div>
@@ -87,11 +90,13 @@ const cards = [
 
 <script>
 	import { gsap } from "gsap";
+	import { revealParagraph } from "../../scripts/revealParagraph";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	const splitLiveCookIntroRows = (element: HTMLElement) => {
+		if (revealParagraph(element)) return;
 		if (element.dataset.livecookIntroPrepared === "true") return;
 
 		const text = element.textContent?.replace(/\s+/g, " ").trim();

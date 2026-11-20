@@ -1,4 +1,7 @@
 ---
+import { createTranslator, getLocale } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import arrowRight from "../../assets/livecook-product-page/arrow-right.svg";
 import beliefs01 from "../../assets/vision/beliefs/asset-01.png";
 import beliefs02 from "../../assets/vision/beliefs/asset-02.png";
@@ -28,37 +31,37 @@ type Props = {
 };
 
 const {
-	eyebrow = "[ Lo que creemos ]",
-	title = "Creemos en tecnología con dirección.",
+	eyebrow = t("[ Lo que creemos ]"),
+	title = t("Creemos en tecnología con dirección."),
 	cards = [
 		{
 			number: "[ 01 ]",
-			body: "Partimos de comportamientos, necesidades y oportunidades observables.",
-			title: "Resolver algo concreto",
+			body: t("Partimos de comportamientos, necesidades y oportunidades observables."),
+			title: t("Resolver algo concreto"),
 			image: beliefs01,
-			imageAlt: "Persona observando a través de binoculares.",
+			imageAlt: t("Persona observando a través de binoculares."),
 			frame: "low",
 		},
 		{
 			number: "[ 02 ]",
-			body: "Interfaz, lenguaje, flujos, comunidad y operación forman parte del sistema. No son decoración.",
-			title: "La experiencia también es infraestructura",
+			body: t("Interfaz, lenguaje, flujos, comunidad y operación forman parte del sistema. No son decoración."),
+			title: t("La experiencia también es infraestructura"),
 			image: beliefs02,
-			imageAlt: "Estructura de concreto usada como referencia de infraestructura.",
+			imageAlt: t("Estructura de concreto usada como referencia de infraestructura."),
 			frame: "high",
 		},
 	],
-	principlesLabel = "[ Nuestros principios ]",
+	principlesLabel = t("[ Nuestros principios ]"),
 	principles = [
 		{
 			number: "[ 03 ]",
-			title: "Dejar aprendizaje acumulable",
-			body: "Lo que se diseña, prueba y construye debe servir para mejorar lo siguiente.",
+			title: t("Dejar aprendizaje acumulable"),
+			body: t("Lo que se diseña, prueba y construye debe servir para mejorar lo siguiente."),
 		},
 		{
 			number: "[ 04 ]",
-			title: "Escalar es mantener claridad",
-			body: "Crecer no significa hacer más cosas. Significa sostener coherencia mientras aumenta la complejidad.",
+			title: t("Escalar es mantener claridad"),
+			body: t("Crecer no significa hacer más cosas. Significa sostener coherencia mientras aumenta la complejidad."),
 		},
 	],
 } = Astro.props;
@@ -72,17 +75,16 @@ const {
 >
 	<div class="border-x border-foreground">
 		<div class="px-[clamp(1rem,1.6vw,1.5rem)] pb-[clamp(2.5rem,5vw,4.5rem)] pt-[clamp(4rem,7vw,6.5rem)]" data-beliefs-reveal-group>
-			<p class="mb-[clamp(2rem,3.5vw,3rem)] text-[clamp(1rem,1.3vw,1.25rem)] font-normal uppercase leading-none tracking-[-0.05em]" data-beliefs-reveal-text>
-				{eyebrow}
+			<p class="eyebrow mb-[clamp(2rem,3.5vw,3rem)]" data-beliefs-reveal-text>
+				<slot name="eyebrow">{eyebrow}</slot>
 			</p>
 
 			<h2
 				id="vision-beliefs-title"
-				class="max-w-[70rem] text-[clamp(3rem,6.2vw,6.25rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
-				aria-label={title}
+				class="heading-h2 max-w-[70rem]"
 				data-beliefs-reveal-text
 			>
-				{title}
+				<slot name="title">{title}</slot>
 			</h2>
 
 			<figure class="mt-[clamp(2.5rem,5vw,4.5rem)]" data-beliefs-reveal-fade>
@@ -93,13 +95,13 @@ const {
 		<div class="grid border-b border-foreground lg:grid-cols-2">
 			{
 				cards.map((card, index) => (
-					<article class="grid" data-beliefs-reveal-item data-beliefs-reveal-group>
-						<p class="px-[clamp(1rem,1.6vw,1.5rem)] pb-[clamp(0.6rem,0.9vw,0.85rem)] pt-[clamp(0.65rem,0.95vw,0.9rem)] text-[clamp(1rem,1.25vw,1.2rem)] font-normal uppercase leading-none tracking-[-0.04em] text-muted-foreground" data-beliefs-reveal-text>
-							{card.number}
+					<article class="flex min-w-0 flex-col" data-beliefs-reveal-item data-beliefs-reveal-group>
+						<p class="px-[clamp(1rem,1.6vw,1.5rem)] pb-[clamp(0.6rem,0.9vw,0.85rem)] pt-[clamp(0.65rem,0.95vw,0.9rem)] text-[clamp(1rem,1.25vw,1.2rem)] font-normal uppercase leading-none tracking-normal text-muted-foreground" data-beliefs-reveal-text>
+							{index === 0 ? (<slot name="card-0-number">{card.number}</slot>) : index === 1 ? (<slot name="card-1-number">{card.number}</slot>) : (<>{card.number}</>)}
 						</p>
 
-						<figure class="relative aspect-square overflow-hidden bg-surface-soft" data-beliefs-reveal-fade>
-							<img
+						<figure class="relative aspect-square w-full shrink-0 overflow-hidden bg-surface-soft" data-beliefs-reveal-fade>
+							{index === 0 ? (<slot name="image-0-0"><img
 								src={card.image.src}
 								width={card.image.width}
 								height={card.image.height}
@@ -107,15 +109,31 @@ const {
 								class="absolute inset-0 h-full w-full object-cover grayscale"
 								loading="lazy"
 								decoding="async"
-							/>
+							/></slot>) : index === 1 ? (<slot name="image-0-1"><img
+								src={card.image.src}
+								width={card.image.width}
+								height={card.image.height}
+								alt={card.imageAlt ?? ""}
+								class="absolute inset-0 h-full w-full object-cover grayscale"
+								loading="lazy"
+								decoding="async"
+							/></slot>) : (<><img
+								src={card.image.src}
+								width={card.image.width}
+								height={card.image.height}
+								alt={card.imageAlt ?? ""}
+								class="absolute inset-0 h-full w-full object-cover grayscale"
+								loading="lazy"
+								decoding="async"
+							/></>)}
 						</figure>
 
-						<div class="min-h-[clamp(9rem,12vw,11rem)] px-[clamp(0.5rem,0.8vw,0.75rem)] py-[clamp(1.25rem,2vw,1.75rem)]">
-							<p class="max-w-[42rem] text-description font-normal text-muted-foreground" data-beliefs-reveal-text>
-								{card.body}
+						<div class="min-h-[clamp(9rem,12vw,11rem)] flex-1 px-[clamp(0.5rem,0.8vw,0.75rem)] py-[clamp(1.25rem,2vw,1.75rem)]">
+							<p class="max-w-[42rem] paragraph text-description-foreground" data-beliefs-reveal-text>
+								{index === 0 ? (<slot name="card-0-body">{card.body}</slot>) : index === 1 ? (<slot name="card-1-body">{card.body}</slot>) : (<>{card.body}</>)}
 							</p>
-							<h3 class="mt-2 max-w-[42rem] text-[clamp(1.7rem,2.55vw,2.5rem)] font-normal uppercase leading-[0.98] tracking-[-0.06em]" data-beliefs-reveal-text>
-								{card.title}
+							<h3 class="heading-h3 mt-2 max-w-[42rem]" data-beliefs-reveal-text>
+								{index === 0 ? (<slot name="card-0-title">{card.title}</slot>) : index === 1 ? (<slot name="card-1-title">{card.title}</slot>) : (<>{card.title}</>)}
 							</h3>
 						</div>
 					</article>
@@ -125,38 +143,38 @@ const {
 
 		<article class="grid border-b border-foreground px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(2rem,3vw,2.75rem)] lg:grid-cols-[1fr_0.58fr] lg:items-start lg:gap-12" data-beliefs-reveal-item data-beliefs-reveal-group>
 			<div>
-				<p class="mb-[clamp(1.25rem,2vw,1.75rem)] text-[clamp(1rem,1.25vw,1.2rem)] font-normal uppercase leading-none tracking-[-0.04em] text-muted-foreground" data-beliefs-reveal-text>
-					{principles[0]?.number}
+				<p class="mb-[clamp(1.25rem,2vw,1.75rem)] text-[clamp(1rem,1.25vw,1.2rem)] font-normal uppercase leading-none tracking-normal text-muted-foreground" data-beliefs-reveal-text>
+					<slot name="principle-0-number">{principles[0]?.number}</slot>
 				</p>
-				<h3 class="text-[clamp(1.8rem,2.5vw,2.25rem)] font-normal uppercase leading-[0.98] tracking-[-0.06em]" data-beliefs-reveal-text>
-					{principles[0]?.title}
+				<h3 class="heading-h3" data-beliefs-reveal-text>
+					<slot name="principle-0-title">{principles[0]?.title}</slot>
 				</h3>
 			</div>
 
-			<p class="mt-[clamp(1.5rem,3vw,2.5rem)] max-w-[30rem] text-description font-normal text-muted-foreground lg:mt-0" data-beliefs-reveal-text>
-				{principles[0]?.body}
+			<p class="mt-[clamp(1.5rem,3vw,2.5rem)] max-w-[30rem] paragraph text-description-foreground lg:mt-0" data-beliefs-reveal-text>
+				<slot name="principle-0-body">{principles[0]?.body}</slot>
 			</p>
 		</article>
 
 		<div class="relative flex min-h-[clamp(7rem,9vw,8.5rem)] items-center justify-end overflow-hidden border-b border-foreground bg-surface-menu px-[clamp(1rem,1.6vw,1.5rem)]" data-beliefs-reveal-group>
 			<img src={waves.src} alt="" class="absolute bottom-0 left-0 h-full w-[min(56rem,58vw)] object-cover object-left-bottom opacity-70" loading="lazy" data-beliefs-reveal-fade />
-			<p class="relative z-10 text-right text-[clamp(1.8rem,3vw,3rem)] font-normal uppercase leading-none tracking-[-0.06em]" data-beliefs-reveal-text>
-				{principlesLabel}
+			<p class="relative z-10 text-right text-[clamp(1.8rem,3vw,3rem)] font-normal uppercase leading-none tracking-normal" data-beliefs-reveal-text>
+				<slot name="principlesLabel">{principlesLabel}</slot>
 			</p>
 		</div>
 
 		<article class="grid border-b border-foreground px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(2rem,3vw,2.75rem)] lg:grid-cols-[1fr_0.58fr] lg:items-start lg:gap-12" data-beliefs-reveal-item data-beliefs-reveal-group>
 			<div>
-				<p class="mb-[clamp(1.25rem,2vw,1.75rem)] text-[clamp(1rem,1.25vw,1.2rem)] font-normal uppercase leading-none tracking-[-0.04em] text-muted-foreground" data-beliefs-reveal-text>
-					{principles[1]?.number}
+				<p class="mb-[clamp(1.25rem,2vw,1.75rem)] text-[clamp(1rem,1.25vw,1.2rem)] font-normal uppercase leading-none tracking-normal text-muted-foreground" data-beliefs-reveal-text>
+					<slot name="principle-1-number">{principles[1]?.number}</slot>
 				</p>
-				<h3 class="text-[clamp(1.8rem,2.5vw,2.25rem)] font-normal uppercase leading-[0.98] tracking-[-0.06em]" data-beliefs-reveal-text>
-					{principles[1]?.title}
+				<h3 class="heading-h3" data-beliefs-reveal-text>
+					<slot name="principle-1-title">{principles[1]?.title}</slot>
 				</h3>
 			</div>
 
-			<p class="mt-[clamp(1.5rem,3vw,2.5rem)] max-w-[30rem] text-description font-normal text-muted-foreground lg:mt-0" data-beliefs-reveal-text>
-				{principles[1]?.body}
+			<p class="mt-[clamp(1.5rem,3vw,2.5rem)] max-w-[30rem] paragraph text-description-foreground lg:mt-0" data-beliefs-reveal-text>
+				<slot name="principle-1-body">{principles[1]?.body}</slot>
 			</p>
 		</article>
 	</div>
@@ -164,11 +182,13 @@ const {
 
 <script>
 	import { gsap } from "gsap";
+	import { revealParagraph } from "../../scripts/revealParagraph";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	const splitBeliefsRows = (element: HTMLElement) => {
+		if (revealParagraph(element)) return;
 		if (element.dataset.beliefsPrepared === "true") return;
 
 		const text = element.textContent?.replace(/\s+/g, " ").trim();

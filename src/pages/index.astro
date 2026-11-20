@@ -1,16 +1,54 @@
 ---
+import EditableImage from "../components/ui/EditableImage.astro";
+import editableImage0 from "../assets/sections/what-is-forwide/product-base.png";
+import editableImage1 from "../assets/sections/what-is-forwide/system-base.png";
+import editableImage2 from "../assets/sections/what-is-forwide/base-scale.png";
+import editableImage3 from "../assets/livecook/livecook-food-001.png";
+import BilingualText from "../components/ui/BilingualText.astro";
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/sections/Hero.astro';
 import WhatIsForwide from '../components/sections/WhatIsForwide.astro';
-import LiveCookSection from '../components/sections/LiveCookSection.astro';
 import NextStepsSection from '../components/sections/NextStepsSection.astro';
 import SignalsSection from '../components/sections/SignalsSection.astro';
+import BrandLogoSection from '../components/sections/BrandLogoSection.astro';
 ---
 
 <BaseLayout>
-	<Hero />
-	<WhatIsForwide />
-	<LiveCookSection />
-	<NextStepsSection />
-	<SignalsSection />
+	<Hero>
+		<BilingualText slot="intro" spanish="Forwide es la estructura desde la que nacen productos digitales presentes y futuros. LiveCook es el primer caso activo: una prueba real para validar tecnología, operación y modelo antes de abrir nuevos verticales con más criterio y menos improvisación." english="Forwide is the foundation for today's and tomorrow's digital products. LiveCook is our first active venture: a real-world test of our technology, operations and business model before entering new verticals with better judgement and less guesswork." />
+		<BilingualText slot="headline-0-0" spanish="Convertimos oportunidades " english="We turn digital " />
+		<BilingualText slot="headline-1-0" spanish="digitales en " english="opportunities into " />
+		<BilingualText slot="headline-1-1" spanish="productos reales." english="real products." />
+	</Hero>
+	<WhatIsForwide>
+		<BilingualText slot="eyebrow" spanish="[ Qué es Forwide ]" english="[ What is Forwide ]" />
+		<BilingualText slot="title" spanish="Tecnología antes que catálogo." english="Technology before a product portfolio." />
+		<BilingualText slot="intro" spanish="Forwide articula producto, operación y escala desde una misma estructura. La compañía no lanza piezas sueltas: crea plataformas con lógica propia y aprendizaje reutilizable." english="Forwide brings product, operations and scale together within a single structure. The company builds platforms with their own logic and reusable knowledge, rather than launching disconnected ventures." />
+		<BilingualText slot="pillar-0-index" spanish="001" english="001" />
+		<BilingualText slot="pillar-1-index" spanish="002" english="002" />
+		<BilingualText slot="pillar-2-index" spanish="003" english="003" />
+		<BilingualText slot="pillar-0-title" spanish="Base de producto" english="Product foundation" />
+		<BilingualText slot="pillar-1-title" spanish="Base de sistema" english="System foundation" />
+		<BilingualText slot="pillar-2-title" spanish="Base de escala" english="Scaling foundation" />
+		<BilingualText slot="pillar-0-body" spanish="Forwide articula producto, operación y escala desde una misma estructura. La compañía no lanza piezas sueltas: crea plataformas con lógica propia y aprendizaje reutilizable." english="Forwide brings product, operations and scale together within a single structure. The company builds platforms with their own logic and reusable knowledge, rather than launching disconnected ventures." />
+		<BilingualText slot="pillar-1-body" spanish="Ordena tecnología, procesos y aprendizaje para no empezar desde cero en cada lanzamiento." english="It organises technology, processes and knowledge so each launch builds on what came before." />
+		<BilingualText slot="pillar-2-body" spanish="Diseña con una pregunta constante: qué puede crecer sin perder foco ni control." english="It designs around one question: what can grow without losing focus or control?" />
+		<EditableImage slot="image-0-0" src={editableImage0} spanishAlt="" englishAlt="" class="h-full w-full object-cover object-center" loading="lazy" decoding="async" />
+		<EditableImage slot="image-0-1" src={editableImage1} spanishAlt="" englishAlt="" class="h-full w-full object-cover object-center" loading="lazy" decoding="async" />
+		<EditableImage slot="image-0-2" src={editableImage2} spanishAlt="" englishAlt="" class="h-full w-full object-cover object-center" loading="lazy" decoding="async" />
+	</WhatIsForwide>
+	<NextStepsSection steps={[]}>
+		<BilingualText slot="kicker" spanish="[ Forwide como estructura de productos ]" english="[ Forwide as a foundation for products ]" />
+		<BilingualText slot="headline" spanish="Forwide organiza presente y futuro bajo una misma capa de método, tecnología y marca." english="Forwide brings the present and the future together through a shared approach, technology and brand." />
+		<SignalsSection productOnly embedded>
+		<BilingualText slot="title" spanish="Señales de una empresa de tecnología." english="The signs of a technology company." />
+		<BilingualText slot="intro" spanish="La compañía ya muestra tres señales: un producto activo, una estructura reutilizable y una dirección capaz de abrir nuevos verticales." english="The company already shows three signs: an active product, a reusable structure and a clear direction for entering new verticals." />
+		<BilingualText slot="bridgeTitle" spanish="Lo que se aprende en un vertical puede mejorar el siguiente." english="What we learn in one vertical can improve the next." />
+		<BilingualText slot="bridgeBody" spanish="Ya existe un caso activo para probar experiencia, contenido, operación y tecnología en condiciones reales." english="An active venture is already testing experience, content, operations and technology in real-world conditions." />
+		<BilingualText slot="row-0-title" spanish="Producto en marcha." english="A product in action." />
+		<BilingualText slot="row-0-body" spanish="Ya existe un caso activo para probar experiencia, contenido, operación y tecnología en condiciones reales." english="An active venture is already testing experience, content, operations and technology in real-world conditions." />
+		<EditableImage slot="image-0-0" src={editableImage3} spanishAlt="Proceso de cocina usado como caso activo de LiveCook." englishAlt="Cooking in progress as part of LiveCook's active venture." class="h-[6rem] w-full object-cover object-center lg:h-[6.2rem]" loading="lazy" />
+	</SignalsSection>
+	</NextStepsSection>
+	<BrandLogoSection />
 </BaseLayout>

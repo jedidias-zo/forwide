@@ -1,0 +1,105 @@
+/* Shared typography. Edit these variables in Stacki's Variables panel. */
+:root {
+	/* Font family */
+	--type-font-family: "Onest Variable", "Onest", ui-sans-serif, system-ui, sans-serif;
+
+	/* H1 — page titles */
+	--h1-font-size: clamp(2rem, calc(0.515rem + 6.095vw), 6rem);
+	--h1-font-weight: 400;
+	--h1-line-height: 0.98;
+	--h1-letter-spacing: normal;
+	--h1-text-transform: uppercase;
+
+	/* H2 — section titles */
+	--h2-font-size: clamp(2rem, calc(1rem + 3.5vw), 4.5rem);
+	--h2-font-weight: 400;
+	--h2-line-height: 0.98;
+	--h2-letter-spacing: normal;
+	--h2-text-transform: uppercase;
+
+	/* H3 — card titles and smaller headings */
+	--h3-font-size: clamp(1.5rem, calc(1rem + 1.75vw), 2.75rem);
+	--h3-font-weight: 400;
+	--h3-line-height: 1.05;
+	--h3-letter-spacing: normal;
+	--h3-text-transform: uppercase;
+
+	/* Paragraph — descriptions and body copy */
+	--paragraph-font-size: 17px;
+	--paragraph-font-weight: 400;
+	--paragraph-line-height: 21px;
+	--paragraph-letter-spacing: normal;
+	--paragraph-color: #0a0a0a;
+
+	/* Product intro — prominent editorial copy beneath the hero image */
+	--product-intro-font-size: clamp(1.5rem, calc(1rem + 2vw), 2.5rem);
+	--product-intro-font-weight: 400;
+	--product-intro-line-height: 1.2;
+
+	/* Eyebrow — small section labels */
+	--eyebrow-font-size: clamp(0.875rem, calc(0.75rem + 0.5vw), 1.25rem);
+	--eyebrow-font-weight: 400;
+	--eyebrow-line-height: 1.2;
+	--eyebrow-letter-spacing: normal;
+}
+
+/* Plain CSS classes are editable in Stacki's Style panel.
+ * A class controls appearance; the HTML tag still controls document structure.
+ * Layout, alignment and contrasting text colours stay on each component. */
+@layer components {
+	.heading-h1 {
+		font-family: var(--type-font-family);
+		font-size: var(--h1-font-size);
+		font-weight: var(--h1-font-weight);
+		line-height: var(--h1-line-height);
+		letter-spacing: var(--h1-letter-spacing);
+		text-transform: var(--h1-text-transform);
+	}
+
+	.heading-h2 {
+		font-family: var(--type-font-family);
+		font-size: var(--h2-font-size);
+		font-weight: var(--h2-font-weight);
+		line-height: var(--h2-line-height);
+		letter-spacing: var(--h2-letter-spacing);
+		text-transform: var(--h2-text-transform);
+	}
+
+	.heading-h3 {
+		font-family: var(--type-font-family);
+		font-size: var(--h3-font-size);
+		font-weight: var(--h3-font-weight);
+		line-height: var(--h3-line-height);
+		letter-spacing: var(--h3-letter-spacing);
+		text-transform: var(--h3-text-transform);
+	}
+
+	.paragraph {
+		font-family: var(--type-font-family);
+		font-size: var(--paragraph-font-size);
+		font-weight: var(--paragraph-font-weight);
+		line-height: var(--paragraph-line-height);
+		letter-spacing: var(--paragraph-letter-spacing);
+		color: var(--paragraph-color);
+		text-wrap: pretty;
+	}
+
+	.eyebrow {
+		font-family: var(--type-font-family);
+		font-size: var(--eyebrow-font-size);
+		font-weight: var(--eyebrow-font-weight);
+		line-height: var(--eyebrow-line-height);
+		letter-spacing: var(--eyebrow-letter-spacing);
+		text-transform: uppercase;
+	}
+
+	.product-intro {
+		font-family: var(--type-font-family);
+		font-size: var(--product-intro-font-size);
+		font-weight: var(--product-intro-font-weight);
+		line-height: var(--product-intro-line-height);
+		letter-spacing: var(--paragraph-letter-spacing);
+		color: var(--paragraph-color);
+		text-wrap: pretty;
+	}
+}

@@ -1,4 +1,7 @@
 ---
+import { createTranslator, getLocale } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import signalImage from "../../assets/livecook/livecook-food-001.png";
 import ForwideLogo from "../brand/ForwideLogo.astro";
 
@@ -11,6 +14,8 @@ type SignalRow = {
 };
 
 type Props = {
+	productOnly?: boolean;
+	embedded?: boolean;
 	title?: string;
 	intro?: string;
 	bridgeTitle?: string;
@@ -20,103 +25,126 @@ type Props = {
 };
 
 const {
-	title = "Señales de una empresa de tecnología.",
-	intro = "La compañía ya muestra tres señales: un producto activo, una estructura reutilizable y una dirección capaz de abrir nuevos verticales.",
-	bridgeTitle = "Lo que se aprende en un vertical puede mejorar el siguiente.",
-	bridgeBody = "Ya existe un caso activo para probar experiencia, contenido, operación y tecnología en condiciones reales.",
+	productOnly = false,
+	embedded = false,
+	title = t("Señales de una empresa de tecnología."),
+	intro = t("La compañía ya muestra tres señales: un producto activo, una estructura reutilizable y una dirección capaz de abrir nuevos verticales."),
+	bridgeTitle = t("Lo que se aprende en un vertical puede mejorar el siguiente."),
+	bridgeBody = t("Ya existe un caso activo para probar experiencia, contenido, operación y tecnología en condiciones reales."),
 	rows = [
 		{
-			title: "Producto en marcha.",
-			body: "Ya existe un caso activo para probar experiencia, contenido, operación y tecnología en condiciones reales.",
+			title: t("Producto en marcha."),
+			body: t("Ya existe un caso activo para probar experiencia, contenido, operación y tecnología en condiciones reales."),
 			image: signalImage,
-			imageAlt: "Proceso de cocina usado como caso activo de LiveCook.",
+			imageAlt: t("Proceso de cocina usado como caso activo de LiveCook."),
 		},
 		{
-			title: "Visión de plataforma.",
-			body: "Forwide no se limita a Livecook. La compañía usa este primer caso para definir una forma de lanzar, operar, medir y aprender que pueda sostener futuros verticales sin empezar desde cero cada vez.",
+			title: t("Visión de plataforma."),
+			body: t("Forwide no se limita a Livecook. La compañía usa este primer caso para definir una forma de lanzar, operar, medir y aprender que pueda sostener futuros verticales sin empezar desde cero cada vez."),
 		},
 	],
 	logoLabel = "Forwide",
 } = Astro.props;
+
+const visibleRows = productOnly ? rows.slice(0, 1) : rows;
+const RowHeading = productOnly && !embedded ? "h2" : "h3";
+const SectionTag = embedded ? "div" : "section";
 ---
 
-<section
+<SectionTag
 	id="senales"
-	class="relative bg-surface-light px-[var(--frame-inset)] text-foreground"
+	class:list={[
+		"relative px-[var(--frame-inset)]",
+		embedded ? "bg-surface-dark text-surface-dark-foreground" : "bg-surface-light text-foreground",
+	]}
 	aria-labelledby="signals-title"
 	data-signals-section
 >
-	<div class="border-x border-foreground">
-		<div class="flex min-h-[clamp(20rem,31vw,29rem)] flex-col justify-center border-b border-foreground px-[clamp(1.25rem,1.6vw,1.5rem)] py-[clamp(4rem,7vw,6rem)]">
-			<div class="max-w-[64rem]">
-				<h2
-					id="signals-title"
-					class="text-[clamp(2.6rem,5vw,4.75rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
-					data-signals-reveal-text
-					aria-label={title}
-				>
-					{title}
-				</h2>
-				<p class="mt-[clamp(1.75rem,3vw,2.4rem)] max-w-[54rem] text-description font-normal text-muted-foreground" data-signals-reveal-text>
-					{intro}
-				</p>
-			</div>
-		</div>
+	<div class:list={[embedded ? "border-t border-surface-dark-foreground/40" : "border-x border-foreground"]}>
+		{!productOnly && (
+				<>
+				<div class="flex min-h-[clamp(20rem,31vw,29rem)] flex-col justify-center border-b border-foreground px-[clamp(1.25rem,1.6vw,1.5rem)] py-[clamp(4rem,7vw,6rem)]">
+					<div class="max-w-[64rem]">
+						<h2
+							id="signals-title"
+							class="heading-h2"
+							data-signals-reveal-text
+						>
+							<slot name="title">{title}</slot>
+						</h2>
+						<p class="mt-[clamp(1.75rem,3vw,2.4rem)] max-w-[54rem] paragraph text-description-foreground" data-signals-reveal-text>
+							<slot name="intro">{intro}</slot>
+						</p>
+					</div>
+				</div>
 
-		<div class="grid min-h-[clamp(8rem,10vw,10.5rem)] gap-8 border-b border-foreground px-[clamp(1.25rem,1.6vw,1.5rem)] py-[clamp(2rem,3.4vw,3rem)] lg:grid-cols-[1.15fr_0.8fr] lg:items-center">
-			<h3 class="max-w-[52rem] text-[clamp(1.9rem,3.1vw,2.8rem)] font-normal uppercase leading-[0.98] tracking-[-0.06em]" data-signals-reveal-text>
-				{bridgeTitle}
-			</h3>
-			<p class="max-w-[34rem] text-description font-normal text-muted-foreground lg:justify-self-end" data-signals-reveal-text>
-				{bridgeBody}
-			</p>
-		</div>
+				<div class="grid min-h-[clamp(8rem,10vw,10.5rem)] gap-8 border-b border-foreground px-[clamp(1.25rem,1.6vw,1.5rem)] py-[clamp(2rem,3.4vw,3rem)] lg:grid-cols-[1.15fr_0.8fr] lg:items-center">
+					<h3 class="heading-h3 max-w-[52rem]" data-signals-reveal-text>
+						<slot name="bridgeTitle">{bridgeTitle}</slot>
+					</h3>
+					<p class="max-w-[34rem] paragraph text-description-foreground lg:justify-self-end" data-signals-reveal-text>
+						<slot name="bridgeBody">{bridgeBody}</slot>
+					</p>
+				</div>
+
+				</>
+		)}
 
 		{
-			rows.map((row) => (
+			visibleRows.map((row, index) => (
 				<article
 					class:list={[
-						"grid min-h-[clamp(12rem,15vw,14rem)] gap-8 border-b border-foreground px-[clamp(1.25rem,1.6vw,1.5rem)] py-[clamp(2.25rem,3.6vw,3.4rem)] lg:grid-cols-[0.72fr_0.72fr_0.52fr] lg:items-center",
-						row.image && "bg-surface-soft",
+						"grid gap-8 px-[clamp(1.25rem,1.6vw,1.5rem)] lg:grid-cols-[0.72fr_0.72fr_0.52fr] lg:items-center",
+						embedded
+							? "py-[clamp(1.5rem,2.5vw,2rem)]"
+							: "min-h-[clamp(12rem,15vw,14rem)] border-b border-foreground py-[clamp(2.25rem,3.6vw,3.4rem)]",
+						row.image && !embedded && "bg-surface-soft",
 					]}
 					data-signals-reveal-item
 					data-signals-on-primary={row.accent ? "true" : undefined}
 				>
-					<h3 class="max-w-[27rem] text-[clamp(1.9rem,3vw,2.75rem)] font-normal uppercase leading-[0.94] tracking-[-0.06em]" data-signals-reveal-text>
-						{row.title}
-					</h3>
+					<RowHeading id={productOnly ? "signals-title" : undefined} class="heading-h3 max-w-[27rem]" data-signals-reveal-text>
+						{index === 0 ? (<slot name="row-0-title">{row.title}</slot>) : (<>{row.title}</>)}
+					</RowHeading>
 
-					<p class="max-w-[34rem] text-description font-normal text-muted-foreground" data-signals-reveal-text>
-						{row.body}
+					<p class:list={["max-w-[34rem] paragraph", embedded ? "text-surface-dark-foreground" : "text-description-foreground"]} data-signals-reveal-text>
+						{index === 0 ? (<slot name="row-0-body">{row.body}</slot>) : (<>{row.body}</>)}
 					</p>
 
 					{row.image && (
 						<figure class="w-full max-w-[24rem] overflow-hidden lg:justify-self-end" data-signals-reveal-fade>
-							<img
+							{index === 0 ? (<slot name="image-0-0"><img
 								src={row.image.src}
 								alt={row.imageAlt ?? ""}
 								class="h-[6rem] w-full object-cover object-center lg:h-[6.2rem]"
 								loading="lazy"
-							/>
+							/></slot>) : (<><img
+								src={row.image.src}
+								alt={row.imageAlt ?? ""}
+								class="h-[6rem] w-full object-cover object-center lg:h-[6.2rem]"
+								loading="lazy"
+							/></>)}
 						</figure>
 					)}
 				</article>
 			))
 		}
 
-		<div class="flex min-h-[clamp(22rem,34vw,32rem)] items-center justify-center border-b border-foreground px-[clamp(1.25rem,1.6vw,1.5rem)] py-[clamp(4rem,8vw,7rem)]" data-signals-reveal-item>
+		{!productOnly && <div class="flex min-h-[clamp(22rem,34vw,32rem)] items-center justify-center border-b border-foreground px-[clamp(1.25rem,1.6vw,1.5rem)] py-[clamp(4rem,8vw,7rem)]" data-signals-reveal-item>
 			<ForwideLogo title={logoLabel} class="w-[min(15rem,52vw)] text-muted-foreground" />
-		</div>
+		</div>}
 	</div>
-</section>
+</SectionTag>
 
 <script>
 	import { gsap } from "gsap";
+	import { revealParagraph } from "../../scripts/revealParagraph";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	const splitSignalsRows = (element: HTMLElement) => {
+		if (revealParagraph(element)) return;
 		if (element.dataset.signalsPrepared === "true") return;
 
 		const text = element.textContent?.replace(/\s+/g, " ").trim();

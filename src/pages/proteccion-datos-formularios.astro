@@ -1,33 +1,48 @@
 ---
+import BilingualText from "../components/ui/BilingualText.astro";
+import { createTranslator, getLocale } from "../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import BaseLayout from "../layouts/BaseLayout.astro";
 import LegalDocumentSection from "../components/sections/LegalDocumentSection.astro";
 
 const blocks = [
 	{
-		text: "Finalidades: responder a sus solicitudes y remitirle información comercial de nuestros productos y servicios, incluso por medios electrónicos.",
+		text: t("Finalidades: responder a sus solicitudes y remitirle información comercial de nuestros productos y servicios, incluso por medios electrónicos."),
 	},
 	{
-		text: "Legitimación: consentimiento del interesado.",
+		text: t("Legitimación: consentimiento del interesado."),
 	},
 	{
-		text: "Destinatarios: no están previstas cesiones de datos.",
+		text: t("Destinatarios: no están previstas cesiones de datos."),
 	},
 	{
-		text: "Derechos: puede retirar su consentimiento en cualquier momento, así como ejercer su derecho de acceso, rectificación, supresión, oposición, limitación y portabilidad de sus datos y demás derechos en Admin@forwide.com.",
+		text: t("Derechos: puede retirar su consentimiento en cualquier momento, así como ejercer su derecho de acceso, rectificación, supresión, oposición, limitación y portabilidad de sus datos y demás derechos en Admin@forwide.com."),
 	},
 	{
-		text: "Información adicional: Política de privacidad.",
+		text: t("Información adicional: Política de privacidad."),
 	},
-	{ type: "heading", text: "Consentimientos" },
+	{ type: "heading", text: t("Consentimientos") },
 	{
-		text: "[   ] Acepto recibir información comercial, incluso por medios electrónicos.",
+		text: t("[   ] Acepto recibir información comercial, incluso por medios electrónicos."),
 	},
 	{
-		text: "[   ] He leído y acepto la Política de Privacidad.",
+		text: t("[   ] He leído y acepto la Política de Privacidad."),
 	},
 ];
 ---
 
-<BaseLayout title="Protección de datos | Forwide" headerHomeVariant="logo">
-	<LegalDocumentSection title="Protección de datos" eyebrow="Formularios" blocks={blocks} />
+<BaseLayout title={t("Protección de datos | Forwide")} headerHomeVariant="logo">
+	<LegalDocumentSection title={t("Protección de datos")} eyebrow={t("Formularios")} blocks={blocks}>
+		<BilingualText slot="title" spanish="Protección de datos" english="Data protection" />
+		<BilingualText slot="eyebrow" spanish="Formularios" english="Forms" />
+		<BilingualText slot="block-0" spanish="Finalidades: responder a sus solicitudes y remitirle información comercial de nuestros productos y servicios, incluso por medios electrónicos." english="Purposes: to respond to your requests and send you marketing information about our products and services, including by electronic means." />
+		<BilingualText slot="block-1" spanish="Legitimación: consentimiento del interesado." english="Legal basis: the data subject’s consent." />
+		<BilingualText slot="block-2" spanish="Destinatarios: no están previstas cesiones de datos." english="Recipients: no data disclosures are envisaged." />
+		<BilingualText slot="block-3" spanish="Derechos: puede retirar su consentimiento en cualquier momento, así como ejercer su derecho de acceso, rectificación, supresión, oposición, limitación y portabilidad de sus datos y demás derechos en Admin@forwide.com." english="Rights: you may withdraw your consent at any time and exercise your rights of access, rectification, erasure, objection, restriction and portability, together with any other rights, by contacting Admin@forwide.com." />
+		<BilingualText slot="block-4" spanish="Información adicional: Política de privacidad." english="Further information: Privacy Policy." />
+		<BilingualText slot="block-5" spanish="Consentimientos" english="Consent" />
+		<BilingualText slot="block-6" spanish="[   ] Acepto recibir información comercial, incluso por medios electrónicos." english="[   ] I agree to receive marketing information, including by electronic means." />
+		<BilingualText slot="block-7" spanish="[   ] He leído y acepto la Política de Privacidad." english="[   ] I have read and accept the Privacy Policy." />
+	</LegalDocumentSection>
 </BaseLayout>

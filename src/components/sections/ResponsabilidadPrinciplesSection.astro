@@ -47,13 +47,13 @@ const {
 		<div class="max-w-[80rem]">
 			<h2
 				id="responsabilidad-principles-title"
-				class="max-w-[72rem] text-[clamp(3rem,6vw,6rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
+				class="heading-h2 max-w-[72rem]"
 				data-reveal-heading
 			>
 				{title}
 			</h2>
 
-			<p class="mt-[clamp(2rem,3vw,2.75rem)] max-w-[46rem] text-description font-normal text-muted-foreground" data-reveal-copy>
+			<p class="mt-[clamp(2rem,3vw,2.75rem)] max-w-[46rem] paragraph text-description-foreground" data-reveal-copy>
 				{intro}
 			</p>
 		</div>
@@ -63,13 +63,13 @@ const {
 				{
 					principles.map((principle) => (
 						<article class="border-b border-foreground py-[clamp(1.25rem,2vw,1.75rem)] first:pt-0" data-reveal-fade>
-							<p class="text-[clamp(0.95rem,1.1vw,1.125rem)] font-normal leading-none tracking-[-0.035em] text-muted-foreground">
+							<p class="text-[clamp(0.95rem,1.1vw,1.125rem)] font-normal leading-none tracking-normal text-muted-foreground">
 								[ {principle.index} ]
 							</p>
-							<h3 class="mt-[clamp(0.8rem,1.2vw,1rem)] text-[clamp(2rem,3vw,3rem)] font-normal uppercase leading-[0.98] tracking-[-0.06em]" data-reveal-heading>
+							<h3 class="heading-h3 mt-[clamp(0.8rem,1.2vw,1rem)]" data-reveal-heading>
 								{principle.title}
 							</h3>
-							<p class="mt-[clamp(0.5rem,0.8vw,0.75rem)] max-w-[45rem] text-description font-normal text-muted-foreground" data-reveal-copy>
+							<p class="mt-[clamp(0.5rem,0.8vw,0.75rem)] max-w-[45rem] paragraph text-description-foreground" data-reveal-copy>
 								{principle.body}
 							</p>
 						</article>

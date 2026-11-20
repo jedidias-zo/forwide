@@ -1,5 +1,9 @@
 ---
+import { createTranslator, getLocale } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import CtaButton from "../ui/CtaButton.astro";
+import BilingualField from "../ui/BilingualField.astro";
 
 const contactGroups = [
 	{
@@ -12,8 +16,8 @@ const contactGroups = [
 	{
 		title: "Media",
 		items: [
-			{ label: "Prensa", value: "press@forwide.com", href: "mailto:press@forwide.com" },
-			{ label: "", value: "Consultas directas solamente" },
+			{ label: t("Prensa"), value: "press@forwide.com", href: "mailto:press@forwide.com" },
+			{ label: "", value: t("Consultas directas solamente") },
 		],
 	},
 ];
@@ -25,9 +29,9 @@ const socialLinks = [
 ];
 
 const fieldClass =
-	"w-full border-0 border-b border-foreground bg-transparent px-0 pb-3 text-[clamp(1.15rem,1.55vw,1.5rem)] font-normal leading-none tracking-[-0.04em] text-foreground placeholder:text-muted-foreground/45 focus:border-foreground focus:outline-none";
+	"w-full border-0 border-b border-foreground bg-transparent px-0 pb-3 text-[clamp(1.15rem,1.55vw,1.5rem)] font-normal leading-none tracking-normal text-foreground placeholder:text-muted-foreground/45 focus:border-foreground focus:outline-none";
 const labelClass =
-	"block text-[clamp(0.75rem,0.9vw,0.9rem)] font-normal uppercase leading-none tracking-[-0.035em] text-foreground";
+	"block text-[clamp(0.75rem,0.9vw,0.9rem)] font-normal uppercase leading-none tracking-normal text-foreground";
 ---
 
 <section
@@ -40,10 +44,10 @@ const labelClass =
 			<div>
 				<h1
 					id="contact-title"
-					class="max-w-[56rem] text-[clamp(4.5rem,12vw,12rem)] font-normal leading-[0.86] tracking-[-0.08em]"
+					class="heading-h1 max-w-[56rem]"
 					data-reveal-heading
 				>
-					Contacto & consultas
+					<slot name="text-0">{t("Contacto & consultas")}</slot>
 				</h1>
 
 				<form
@@ -55,51 +59,50 @@ const labelClass =
 				>
 					<div class="grid gap-[clamp(2rem,4vw,3.75rem)] md:grid-cols-2">
 						<label class="grid gap-8">
-							<span class={labelClass}>Nombre completo</span>
-							<input class={fieldClass} type="text" name="nombre" placeholder="John Doe" autocomplete="name" />
+							<span class={labelClass}><slot name="text-1">{t("Nombre completo")}</slot></span>
+							<BilingualField class={fieldClass} type="text" name="nombre" spanish="John Doe" english="John Doe" autocomplete="name" />
 						</label>
 
 						<label class="grid gap-8">
-							<span class={labelClass}>Email</span>
-							<input class={fieldClass} type="email" name="email" placeholder="john@example.com" autocomplete="email" />
+							<span class={labelClass}><slot name="email-label">Email</slot></span>
+							<BilingualField class={fieldClass} type="email" name="email" spanish="john@example.com" english="john@example.com" autocomplete="email" />
 						</label>
 					</div>
 
 					<label class="grid gap-8">
-						<span class={labelClass}>Asunto</span>
-						<input class={fieldClass} type="text" name="asunto" placeholder="Consulta general" />
+						<span class={labelClass}><slot name="text-2">{t("Asunto")}</slot></span>
+						<BilingualField class={fieldClass} type="text" name="asunto" spanish="Consulta general" english="General enquiry" />
 					</label>
 
 					<label class="grid gap-[clamp(5rem,10vw,8rem)]">
-						<span class={labelClass}>Mensaje</span>
-						<textarea class={`${fieldClass} min-h-[8rem] resize-y`} name="mensaje" placeholder="¿Cómo podemos ayudarte?"></textarea>
+						<span class={labelClass}><slot name="text-3">{t("Mensaje")}</slot></span>
+						<BilingualField tag="textarea" class={`${fieldClass} min-h-[8rem] resize-y`} name="mensaje" spanish="¿Cómo podemos ayudarte?" english="How can we help you?" />
 					</label>
 
 					<div class="flex justify-start md:justify-end">
 						<button type="submit" class="cta-button cta-button-dark min-w-[clamp(13rem,16vw,17rem)]">
-							<span>Enviar mensaje</span>
+							<span><slot name="text-4">{t("Enviar mensaje")}</slot></span>
 						</button>
 					</div>
 				</form>
 			</div>
 
-			<aside class="grid gap-[clamp(2rem,4vw,3.5rem)] pb-[clamp(0rem,2vw,2rem)]" aria-label="Información de contacto" data-reveal-fade>
+			<aside class="grid gap-[clamp(2rem,4vw,3.5rem)] pb-[clamp(0rem,2vw,2rem)]" aria-label={t("Información de contacto")} data-reveal-fade>
 				{
-					contactGroups.map((group) => (
+					contactGroups.map((group, groupIndex) => (
 						<section class="grid gap-5 border-b border-foreground/20 pb-[clamp(1.75rem,3vw,2.5rem)] md:grid-cols-[0.72fr_1fr]">
-							<h2 class="text-[clamp(1.75rem,2.25vw,2.5rem)] font-normal leading-none tracking-[-0.055em]">
-								{group.title}
+							<h2 class="heading-h3">
+								{groupIndex === 0 ? (<slot name="group-0-title">{group.title}</slot>) : groupIndex === 1 ? (<slot name="group-1-title">{group.title}</slot>) : (<>{group.title}</>)}
 							</h2>
 
-							<div class="grid gap-4 text-[clamp(1rem,1.35vw,1.35rem)] font-normal leading-[1.15] tracking-[-0.045em]">
-								{group.items.map((item) => (
+							<div class="grid gap-4 text-[clamp(1rem,1.35vw,1.35rem)] font-normal leading-[1.15] tracking-normal">
+								{group.items.map((item, itemIndex) => (
 									item.href ? (
 										<a href={item.href} class="transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
-											{item.label ? `${item.label}: ` : ""}
-											{item.value}
+											{groupIndex === 0 && itemIndex === 0 ? (<slot name="contact-0-0">{item.label ? `${item.label}: ` : ""}{item.value}</slot>) : groupIndex === 0 && itemIndex === 1 ? (<slot name="contact-0-1">{item.label ? `${item.label}: ` : ""}{item.value}</slot>) : groupIndex === 1 && itemIndex === 0 ? (<slot name="contact-1-0">{item.label ? `${item.label}: ` : ""}{item.value}</slot>) : groupIndex === 1 && itemIndex === 1 ? (<slot name="contact-1-1">{item.label ? `${item.label}: ` : ""}{item.value}</slot>) : (<>{item.label ? `${item.label}: ` : ""}{item.value}</>)}
 										</a>
 									) : (
-										<p>{item.value}</p>
+										<p>{groupIndex === 0 && itemIndex === 0 ? (<slot name="contact-0-0">{item.value}</slot>) : groupIndex === 0 && itemIndex === 1 ? (<slot name="contact-0-1">{item.value}</slot>) : groupIndex === 1 && itemIndex === 0 ? (<slot name="contact-1-0">{item.value}</slot>) : groupIndex === 1 && itemIndex === 1 ? (<slot name="contact-1-1">{item.value}</slot>) : (<>{item.value}</>)}</p>
 									)
 								))}
 							</div>
@@ -107,13 +110,13 @@ const labelClass =
 					))
 				}
 
-				<nav aria-label="Redes sociales">
-					<ul class="flex flex-wrap gap-x-8 gap-y-3 text-[clamp(1rem,1.1vw,1.125rem)] font-normal leading-none tracking-[-0.04em]">
+				<nav aria-label={t("Redes sociales")}>
+					<ul class="flex flex-wrap gap-x-8 gap-y-3 text-[clamp(1rem,1.1vw,1.125rem)] font-normal leading-none tracking-normal">
 						{
-							socialLinks.map((link) => (
+							socialLinks.map((link, index) => (
 								<li>
 									<a href={link.href} class="underline underline-offset-4 transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
-										{link.label}
+										{index === 0 ? (<slot name="social-0">{link.label}</slot>) : index === 1 ? (<slot name="social-1">{link.label}</slot>) : index === 2 ? (<slot name="social-2">{link.label}</slot>) : (<>{link.label}</>)}
 									</a>
 								</li>
 							))

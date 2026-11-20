@@ -1,4 +1,7 @@
 ---
+import { createTranslator, getLocale, localisePath } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import HeroBackgroundManager from '../reactbits/HeroBackgroundManager.jsx';
 import ForwideLogo from '../brand/ForwideLogo.astro';
 
@@ -13,10 +16,10 @@ type Props = {
 };
 
 const {
-	intro = "Forwide es la estructura desde la que nacen productos digitales presentes y futuros. LiveCook es el primer caso activo: una prueba real para validar tecnología, operación y modelo antes de abrir nuevos verticales con más criterio y menos improvisación.",
+	intro = t("Forwide es la estructura desde la que nacen productos digitales presentes y futuros. LiveCook es el primer caso activo: una prueba real para validar tecnología, operación y modelo antes de abrir nuevos verticales con más criterio y menos improvisación."),
 	headlineLines = [
-		[{ text: "Convertimos oportunidades " }],
-		[{ text: "digitales en " }, { text: "productos reales.", muted: true }],
+		[{ text: t("Convertimos oportunidades ") }],
+		[{ text: t("digitales en ") }, { text: t("productos reales."), muted: true }],
 	],
 } = Astro.props;
 ---
@@ -32,7 +35,7 @@ const {
 	>
 		<div class="flex min-h-0 flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
 			<a
-				href="/"
+				href={localisePath("/", getLocale(Astro.url.pathname))}
 				aria-label="Forwide home"
 				class="block w-[min(16.375rem,62vw)] shrink-0 lg:w-[16.375rem]"
 				data-reveal-logo
@@ -41,23 +44,23 @@ const {
 			</a>
 
 			<p
-				class="max-w-[39rem] text-hero-intro font-normal leading-[1.2] text-pretty lg:ml-auto lg:text-right"
-				data-reveal-copy
+				class="max-w-[39rem] paragraph text-pretty lg:ml-auto lg:text-right text-description-foreground"
+				data-reveal-fade
 			>
-				{intro}
+				<slot name="intro">{intro}</slot>
 			</p>
 		</div>
 
 		<h1
 			id="hero-title"
-			class="max-w-full text-[length:var(--hero-title-size)] text-section-heading"
+			class="heading-h1 max-w-full"
 		>
 			{
-				headlineLines.map((line) => (
+				headlineLines.map((line, lineIndex) => (
 					<span class="relative block overflow-hidden" data-reveal-heading-line>
 						<span class="block" data-reveal-heading-text>
-							{line.map((segment) => (
-								<span class:list={[segment.muted && "text-foreground/50"]}>{segment.text}</span>
+							{line.map((segment, segmentIndex) => (
+								<span class:list={[segment.muted && "text-foreground/50"]}>{lineIndex === 0 && segmentIndex === 0 ? (<slot name="headline-0-0">{segment.text}</slot>) : lineIndex === 1 && segmentIndex === 0 ? (<slot name="headline-1-0">{segment.text}</slot>) : lineIndex === 1 && segmentIndex === 1 ? (<slot name="headline-1-1">{segment.text}</slot>) : (<>{segment.text}</>)}</span>
 							))}
 						</span>
 						<span class="pointer-events-none absolute inset-0 z-10 block bg-reveal-bar" data-reveal-heading-bar aria-hidden="true" />

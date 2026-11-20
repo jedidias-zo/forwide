@@ -17,28 +17,28 @@ const { title, eyebrow = "Legal", blocks } = Astro.props;
 	<div class="min-h-[100svh] border-x border-foreground">
 		<article class="mx-auto w-full max-w-[48rem] px-[clamp(1.25rem,3vw,2rem)] py-[clamp(5rem,9vw,8rem)]">
 			<p
-				class="mb-[clamp(2rem,4vw,3rem)] text-center text-[clamp(0.9rem,1vw,1rem)] font-normal uppercase leading-none tracking-[-0.03em] text-muted-foreground"
+				class="eyebrow mb-[clamp(2rem,4vw,3rem)] text-center text-muted-foreground"
 				data-reveal-copy
 			>
-				{eyebrow}
+				<slot name="eyebrow">{eyebrow}</slot>
 			</p>
 
 			<h1
-				class="mx-auto mb-[clamp(3.5rem,7vw,6rem)] max-w-[42rem] text-center text-[clamp(3rem,6vw,5.75rem)] font-normal uppercase leading-[0.95] tracking-[-0.075em]"
+				class="heading-h1 mx-auto mb-[clamp(3.5rem,7vw,6rem)] max-w-[42rem] text-center"
 				data-reveal-heading
 			>
-				{title}
+				<slot name="title">{title}</slot>
 			</h1>
 
-			<div class="space-y-[clamp(1.1rem,1.6vw,1.45rem)] text-[clamp(0.95rem,1.1vw,1.125rem)] font-normal leading-[1.5] tracking-[-0.025em] text-muted-foreground">
+			<div class="space-y-[clamp(1.1rem,1.6vw,1.45rem)] paragraph text-description-foreground">
 				{
-					blocks.map((block) =>
+					blocks.map((block, index) =>
 						block.type === "heading" ? (
-							<h2 class="pt-[clamp(1.2rem,2vw,1.8rem)] text-[clamp(1.05rem,1.25vw,1.25rem)] font-normal uppercase leading-[1.1] tracking-[-0.045em] text-foreground">
-								{block.text}
+							<h2 class="eyebrow pt-[clamp(1.2rem,2vw,1.8rem)] text-foreground">
+								{index === 0 ? (<slot name="block-0">{block.text}</slot>) : index === 1 ? (<slot name="block-1">{block.text}</slot>) : index === 2 ? (<slot name="block-2">{block.text}</slot>) : index === 3 ? (<slot name="block-3">{block.text}</slot>) : index === 4 ? (<slot name="block-4">{block.text}</slot>) : index === 5 ? (<slot name="block-5">{block.text}</slot>) : index === 6 ? (<slot name="block-6">{block.text}</slot>) : index === 7 ? (<slot name="block-7">{block.text}</slot>) : index === 8 ? (<slot name="block-8">{block.text}</slot>) : index === 9 ? (<slot name="block-9">{block.text}</slot>) : index === 10 ? (<slot name="block-10">{block.text}</slot>) : index === 11 ? (<slot name="block-11">{block.text}</slot>) : index === 12 ? (<slot name="block-12">{block.text}</slot>) : index === 13 ? (<slot name="block-13">{block.text}</slot>) : index === 14 ? (<slot name="block-14">{block.text}</slot>) : index === 15 ? (<slot name="block-15">{block.text}</slot>) : index === 16 ? (<slot name="block-16">{block.text}</slot>) : index === 17 ? (<slot name="block-17">{block.text}</slot>) : index === 18 ? (<slot name="block-18">{block.text}</slot>) : index === 19 ? (<slot name="block-19">{block.text}</slot>) : index === 20 ? (<slot name="block-20">{block.text}</slot>) : index === 21 ? (<slot name="block-21">{block.text}</slot>) : index === 22 ? (<slot name="block-22">{block.text}</slot>) : index === 23 ? (<slot name="block-23">{block.text}</slot>) : index === 24 ? (<slot name="block-24">{block.text}</slot>) : index === 25 ? (<slot name="block-25">{block.text}</slot>) : index === 26 ? (<slot name="block-26">{block.text}</slot>) : index === 27 ? (<slot name="block-27">{block.text}</slot>) : index === 28 ? (<slot name="block-28">{block.text}</slot>) : index === 29 ? (<slot name="block-29">{block.text}</slot>) : index === 30 ? (<slot name="block-30">{block.text}</slot>) : index === 31 ? (<slot name="block-31">{block.text}</slot>) : index === 32 ? (<slot name="block-32">{block.text}</slot>) : index === 33 ? (<slot name="block-33">{block.text}</slot>) : index === 34 ? (<slot name="block-34">{block.text}</slot>) : index === 35 ? (<slot name="block-35">{block.text}</slot>) : index === 36 ? (<slot name="block-36">{block.text}</slot>) : index === 37 ? (<slot name="block-37">{block.text}</slot>) : index === 38 ? (<slot name="block-38">{block.text}</slot>) : index === 39 ? (<slot name="block-39">{block.text}</slot>) : (<>{block.text}</>)}
 							</h2>
 						) : (
-							<p>{block.text}</p>
+							<p>{index === 0 ? (<slot name="block-0">{block.text}</slot>) : index === 1 ? (<slot name="block-1">{block.text}</slot>) : index === 2 ? (<slot name="block-2">{block.text}</slot>) : index === 3 ? (<slot name="block-3">{block.text}</slot>) : index === 4 ? (<slot name="block-4">{block.text}</slot>) : index === 5 ? (<slot name="block-5">{block.text}</slot>) : index === 6 ? (<slot name="block-6">{block.text}</slot>) : index === 7 ? (<slot name="block-7">{block.text}</slot>) : index === 8 ? (<slot name="block-8">{block.text}</slot>) : index === 9 ? (<slot name="block-9">{block.text}</slot>) : index === 10 ? (<slot name="block-10">{block.text}</slot>) : index === 11 ? (<slot name="block-11">{block.text}</slot>) : index === 12 ? (<slot name="block-12">{block.text}</slot>) : index === 13 ? (<slot name="block-13">{block.text}</slot>) : index === 14 ? (<slot name="block-14">{block.text}</slot>) : index === 15 ? (<slot name="block-15">{block.text}</slot>) : index === 16 ? (<slot name="block-16">{block.text}</slot>) : index === 17 ? (<slot name="block-17">{block.text}</slot>) : index === 18 ? (<slot name="block-18">{block.text}</slot>) : index === 19 ? (<slot name="block-19">{block.text}</slot>) : index === 20 ? (<slot name="block-20">{block.text}</slot>) : index === 21 ? (<slot name="block-21">{block.text}</slot>) : index === 22 ? (<slot name="block-22">{block.text}</slot>) : index === 23 ? (<slot name="block-23">{block.text}</slot>) : index === 24 ? (<slot name="block-24">{block.text}</slot>) : index === 25 ? (<slot name="block-25">{block.text}</slot>) : index === 26 ? (<slot name="block-26">{block.text}</slot>) : index === 27 ? (<slot name="block-27">{block.text}</slot>) : index === 28 ? (<slot name="block-28">{block.text}</slot>) : index === 29 ? (<slot name="block-29">{block.text}</slot>) : index === 30 ? (<slot name="block-30">{block.text}</slot>) : index === 31 ? (<slot name="block-31">{block.text}</slot>) : index === 32 ? (<slot name="block-32">{block.text}</slot>) : index === 33 ? (<slot name="block-33">{block.text}</slot>) : index === 34 ? (<slot name="block-34">{block.text}</slot>) : index === 35 ? (<slot name="block-35">{block.text}</slot>) : index === 36 ? (<slot name="block-36">{block.text}</slot>) : index === 37 ? (<slot name="block-37">{block.text}</slot>) : index === 38 ? (<slot name="block-38">{block.text}</slot>) : index === 39 ? (<slot name="block-39">{block.text}</slot>) : (<>{block.text}</>)}</p>
 						),
 					)
 				}

@@ -1,23 +1,9 @@
 ---
+import { createTranslator, getLocale } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import assetTechnology from "../../assets/livecook-product-page/section_layers/asset-05.png";
 
-const proofCards = [
-	{
-		index: "01",
-		title: "Un producto real",
-		copy: "No una maqueta. Una plataforma en uso, con hábitos, datos y decisiones visibles.",
-	},
-	{
-		index: "02",
-		title: "Se prueba en la práctica",
-		copy: "Cada sesión muestra qué parte del modelo funciona y qué debe ajustarse.",
-	},
-	{
-		index: "03",
-		title: "Lo que queda después",
-		copy: "Los aciertos y límites de LiveCook se convierten en criterio para futuros productos.",
-	},
-];
 ---
 
 <section
@@ -28,81 +14,50 @@ const proofCards = [
 	data-dark-frame-section
 >
 	<div class="border-x border-surface-dark-foreground">
-		<div class="relative min-h-[clamp(40rem,78vw,50rem)] overflow-hidden px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(4rem,8vw,6rem)]">
+		<div class="relative min-h-[clamp(40rem,78vw,50rem)] overflow-hidden px-[clamp(1rem,1.25vw,1.25rem)] py-header">
 			<div class="relative z-10 max-w-[68rem]">
 				<h2
 					id="livecook-proof-title"
-					class="max-w-[73rem] text-[clamp(2.65rem,6vw,5.7rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
+					class="heading-h2 max-w-[73rem]"
 					data-livecook-proof-reveal-text
 				>
-					<span class="text-surface-dark-muted">LiveCook</span> es el primer caso activo donde Forwide prueba cómo construye.
+					<span class="text-white"><slot name="brand">LiveCook</slot></span><slot name="text-0">{t(" es el primer caso activo donde Forwide prueba cómo construye.")}</slot>
 				</h2>
 
-				<div class="mt-[clamp(2rem,4vw,3.75rem)] max-w-[41rem] space-y-[clamp(1.25rem,2vw,1.75rem)] text-description font-normal text-surface-dark-muted">
-					<p data-livecook-proof-reveal-text>
-						Cada clase deja señales: qué entiende la persona que cocina, dónde se atasca, qué reserva, qué repite y qué pide después.
-					</p>
-					<p data-livecook-proof-reveal-text>
-						Para Forwide, LiveCook es una prueba en condiciones reales. No valida una idea en una presentación: la valida con sesiones, chefs, pagos, personas cocinando y operación.
+				<div class="mt-[clamp(2rem,4vw,3.75rem)] max-w-[41rem] space-y-[clamp(1.25rem,2vw,1.75rem)] paragraph text-white">
+					<p class="text-white" data-livecook-proof-reveal-text>
+						<slot name="text-1">{t("Cada clase deja señales: qué entiende la persona que cocina, dónde se atasca, qué reserva, qué repite y qué pide después.")}</slot>
 					</p>
 				</div>
 			</div>
 
 			<figure
-				class="pointer-events-none absolute bottom-[clamp(1.5rem,4vw,3rem)] right-[clamp(1rem,7vw,7rem)] z-0 w-[min(30vw,24rem)] min-w-[12rem]"
+				class="pointer-events-none absolute bottom-0 right-[clamp(1rem,7vw,7rem)] z-0 w-[min(30vw,24rem)] min-w-[12rem]"
 				data-livecook-proof-target
 			>
-				<img
+				<slot name="image-0"><img
 					src={assetTechnology.src}
 					width={assetTechnology.width}
 					height={assetTechnology.height}
-					alt="Teléfono iluminado sostenido en una mano."
+					alt={t("Teléfono iluminado sostenido en una mano.")}
 					class="w-full"
 					loading="lazy"
 					decoding="async"
-				/>
+				/></slot>
 			</figure>
-		</div>
-
-		<div class="grid border-t border-surface-dark-foreground lg:grid-cols-3" data-livecook-proof-grid>
-			{
-				proofCards.map((card, index) => (
-					<article
-						class:list={[
-							"min-h-[12rem] border-surface-dark-foreground px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(1.5rem,2.5vw,2rem)]",
-							index > 0 && "border-t lg:border-l lg:border-t-0",
-						]}
-						data-livecook-proof-card
-					>
-						<p class="text-[clamp(0.9rem,1.1vw,1rem)] font-normal uppercase leading-none text-surface-dark-muted" data-livecook-proof-reveal-text>
-							[ {card.index} ]
-						</p>
-						<h3 class="mt-[clamp(1rem,2vw,1.5rem)] max-w-[23rem] text-[clamp(1.65rem,2.8vw,2.65rem)] font-normal uppercase leading-none tracking-[-0.055em]" data-livecook-proof-reveal-text>
-							{card.title}
-						</h3>
-						<p class="mt-[clamp(0.75rem,1.4vw,1rem)] max-w-[26rem] text-description font-normal text-surface-dark-muted" data-livecook-proof-reveal-text>
-							{card.copy}
-						</p>
-					</article>
-				))
-			}
-		</div>
-
-		<div class="border-t border-surface-dark-foreground px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(2rem,4vw,3.25rem)] text-right">
-			<p class="ml-auto max-w-[58rem] text-[clamp(1.65rem,3vw,3rem)] font-normal uppercase leading-none tracking-[-0.055em]" data-livecook-proof-reveal-text>
-				Lo que aprendemos aquí no se queda <span class="text-surface-dark-muted">aquí.</span>
-			</p>
 		</div>
 	</div>
 </section>
 
 <script>
 	import { gsap } from "gsap";
+	import { revealParagraph } from "../../scripts/revealParagraph";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	const splitProofRows = (element: HTMLElement) => {
+		if (revealParagraph(element)) return;
 		if (element.dataset.livecookProofPrepared === "true") return;
 
 		const text = element.textContent?.replace(/\s+/g, " ").trim();

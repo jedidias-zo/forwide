@@ -1,94 +1,134 @@
 ---
+import BilingualText from "../components/ui/BilingualText.astro";
+import { createTranslator, getLocale } from "../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import BaseLayout from "../layouts/BaseLayout.astro";
 import LegalDocumentSection from "../components/sections/LegalDocumentSection.astro";
 
 const blocks = [
 	{
-		text: "La confidencialidad y la seguridad son valores primordiales de FORWIDE OU y, en consecuencia, asumimos el compromiso de garantizar la privacidad del Usuario en todo momento y de no recabar información innecesaria.",
+		text: t("La confidencialidad y la seguridad son valores primordiales de FORWIDE OU y, en consecuencia, asumimos el compromiso de garantizar la privacidad del Usuario en todo momento y de no recabar información innecesaria."),
 	},
 	{
-		text: "A continuación, le proporcionamos toda la información necesaria sobre nuestra Política de Privacidad en relación con los datos personales que recabamos, explicándole quién es el responsable del tratamiento de sus datos, para qué finalidades los recabamos, cuál es la legitimación para su tratamiento, durante cuánto tiempo los conservamos, a qué destinatarios se comunican sus datos y cuáles son sus derechos y cómo ejercerlos.",
+		text: t("A continuación, le proporcionamos toda la información necesaria sobre nuestra Política de Privacidad en relación con los datos personales que recabamos, explicándole quién es el responsable del tratamiento de sus datos, para qué finalidades los recabamos, cuál es la legitimación para su tratamiento, durante cuánto tiempo los conservamos, a qué destinatarios se comunican sus datos y cuáles son sus derechos y cómo ejercerlos."),
 	},
-	{ type: "heading", text: "Responsable" },
+	{ type: "heading", text: t("Responsable") },
 	{
-		text: "FORWIDE OU, NIF 17253142, con domicilio en JÄRVEBANA TEE 9 (11314 Tallin). Contacto: Admin@forwide.com.",
+		text: t("FORWIDE OU, NIF 17253142, con domicilio en JÄRVEBANA TEE 9 (11314 Tallin). Contacto: Admin@forwide.com."),
 	},
-	{ type: "heading", text: "Finalidades, legitimación y conservación" },
+	{ type: "heading", text: t("Finalidades, legitimación y conservación") },
 	{
-		text: "Formulario de Contacto. Finalidad: facilitarle un medio para que pueda ponerse en contacto con nosotros y contestar a sus solicitudes de información, así como enviarle comunicaciones de nuestros productos, servicios y actividades, inclusive por medios electrónicos (correo electrónico, SMS, etc.), si marca la casilla de aceptación.",
-	},
-	{
-		text: "Legitimación: el consentimiento del usuario al solicitarnos información a través de nuestro formulario de contacto y al marcar la casilla de aceptación de envío de información.",
+		text: t("Formulario de Contacto. Finalidad: facilitarle un medio para que pueda ponerse en contacto con nosotros y contestar a sus solicitudes de información, así como enviarle comunicaciones de nuestros productos, servicios y actividades, inclusive por medios electrónicos (correo electrónico, SMS, etc.), si marca la casilla de aceptación."),
 	},
 	{
-		text: "Conservación: una vez resuelta su solicitud por medio de nuestro formulario o contestada por correo electrónico, si no ha generado un nuevo tratamiento, y en caso de haber aceptado recibir envíos comerciales, hasta que solicite la baja de los mismos.",
+		text: t("Legitimación: el consentimiento del usuario al solicitarnos información a través de nuestro formulario de contacto y al marcar la casilla de aceptación de envío de información."),
 	},
 	{
-		text: "Envío de correos electrónicos. Finalidad: contestar a sus solicitudes de información, atender sus peticiones y responder sus consultas o dudas. En caso de recibir su Currículum Vitae, sus datos personales y curriculares podrán formar parte de nuestras bases de datos para participar en nuestros procesos de selección presentes y futuros.",
+		text: t("Conservación: una vez resuelta su solicitud por medio de nuestro formulario o contestada por correo electrónico, si no ha generado un nuevo tratamiento, y en caso de haber aceptado recibir envíos comerciales, hasta que solicite la baja de los mismos."),
 	},
 	{
-		text: "Legitimación: el consentimiento del usuario al solicitarnos información a través de la dirección de correo electrónico o enviarnos sus datos y CV para participar en nuestros procesos de selección.",
+		text: t("Envío de correos electrónicos. Finalidad: contestar a sus solicitudes de información, atender sus peticiones y responder sus consultas o dudas. En caso de recibir su Currículum Vitae, sus datos personales y curriculares podrán formar parte de nuestras bases de datos para participar en nuestros procesos de selección presentes y futuros."),
 	},
 	{
-		text: "Conservación: una vez resulta contestada su petición por correo electrónico, si no ha generado un nuevo tratamiento. En el caso de recibir su CV, sus datos podrán ser conservados durante un año máximo para futuros procesos de selección.",
-	},
-	{ type: "heading", text: "Obligación de facilitarnos sus datos personales" },
-	{
-		text: "El suministro de datos personales requiere una edad mínima de 14 años o, en su caso, la edad mínima que establezca la normativa de protección de datos aplicable y/o disponer de capacidad jurídica suficiente para contratar.",
+		text: t("Legitimación: el consentimiento del usuario al solicitarnos información a través de la dirección de correo electrónico o enviarnos sus datos y CV para participar en nuestros procesos de selección."),
 	},
 	{
-		text: "Los datos personales solicitados son necesarios para gestionar sus solicitudes, darle de alta como usuario y/o prestarle los servicios que pueda contratar, por lo que, si no nos los facilita, no podremos atenderle correctamente ni prestarle el servicio que ha solicitado.",
+		text: t("Conservación: una vez resulta contestada su petición por correo electrónico, si no ha generado un nuevo tratamiento. En el caso de recibir su CV, sus datos podrán ser conservados durante un año máximo para futuros procesos de selección."),
+	},
+	{ type: "heading", text: t("Obligación de facilitarnos sus datos personales") },
+	{
+		text: t("El suministro de datos personales requiere una edad mínima de 14 años o, en su caso, la edad mínima que establezca la normativa de protección de datos aplicable y/o disponer de capacidad jurídica suficiente para contratar."),
 	},
 	{
-		text: "En todo caso, nos reservamos el derecho de decidir sobre la incorporación o no de sus datos personales y demás información a nuestras bases de datos.",
-	},
-	{ type: "heading", text: "Destinatarios de sus datos" },
-	{
-		text: "Sus datos son confidenciales y no se cederán a terceros, salvo que exista obligación legal.",
-	},
-	{ type: "heading", text: "Cookies" },
-	{
-		text: "Opción A: esta página web no utiliza cookies y por tanto no se tratan datos de conexión y/o dispositivos para fines estadísticos ni se captan hábitos de navegación para fines publicitarios. Por ello, no se requiere, de acuerdo con el artículo 22 de la Ley de Servicios de la Sociedad de la Información, su consentimiento para su instalación temporal durante su sesión de navegación.",
+		text: t("Los datos personales solicitados son necesarios para gestionar sus solicitudes, darle de alta como usuario y/o prestarle los servicios que pueda contratar, por lo que, si no nos los facilita, no podremos atenderle correctamente ni prestarle el servicio que ha solicitado."),
 	},
 	{
-		text: "Opción B: esta página web únicamente utiliza cookies que permiten el funcionamiento y la prestación de los servicios ofrecidos en la misma y en su caso cookies propias con la única finalidad de medir las audiencias de esta y por tanto consideradas exentas de consentimiento. Por ello, no se requiere, de acuerdo con el artículo 22 de la Ley de Servicios de la Sociedad de la Información, su consentimiento para su instalación.",
+		text: t("En todo caso, nos reservamos el derecho de decidir sobre la incorporación o no de sus datos personales y demás información a nuestras bases de datos."),
+	},
+	{ type: "heading", text: t("Destinatarios de sus datos") },
+	{
+		text: t("Sus datos son confidenciales y no se cederán a terceros, salvo que exista obligación legal."),
+	},
+	{ type: "heading", text: t("Cookies") },
+	{
+		text: t("Opción A: esta página web no utiliza cookies y por tanto no se tratan datos de conexión y/o dispositivos para fines estadísticos ni se captan hábitos de navegación para fines publicitarios. Por ello, no se requiere, de acuerdo con el artículo 22 de la Ley de Servicios de la Sociedad de la Información, su consentimiento para su instalación temporal durante su sesión de navegación."),
 	},
 	{
-		text: "Opción C: esta página web utiliza cookies técnicas, de personalización y análisis, propias y de terceros que tratan datos de conexión y/o de los dispositivos para fines estadísticos, pero en ningún caso captan hábitos de navegación para fines publicitarios. Por ello, al acceder a nuestra web, en cumplimiento del artículo 22 de la Ley de Sociedad de la Información, al tratar las cookies mencionadas, le hemos solicitado su consentimiento para su uso y facilitado información de las mismas.",
+		text: t("Opción B: esta página web únicamente utiliza cookies que permiten el funcionamiento y la prestación de los servicios ofrecidos en la misma y en su caso cookies propias con la única finalidad de medir las audiencias de esta y por tanto consideradas exentas de consentimiento. Por ello, no se requiere, de acuerdo con el artículo 22 de la Ley de Servicios de la Sociedad de la Información, su consentimiento para su instalación."),
 	},
 	{
-		text: "Opción D: esta página web utiliza cookies técnicas, de personalización, de análisis y publicitarias, propias y de terceros que tratan datos de conexión y/o del dispositivo, así como hábitos de navegación para fines estadísticos y publicitarios. Por ello, al acceder a nuestra web, en cumplimiento del artículo 22 de la Ley de Servicios de la Sociedad de la Información, al tratar las cookies mencionadas, le hemos solicitado su consentimiento para su uso y facilitado información de las mismas.",
-	},
-	{ type: "heading", text: "Derechos en relación con sus datos personales" },
-	{
-		text: "Cualquier persona puede retirar su consentimiento en cualquier momento, cuando el mismo se haya otorgado para el tratamiento de sus datos. En ningún caso, la retirada de este consentimiento condiciona la ejecución del contrato de suscripción o las relaciones generadas con anterioridad.",
+		text: t("Opción C: esta página web utiliza cookies técnicas, de personalización y análisis, propias y de terceros que tratan datos de conexión y/o de los dispositivos para fines estadísticos, pero en ningún caso captan hábitos de navegación para fines publicitarios. Por ello, al acceder a nuestra web, en cumplimiento del artículo 22 de la Ley de Sociedad de la Información, al tratar las cookies mencionadas, le hemos solicitado su consentimiento para su uso y facilitado información de las mismas."),
 	},
 	{
-		text: "Igualmente, puede solicitar el acceso a sus datos personales o su rectificación cuando sean inexactos; solicitar su supresión cuando, entre otros motivos, los datos ya no sean necesarios para los fines para los que fueron recogidos; solicitar la limitación de su tratamiento en determinadas circunstancias; solicitar la oposición al tratamiento de sus datos por motivos relacionados con su situación particular; solicitar la portabilidad de los datos en los casos previstos en la normativa; y ejercer otros derechos reconocidos en las normativas aplicables.",
+		text: t("Opción D: esta página web utiliza cookies técnicas, de personalización, de análisis y publicitarias, propias y de terceros que tratan datos de conexión y/o del dispositivo, así como hábitos de navegación para fines estadísticos y publicitarios. Por ello, al acceder a nuestra web, en cumplimiento del artículo 22 de la Ley de Servicios de la Sociedad de la Información, al tratar las cookies mencionadas, le hemos solicitado su consentimiento para su uso y facilitado información de las mismas."),
+	},
+	{ type: "heading", text: t("Derechos en relación con sus datos personales") },
+	{
+		text: t("Cualquier persona puede retirar su consentimiento en cualquier momento, cuando el mismo se haya otorgado para el tratamiento de sus datos. En ningún caso, la retirada de este consentimiento condiciona la ejecución del contrato de suscripción o las relaciones generadas con anterioridad."),
 	},
 	{
-		text: "Dónde y cómo solicitar sus derechos: mediante un escrito dirigido al responsable a su dirección postal o electrónica, indicando la referencia “Datos Personales”, especificando el derecho que se quiere ejercer y respecto a qué datos personales.",
+		text: t("Igualmente, puede solicitar el acceso a sus datos personales o su rectificación cuando sean inexactos; solicitar su supresión cuando, entre otros motivos, los datos ya no sean necesarios para los fines para los que fueron recogidos; solicitar la limitación de su tratamiento en determinadas circunstancias; solicitar la oposición al tratamiento de sus datos por motivos relacionados con su situación particular; solicitar la portabilidad de los datos en los casos previstos en la normativa; y ejercer otros derechos reconocidos en las normativas aplicables."),
 	},
 	{
-		text: "En caso de divergencias con la empresa en relación con el tratamiento de sus datos, puede presentar una reclamación ante la Agencia de Protección de Datos (www.agpd.es).",
-	},
-	{ type: "heading", text: "Seguridad de sus datos personales" },
-	{
-		text: "Con el objetivo de salvaguardar la seguridad de sus datos personales, le informamos que hemos adoptado todas las medidas de índole técnica y organizativa necesarias para garantizar la seguridad de los datos personales suministrados de su alteración, pérdida y tratamientos o accesos no autorizados.",
-	},
-	{ type: "heading", text: "Actualización de sus datos" },
-	{
-		text: "Es importante que para que podamos mantener sus datos personales actualizados nos informe siempre que haya habido alguna modificación en ellos; en caso contrario, no respondemos de la veracidad de los mismos.",
+		text: t("Dónde y cómo solicitar sus derechos: mediante un escrito dirigido al responsable a su dirección postal o electrónica, indicando la referencia “Datos Personales”, especificando el derecho que se quiere ejercer y respecto a qué datos personales."),
 	},
 	{
-		text: "No nos hacemos responsables de la política de privacidad respecto a los datos personales que pueda facilitar a terceros por medio de los enlaces disponibles en nuestra página web.",
+		text: t("En caso de divergencias con la empresa en relación con el tratamiento de sus datos, puede presentar una reclamación ante la Agencia de Protección de Datos (www.agpd.es)."),
+	},
+	{ type: "heading", text: t("Seguridad de sus datos personales") },
+	{
+		text: t("Con el objetivo de salvaguardar la seguridad de sus datos personales, le informamos que hemos adoptado todas las medidas de índole técnica y organizativa necesarias para garantizar la seguridad de los datos personales suministrados de su alteración, pérdida y tratamientos o accesos no autorizados."),
+	},
+	{ type: "heading", text: t("Actualización de sus datos") },
+	{
+		text: t("Es importante que para que podamos mantener sus datos personales actualizados nos informe siempre que haya habido alguna modificación en ellos; en caso contrario, no respondemos de la veracidad de los mismos."),
 	},
 	{
-		text: "La presente Política de Privacidad ha sido actualizada en fecha 17/06/2026 y puede ser modificada para adaptarla a los cambios que se produzcan en nuestra web, así como modificaciones legislativas o jurisprudenciales sobre datos personales que vayan apareciendo, por lo que exige su lectura cada vez que nos facilite sus datos a través de esta Web.",
+		text: t("No nos hacemos responsables de la política de privacidad respecto a los datos personales que pueda facilitar a terceros por medio de los enlaces disponibles en nuestra página web."),
+	},
+	{
+		text: t("La presente Política de Privacidad ha sido actualizada en fecha 17/06/2026 y puede ser modificada para adaptarla a los cambios que se produzcan en nuestra web, así como modificaciones legislativas o jurisprudenciales sobre datos personales que vayan apareciendo, por lo que exige su lectura cada vez que nos facilite sus datos a través de esta Web."),
 	},
 ];
 ---
 
-<BaseLayout title="Política de privacidad | Forwide" headerHomeVariant="logo">
-	<LegalDocumentSection title="Política de privacidad" blocks={blocks} />
+<BaseLayout title={t("Política de privacidad | Forwide")} headerHomeVariant="logo">
+	<LegalDocumentSection title={t("Política de privacidad")} blocks={blocks}>
+		<BilingualText slot="title" spanish="Política de privacidad" english="Privacy policy" />
+		<BilingualText slot="eyebrow" spanish="Legal" english="Legal" />
+		<BilingualText slot="block-0" spanish="La confidencialidad y la seguridad son valores primordiales de FORWIDE OU y, en consecuencia, asumimos el compromiso de garantizar la privacidad del Usuario en todo momento y de no recabar información innecesaria." english="Confidentiality and security are core values of FORWIDE OU. We therefore undertake to protect user privacy at all times and not to collect unnecessary information." />
+		<BilingualText slot="block-1" spanish="A continuación, le proporcionamos toda la información necesaria sobre nuestra Política de Privacidad en relación con los datos personales que recabamos, explicándole quién es el responsable del tratamiento de sus datos, para qué finalidades los recabamos, cuál es la legitimación para su tratamiento, durante cuánto tiempo los conservamos, a qué destinatarios se comunican sus datos y cuáles son sus derechos y cómo ejercerlos." english="Below, we provide all the information you need about our Privacy Policy regarding the personal data we collect. We explain who controls your data, why we collect it, the legal basis for processing it, how long we retain it, who receives it, and your rights and how to exercise them." />
+		<BilingualText slot="block-2" spanish="Responsable" english="Data controller" />
+		<BilingualText slot="block-3" spanish="FORWIDE OU, NIF 17253142, con domicilio en JÄRVEBANA TEE 9 (11314 Tallin). Contacto: Admin@forwide.com." english="FORWIDE OU, tax identification number 17253142, with its registered address at JÄRVEBANA TEE 9 (11314 Tallinn). Contact: Admin@forwide.com." />
+		<BilingualText slot="block-4" spanish="Finalidades, legitimación y conservación" english="Purposes, legal basis and retention" />
+		<BilingualText slot="block-5" spanish="Formulario de Contacto. Finalidad: facilitarle un medio para que pueda ponerse en contacto con nosotros y contestar a sus solicitudes de información, así como enviarle comunicaciones de nuestros productos, servicios y actividades, inclusive por medios electrónicos (correo electrónico, SMS, etc.), si marca la casilla de aceptación." english="Contact form. Purpose: to provide a way to contact us and respond to your requests for information, and to send communications about our products, services and activities, including by electronic means (email, SMS, etc.), if you tick the consent box." />
+		<BilingualText slot="block-6" spanish="Legitimación: el consentimiento del usuario al solicitarnos información a través de nuestro formulario de contacto y al marcar la casilla de aceptación de envío de información." english="Legal basis: your consent when requesting information through our contact form and ticking the box to agree to receive information." />
+		<BilingualText slot="block-7" spanish="Conservación: una vez resuelta su solicitud por medio de nuestro formulario o contestada por correo electrónico, si no ha generado un nuevo tratamiento, y en caso de haber aceptado recibir envíos comerciales, hasta que solicite la baja de los mismos." english="Retention: until your request through our form has been resolved or answered by email, provided no further processing has arisen; if you have agreed to receive marketing communications, until you unsubscribe." />
+		<BilingualText slot="block-8" spanish="Envío de correos electrónicos. Finalidad: contestar a sus solicitudes de información, atender sus peticiones y responder sus consultas o dudas. En caso de recibir su Currículum Vitae, sus datos personales y curriculares podrán formar parte de nuestras bases de datos para participar en nuestros procesos de selección presentes y futuros." english="Emails. Purpose: to respond to your requests for information, deal with your requests and answer your enquiries or questions. If we receive your CV, your personal and professional information may be included in our databases for current and future recruitment processes." />
+		<BilingualText slot="block-9" spanish="Legitimación: el consentimiento del usuario al solicitarnos información a través de la dirección de correo electrónico o enviarnos sus datos y CV para participar en nuestros procesos de selección." english="Legal basis: your consent when requesting information by email or sending us your details and CV to participate in our recruitment processes." />
+		<BilingualText slot="block-10" spanish="Conservación: una vez resulta contestada su petición por correo electrónico, si no ha generado un nuevo tratamiento. En el caso de recibir su CV, sus datos podrán ser conservados durante un año máximo para futuros procesos de selección." english="Retention: until your request has been answered by email, provided no further processing has arisen. If we receive your CV, your data may be retained for a maximum of one year for future recruitment processes." />
+		<BilingualText slot="block-11" spanish="Obligación de facilitarnos sus datos personales" english="Obligation to provide personal data" />
+		<BilingualText slot="block-12" spanish="El suministro de datos personales requiere una edad mínima de 14 años o, en su caso, la edad mínima que establezca la normativa de protección de datos aplicable y/o disponer de capacidad jurídica suficiente para contratar." english="Providing personal data requires a minimum age of 14 or, where applicable, the minimum age set by applicable data protection regulations and/or sufficient legal capacity to enter into a contract." />
+		<BilingualText slot="block-13" spanish="Los datos personales solicitados son necesarios para gestionar sus solicitudes, darle de alta como usuario y/o prestarle los servicios que pueda contratar, por lo que, si no nos los facilita, no podremos atenderle correctamente ni prestarle el servicio que ha solicitado." english="The personal data requested is necessary to manage your requests, register you as a user and/or provide the services you may purchase. If you do not provide it, we will be unable to assist you properly or provide the service you have requested." />
+		<BilingualText slot="block-14" spanish="En todo caso, nos reservamos el derecho de decidir sobre la incorporación o no de sus datos personales y demás información a nuestras bases de datos." english="In all cases, we reserve the right to decide whether to include your personal data and other information in our databases." />
+		<BilingualText slot="block-15" spanish="Destinatarios de sus datos" english="Recipients of your data" />
+		<BilingualText slot="block-16" spanish="Sus datos son confidenciales y no se cederán a terceros, salvo que exista obligación legal." english="Your data is confidential and will not be disclosed to third parties unless required by law." />
+		<BilingualText slot="block-17" spanish="Cookies" english="Cookies" />
+		<BilingualText slot="block-18" spanish="Opción A: esta página web no utiliza cookies y por tanto no se tratan datos de conexión y/o dispositivos para fines estadísticos ni se captan hábitos de navegación para fines publicitarios. Por ello, no se requiere, de acuerdo con el artículo 22 de la Ley de Servicios de la Sociedad de la Información, su consentimiento para su instalación temporal durante su sesión de navegación." english="Option A: this website does not use cookies. Connection and/or device data is therefore not processed for statistical purposes, nor are browsing habits collected for advertising purposes. Accordingly, under Article 22 of the Spanish Information Society Services Act, your consent is not required for their temporary installation during your browsing session." />
+		<BilingualText slot="block-19" spanish="Opción B: esta página web únicamente utiliza cookies que permiten el funcionamiento y la prestación de los servicios ofrecidos en la misma y en su caso cookies propias con la única finalidad de medir las audiencias de esta y por tanto consideradas exentas de consentimiento. Por ello, no se requiere, de acuerdo con el artículo 22 de la Ley de Servicios de la Sociedad de la Información, su consentimiento para su instalación." english="Option B: this website only uses cookies that enable its operation and the provision of its services and, where applicable, first-party cookies used solely to measure its audience, which are therefore considered exempt from consent. Accordingly, under Article 22 of the Spanish Information Society Services Act, your consent is not required for their installation." />
+		<BilingualText slot="block-20" spanish="Opción C: esta página web utiliza cookies técnicas, de personalización y análisis, propias y de terceros que tratan datos de conexión y/o de los dispositivos para fines estadísticos, pero en ningún caso captan hábitos de navegación para fines publicitarios. Por ello, al acceder a nuestra web, en cumplimiento del artículo 22 de la Ley de Sociedad de la Información, al tratar las cookies mencionadas, le hemos solicitado su consentimiento para su uso y facilitado información de las mismas." english="Option C: this website uses first-party and third-party technical, personalisation and analytics cookies that process connection and/or device data for statistical purposes, but do not collect browsing habits for advertising purposes. Accordingly, when you access our website, in compliance with Article 22 of the Spanish Information Society Act, we have requested your consent to use these cookies and provided information about them." />
+		<BilingualText slot="block-21" spanish="Opción D: esta página web utiliza cookies técnicas, de personalización, de análisis y publicitarias, propias y de terceros que tratan datos de conexión y/o del dispositivo, así como hábitos de navegación para fines estadísticos y publicitarios. Por ello, al acceder a nuestra web, en cumplimiento del artículo 22 de la Ley de Servicios de la Sociedad de la Información, al tratar las cookies mencionadas, le hemos solicitado su consentimiento para su uso y facilitado información de las mismas." english="Option D: this website uses first-party and third-party technical, personalisation, analytics and advertising cookies that process connection and/or device data, as well as browsing habits, for statistical and advertising purposes. Accordingly, when you access our website, in compliance with Article 22 of the Spanish Information Society Services Act, we have requested your consent to use these cookies and provided information about them." />
+		<BilingualText slot="block-22" spanish="Derechos en relación con sus datos personales" english="Rights regarding your personal data" />
+		<BilingualText slot="block-23" spanish="Cualquier persona puede retirar su consentimiento en cualquier momento, cuando el mismo se haya otorgado para el tratamiento de sus datos. En ningún caso, la retirada de este consentimiento condiciona la ejecución del contrato de suscripción o las relaciones generadas con anterioridad." english="Anyone may withdraw their consent at any time where consent was given for the processing of their data. Withdrawal of consent will not affect the performance of a subscription contract or any relationships established previously." />
+		<BilingualText slot="block-24" spanish="Igualmente, puede solicitar el acceso a sus datos personales o su rectificación cuando sean inexactos; solicitar su supresión cuando, entre otros motivos, los datos ya no sean necesarios para los fines para los que fueron recogidos; solicitar la limitación de su tratamiento en determinadas circunstancias; solicitar la oposición al tratamiento de sus datos por motivos relacionados con su situación particular; solicitar la portabilidad de los datos en los casos previstos en la normativa; y ejercer otros derechos reconocidos en las normativas aplicables." english="You may also request access to your personal data or rectification where it is inaccurate; request its erasure where, among other reasons, it is no longer necessary for the purposes for which it was collected; request restriction of processing in certain circumstances; object to processing on grounds relating to your particular situation; request data portability in the cases provided for by law; and exercise other rights recognised by applicable regulations." />
+		<BilingualText slot="block-25" spanish="Dónde y cómo solicitar sus derechos: mediante un escrito dirigido al responsable a su dirección postal o electrónica, indicando la referencia “Datos Personales”, especificando el derecho que se quiere ejercer y respecto a qué datos personales." english="Where and how to exercise your rights: write to the data controller at its postal or email address, quoting “Personal Data” and specifying the right you wish to exercise and the personal data concerned." />
+		<BilingualText slot="block-26" spanish="En caso de divergencias con la empresa en relación con el tratamiento de sus datos, puede presentar una reclamación ante la Agencia de Protección de Datos (www.agpd.es)." english="If you disagree with the company regarding the processing of your data, you may lodge a complaint with the Spanish Data Protection Agency (www.agpd.es)." />
+		<BilingualText slot="block-27" spanish="Seguridad de sus datos personales" english="Security of your personal data" />
+		<BilingualText slot="block-28" spanish="Con el objetivo de salvaguardar la seguridad de sus datos personales, le informamos que hemos adoptado todas las medidas de índole técnica y organizativa necesarias para garantizar la seguridad de los datos personales suministrados de su alteración, pérdida y tratamientos o accesos no autorizados." english="To safeguard your personal data, we inform you that we have adopted all necessary technical and organisational measures to protect the personal data provided against alteration, loss and unauthorised processing or access." />
+		<BilingualText slot="block-29" spanish="Actualización de sus datos" english="Updating your data" />
+		<BilingualText slot="block-30" spanish="Es importante que para que podamos mantener sus datos personales actualizados nos informe siempre que haya habido alguna modificación en ellos; en caso contrario, no respondemos de la veracidad de los mismos." english="To help us keep your personal data up to date, it is important that you inform us whenever it changes. Otherwise, we cannot be responsible for its accuracy." />
+		<BilingualText slot="block-31" spanish="No nos hacemos responsables de la política de privacidad respecto a los datos personales que pueda facilitar a terceros por medio de los enlaces disponibles en nuestra página web." english="We are not responsible for the privacy policies concerning personal data you may provide to third parties through links available on our website." />
+		<BilingualText slot="block-32" spanish="La presente Política de Privacidad ha sido actualizada en fecha 17/06/2026 y puede ser modificada para adaptarla a los cambios que se produzcan en nuestra web, así como modificaciones legislativas o jurisprudenciales sobre datos personales que vayan apareciendo, por lo que exige su lectura cada vez que nos facilite sus datos a través de esta Web." english="This Privacy Policy was updated on 17/06/2026 and may be amended to reflect changes to our website, as well as legislative or case-law developments concerning personal data. You should therefore read it whenever you provide your data through this website." />
+	</LegalDocumentSection>
 </BaseLayout>

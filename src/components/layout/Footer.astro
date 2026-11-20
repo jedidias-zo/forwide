@@ -1,34 +1,11 @@
 ---
+import BilingualText from "../ui/BilingualText.astro";
+import { createTranslator, getLocale, localisePath } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+const locale = getLocale(Astro.url.pathname);
+
 import ForwideLogo from "../brand/ForwideLogo.astro";
 
-type FooterLink = {
-	label: string;
-	href: string;
-};
-
-type Props = {
-	claim?: string;
-	pageLinks?: FooterLink[];
-	legalLinks?: FooterLink[];
-	copyright?: string;
-};
-
-const {
-	claim = "Convertimos oportunidades digitales en productos reales.",
-	pageLinks = [
-		{ label: "Home", href: "/" },
-		{ label: "Vision", href: "/vision" },
-		{ label: "Productos", href: "/productos/livecook/" },
-		{ label: "Responsabilidad", href: "/responsabilidad" },
-		{ label: "Contáctanos", href: "/contactanos" },
-	],
-	legalLinks = [
-		{ label: "Aviso legal", href: "/aviso-legal" },
-		{ label: "Política de privacidad", href: "/privacidad" },
-		{ label: "Protección de datos", href: "/proteccion-datos-formularios" },
-	],
-	copyright = "© 2025 Livecook. All rights reserved.",
-} = Astro.props;
 ---
 
 <footer
@@ -40,45 +17,63 @@ const {
 
 	<div class="border-x border-foreground">
 		<div class="grid min-h-[clamp(9rem,13vw,12rem)] gap-[clamp(2rem,5vw,5rem)] border-b border-foreground px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(2rem,4vw,4rem)] lg:grid-cols-[0.85fr_1.35fr] lg:items-center">
-			<a href="/" aria-label="Forwide home" class="block w-[min(18rem,42vw)]">
+			<a href={localisePath("/", locale)} aria-label="Forwide home" class="block w-[min(18rem,42vw)]">
 				<ForwideLogo class="h-auto w-full" />
 			</a>
 
-			<p class="max-w-[43rem] text-[clamp(2rem,3.35vw,3rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em] lg:justify-self-end">
-				{claim}
+			<p class="max-w-[43rem] text-[clamp(2rem,3.35vw,3rem)] font-normal uppercase leading-[0.98] tracking-normal lg:justify-self-end">
+				<BilingualText spanish="CREAMOS Y GESTIONAMOS NUESTRAS PROPIAS APLICACIONES." english="We create and manage our own applications." />
 			</p>
 		</div>
 
-		<div class="grid min-h-[clamp(13rem,19vw,16rem)] gap-[clamp(2.5rem,7vw,8rem)] px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(2rem,4vw,3rem)] text-[clamp(0.9rem,1.05vw,1rem)] font-normal uppercase leading-[1.55] tracking-[-0.03em] lg:grid-cols-[0.8fr_0.8fr_1fr] lg:items-start">
-			<nav aria-label="Páginas" class="space-y-[clamp(1.5rem,3vw,2rem)]">
-				<p>Páginas</p>
+		<div class="grid min-h-[clamp(13rem,19vw,16rem)] gap-[clamp(2.5rem,7vw,8rem)] px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(2rem,4vw,3rem)] text-[clamp(0.9rem,1.05vw,1rem)] font-normal uppercase leading-[1.55] tracking-normal lg:grid-cols-[0.8fr_0.8fr_1fr] lg:items-start">
+			<nav aria-label={t("Páginas")} class="space-y-[clamp(1.5rem,3vw,2rem)]">
+				<p><BilingualText spanish="Páginas" english="Pages" /></p>
 				<ul>
-					{pageLinks.map((link) => (
-						<li>
-							<a href={link.href} class="transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
-								{link.label}
-							</a>
-						</li>
-					))}
+					<li>
+						<a href={localisePath("/", locale)} class="transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
+							<BilingualText spanish="Home" english="Home" />
+						</a>
+					</li>
+					<li>
+						<a href={localisePath("/vision", locale)} class="transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
+							<BilingualText spanish="Misión y visión" english="Mission &amp; vision" />
+						</a>
+					</li>
+					<li>
+						<a href={localisePath("/productos/livecook/", locale)} class="transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
+							<BilingualText spanish="Productos" english="Products" />
+						</a>
+					</li>
+					<li>
+						<a href={localisePath("/contactanos", locale)} class="transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
+							<BilingualText spanish="Contáctanos" english="Contact us" />
+						</a>
+					</li>
 				</ul>
 			</nav>
 
 			<nav aria-label="Legal" class="space-y-[clamp(1.5rem,3vw,2rem)]">
-				<p>Legal</p>
+				<p><BilingualText spanish="Legal" english="Legal" /></p>
 				<ul>
-					{legalLinks.map((link) => (
-						<li>
-							<a href={link.href} class="transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
-								{link.label}
-							</a>
-						</li>
-					))}
+					<li>
+						<a href={localisePath("/aviso-legal", locale)} class="transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
+							<BilingualText spanish="Aviso legal" english="Legal notice" />
+						</a>
+					</li>
+					<li>
+						<a href={localisePath("/privacidad", locale)} class="transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
+							<BilingualText spanish="Política de privacidad" english="Privacy policy" />
+						</a>
+					</li>
+					<li>
+						<a href={localisePath("/proteccion-datos-formularios", locale)} class="transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
+							<BilingualText spanish="Protección de datos" english="Data protection" />
+						</a>
+					</li>
 				</ul>
 			</nav>
 
-			<p class="normal-case tracking-[-0.03em] lg:self-end lg:justify-self-end">
-				{copyright}
-			</p>
 		</div>
 	</div>
 </footer>

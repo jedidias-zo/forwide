@@ -1,13 +1,14 @@
 ---
+import { getLocale, localisePath } from "../../i18n";
 type Props = {
-	label: string;
+	label?: string;
 	href: string;
 	isActive?: boolean;
 	class?: string;
 };
 
 const {
-	label,
+	label = "",
 	href,
 	isActive = false,
 	class: className = "",
@@ -15,7 +16,7 @@ const {
 ---
 
 <a
-	href={href}
+	href={localisePath(href, getLocale(Astro.url.pathname))}
 	aria-current={isActive ? "page" : undefined}
 	class:list={[
 		"group inline-flex items-center justify-center overflow-visible font-normal uppercase leading-none text-current [letter-spacing:0]",
@@ -29,7 +30,7 @@ const {
 		[
 	</span>
 	<span class:list={["inline-block transition-transform duration-normal ease-standard", isActive && "line-through decoration-[0.08em]"]}>
-		{label}
+		<slot>{label}</slot>
 	</span>
 	<span
 		aria-hidden="true"

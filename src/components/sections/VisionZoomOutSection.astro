@@ -1,4 +1,7 @@
 ---
+import { createTranslator, getLocale } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import asset00 from "../../assets/vision/zoom-out-animation/asset-00.png";
 import asset01 from "../../assets/vision/zoom-out-animation/asset-01.png";
 import asset03 from "../../assets/vision/zoom-out-animation/asset-03.png";
@@ -9,29 +12,29 @@ import asset07 from "../../assets/vision/zoom-out-animation/asset-07.png";
 
 const stages = [
 	{
-		label: "[ Qué es Forwide ]",
-		word: "Una compañía diseñada para construir con continuidad.",
-		copy: "Forwide no busca lanzar por volumen. Busca crear productos digitales con propósito, sistemas reutilizables y capacidad de evolucionar.",
+		label: "",
+		word: t("¿Qué es Forwide?"),
+		copy: "",
 	},
 	{
 		label: "",
-		word: "Clara",
-		copy: "Cada producto debe ser fácil de entender.",
+		word: t("Clara"),
+		copy: t("Cada producto debe ser fácil de entender."),
 	},
 	{
 		label: "",
-		word: "Sistémica",
-		copy: "Cada decisión debe aportar a una estructura mayor.",
+		word: t("Sistémica"),
+		copy: t("Cada decisión debe aportar a una estructura mayor."),
 	},
 	{
 		label: "",
-		word: "Adaptable",
-		copy: "La base debe evolucionar con el mercado.",
+		word: t("Adaptable"),
+		copy: t("La base debe evolucionar con el mercado."),
 	},
 	{
 		label: "",
-		word: "Escalable",
-		copy: "Un producto bien construido debe facilitar el siguiente.",
+		word: t("Escalable"),
+		copy: t("Un producto bien construido debe facilitar el siguiente."),
 	},
 ];
 
@@ -95,7 +98,7 @@ const zoomImages = [
 						{
 							stages.map((stage, index) => (
 								<p
-									class="absolute inset-x-0 text-[clamp(1rem,1.35vw,1.25rem)] font-normal leading-none tracking-[-0.05em] text-muted-foreground"
+									class="eyebrow absolute inset-x-0 text-muted-foreground"
 									data-vision-zoom-label
 									data-vision-zoom-stage={index}
 								>
@@ -107,8 +110,8 @@ const zoomImages = [
 
 					<h2
 						id="vision-zoom-title"
-						class="relative w-full text-[clamp(1.55rem,7.2vw,3rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
-						style="min-height: 7.5rem;"
+						class="heading-h2 relative w-full"
+						style="min-height: 1em;"
 						data-vision-zoom-title
 					>
 						{
@@ -118,7 +121,7 @@ const zoomImages = [
 									data-vision-zoom-word
 									data-vision-zoom-stage={index}
 								>
-									{stage.word}
+									{index === 0 ? (<slot name="stage-0-word">{stage.word}</slot>) : index === 1 ? (<slot name="stage-1-word">{stage.word}</slot>) : index === 2 ? (<slot name="stage-2-word">{stage.word}</slot>) : index === 3 ? (<slot name="stage-3-word">{stage.word}</slot>) : index === 4 ? (<slot name="stage-4-word">{stage.word}</slot>) : (<>{stage.word}</>)}
 								</span>
 							))
 						}
@@ -128,11 +131,11 @@ const zoomImages = [
 						{
 							stages.map((stage, index) => (
 								<p
-									class="absolute inset-x-0 mx-auto max-w-[50rem] text-[clamp(0.8125rem,1.7vw,1.55rem)] font-normal uppercase leading-[1.05] tracking-[-0.045em] text-muted-foreground"
+									class="paragraph absolute inset-x-0 mx-auto max-w-[50rem]"
 									data-vision-zoom-copy
 									data-vision-zoom-stage={index}
 								>
-									{stage.copy}
+									{index === 1 ? (<slot name="stage-1-copy">{stage.copy}</slot>) : index === 2 ? (<slot name="stage-2-copy">{stage.copy}</slot>) : index === 3 ? (<slot name="stage-3-copy">{stage.copy}</slot>) : index === 4 ? (<slot name="stage-4-copy">{stage.copy}</slot>) : (<>{stage.copy}</>)}
 								</p>
 							))
 						}
@@ -153,7 +156,7 @@ const zoomImages = [
 								data-vision-zoom-image
 								data-vision-zoom-image-index={index}
 							>
-								<img
+								{index === 0 ? (<slot name="image-0-0"><img
 									src={item.image.src}
 									width={item.image.width}
 									height={item.image.height}
@@ -161,7 +164,63 @@ const zoomImages = [
 									class="h-full w-full object-cover"
 									loading={index < 2 ? "eager" : "lazy"}
 									decoding="async"
-								/>
+								/></slot>) : index === 1 ? (<slot name="image-0-1"><img
+									src={item.image.src}
+									width={item.image.width}
+									height={item.image.height}
+									alt={item.alt}
+									class="h-full w-full object-cover"
+									loading={index < 2 ? "eager" : "lazy"}
+									decoding="async"
+								/></slot>) : index === 2 ? (<slot name="image-0-2"><img
+									src={item.image.src}
+									width={item.image.width}
+									height={item.image.height}
+									alt={item.alt}
+									class="h-full w-full object-cover"
+									loading={index < 2 ? "eager" : "lazy"}
+									decoding="async"
+								/></slot>) : index === 3 ? (<slot name="image-0-3"><img
+									src={item.image.src}
+									width={item.image.width}
+									height={item.image.height}
+									alt={item.alt}
+									class="h-full w-full object-cover"
+									loading={index < 2 ? "eager" : "lazy"}
+									decoding="async"
+								/></slot>) : index === 4 ? (<slot name="image-0-4"><img
+									src={item.image.src}
+									width={item.image.width}
+									height={item.image.height}
+									alt={item.alt}
+									class="h-full w-full object-cover"
+									loading={index < 2 ? "eager" : "lazy"}
+									decoding="async"
+								/></slot>) : index === 5 ? (<slot name="image-0-5"><img
+									src={item.image.src}
+									width={item.image.width}
+									height={item.image.height}
+									alt={item.alt}
+									class="h-full w-full object-cover"
+									loading={index < 2 ? "eager" : "lazy"}
+									decoding="async"
+								/></slot>) : index === 6 ? (<slot name="image-0-6"><img
+									src={item.image.src}
+									width={item.image.width}
+									height={item.image.height}
+									alt={item.alt}
+									class="h-full w-full object-cover"
+									loading={index < 2 ? "eager" : "lazy"}
+									decoding="async"
+								/></slot>) : (<><img
+									src={item.image.src}
+									width={item.image.width}
+									height={item.image.height}
+									alt={item.alt}
+									class="h-full w-full object-cover"
+									loading={index < 2 ? "eager" : "lazy"}
+									decoding="async"
+								/></>)}
 							</figure>
 						))
 					}
@@ -203,11 +262,7 @@ const zoomImages = [
 		gsap.set(images, { autoAlpha: 0, scale: 1.12 });
 		gsap.set(images.slice(0, 2), { autoAlpha: 1, scale: 1 });
 		gsap.set(camera, { scale: 1, xPercent: 0, yPercent: 0, transformOrigin: "50% 50%" });
-		const isMobile = window.matchMedia("(max-width: 767px)").matches;
-		const titleHeights = words.map((_, index) => {
-			if (isMobile) return index === 0 ? "7.5rem" : "2.25rem";
-			return index === 0 ? "6rem" : "3.25rem";
-		});
+		const titleHeights = words.map((word) => `${word.offsetHeight}px`);
 		gsap.set(title, { minHeight: titleHeights[0] });
 
 		const showStage = (timeline: gsap.core.Timeline, stage: number, position: number) => {

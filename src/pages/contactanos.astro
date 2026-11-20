@@ -1,8 +1,28 @@
 ---
+import BilingualText from "../components/ui/BilingualText.astro";
+import { createTranslator, getLocale } from "../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ContactSection from "../components/sections/ContactSection.astro";
 ---
 
-<BaseLayout title="Contáctanos | Forwide" headerHomeVariant="logo">
-	<ContactSection />
+<BaseLayout title={t("Contáctanos | Forwide")} headerHomeVariant="logo">
+	<ContactSection>
+		<BilingualText slot="email-label" spanish="Email" english="Email" />
+		<BilingualText slot="group-0-title" spanish="Global" english="Global" />
+		<BilingualText slot="group-1-title" spanish="Media" english="Media" />
+		<BilingualText slot="contact-0-0" spanish="General: hola@forwide.com" english="General: hola@forwide.com" />
+		<BilingualText slot="contact-0-1" spanish="Legal: legal@forwide.com" english="Legal: legal@forwide.com" />
+		<BilingualText slot="contact-1-0" spanish="Prensa: press@forwide.com" english="Press: press@forwide.com" />
+		<BilingualText slot="contact-1-1" spanish="Consultas directas solamente" english="Direct enquiries only" />
+		<BilingualText slot="social-0" spanish="LinkedIn" english="LinkedIn" />
+		<BilingualText slot="social-1" spanish="Twitter" english="Twitter" />
+		<BilingualText slot="social-2" spanish="Instagram" english="Instagram" />
+		<BilingualText slot="text-0" spanish="Contacto &amp; consultas" english="Contact &amp; enquiries" />
+		<BilingualText slot="text-1" spanish="Nombre completo" english="Full name" />
+		<BilingualText slot="text-2" spanish="Asunto" english="Subject" />
+		<BilingualText slot="text-3" spanish="Mensaje" english="Message" />
+		<BilingualText slot="text-4" spanish="Enviar mensaje" english="Send message" />
+	</ContactSection>
 </BaseLayout>

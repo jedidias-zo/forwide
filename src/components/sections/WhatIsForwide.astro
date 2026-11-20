@@ -1,4 +1,7 @@
 ---
+import { createTranslator, getLocale } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 /*
  * Pillar card visuals: export at ~347px square inside a 428px-tall frame (896px @2x).
  * Card proportion follows Figma 448×631; grid locks to aspect-[448/631] on large screens.
@@ -23,26 +26,26 @@ type Props = {
 };
 
 const {
-	eyebrow = "[ Qué es Forwide ]",
-	title = "Tecnología antes que catálogo.",
-	intro = "Forwide articula producto, operación y escala desde una misma estructura. La compañía no lanza piezas sueltas: crea plataformas con lógica propia y aprendizaje reutilizable.",
+	eyebrow = t("[ Qué es Forwide ]"),
+	title = t("Tecnología antes que catálogo."),
+	intro = t("Forwide articula producto, operación y escala desde una misma estructura. La compañía no lanza piezas sueltas: crea plataformas con lógica propia y aprendizaje reutilizable."),
 	pillars = [
 		{
 			index: "001",
-			title: "Base de producto",
-			body: "Forwide articula producto, operación y escala desde una misma estructura. La compañía no lanza piezas sueltas: crea plataformas con lógica propia y aprendizaje reutilizable.",
+			title: t("Base de producto"),
+			body: t("Forwide articula producto, operación y escala desde una misma estructura. La compañía no lanza piezas sueltas: crea plataformas con lógica propia y aprendizaje reutilizable."),
 			visual: productBase,
 		},
 		{
 			index: "002",
-			title: "Base de sistema",
-			body: "Ordena tecnología, procesos y aprendizaje para no empezar desde cero en cada lanzamiento.",
+			title: t("Base de sistema"),
+			body: t("Ordena tecnología, procesos y aprendizaje para no empezar desde cero en cada lanzamiento."),
 			visual: systemBase,
 		},
 		{
 			index: "003",
-			title: "Base de escala",
-			body: "Diseña con una pregunta constante: qué puede crecer sin perder foco ni control.",
+			title: t("Base de escala"),
+			body: t("Diseña con una pregunta constante: qué puede crecer sin perder foco ni control."),
 			visual: baseScale,
 		},
 	],
@@ -58,23 +61,23 @@ const {
 	<div class="flex w-full flex-col gap-[clamp(3rem,8vw,5.25rem)]">
 		<div class="flex flex-col items-start gap-8 px-4 lg:flex-row lg:items-end lg:gap-12">
 			<div class="flex min-w-0 flex-1 flex-col gap-6 uppercase">
-				<p class="text-[1.25rem] italic text-section-label" data-what-reveal-text>
-					{eyebrow}
+				<p class="eyebrow italic text-muted-foreground" data-what-reveal-text>
+					<slot name="eyebrow">{eyebrow}</slot>
 				</p>
 				<h2
 					id="what-is-forwide-title"
-					class="text-what-title text-section-heading"
+					class="heading-h2"
 					data-what-reveal-text
 				>
-					{title}
+					<slot name="title">{title}</slot>
 				</h2>
 			</div>
 
 			<p
-				class="max-w-[27.125rem] text-section-copy text-foreground/50 lg:shrink-0"
+				class="max-w-[27.125rem] paragraph text-description-foreground lg:shrink-0"
 				data-what-reveal-text
 			>
-				{intro}
+				<slot name="intro">{intro}</slot>
 			</p>
 		</div>
 
@@ -90,12 +93,12 @@ const {
 					>
 						<div class="flex items-center py-2 pl-4">
 							<p class="text-[1rem] text-section-label uppercase text-foreground" data-what-reveal-text>
-								{pillar.index}
+								{index === 0 ? (<slot name="pillar-0-index">{pillar.index}</slot>) : index === 1 ? (<slot name="pillar-1-index">{pillar.index}</slot>) : index === 2 ? (<slot name="pillar-2-index">{pillar.index}</slot>) : (<>{pillar.index}</>)}
 							</p>
 						</div>
 
 						<div class="flex h-[clamp(16rem,42vw,26.75rem)] items-center justify-center border-y border-foreground bg-[var(--pillar-visual-bg)]">
-							<img
+							{index === 0 ? (<slot name="image-0-0"><img
 								src={pillar.visual.src}
 								width={pillar.visual.width}
 								height={pillar.visual.height}
@@ -103,15 +106,39 @@ const {
 								class="h-full w-full object-cover object-center"
 								loading="lazy"
 								decoding="async"
-							/>
+							/></slot>) : index === 1 ? (<slot name="image-0-1"><img
+								src={pillar.visual.src}
+								width={pillar.visual.width}
+								height={pillar.visual.height}
+								alt=""
+								class="h-full w-full object-cover object-center"
+								loading="lazy"
+								decoding="async"
+							/></slot>) : index === 2 ? (<slot name="image-0-2"><img
+								src={pillar.visual.src}
+								width={pillar.visual.width}
+								height={pillar.visual.height}
+								alt=""
+								class="h-full w-full object-cover object-center"
+								loading="lazy"
+								decoding="async"
+							/></slot>) : (<><img
+								src={pillar.visual.src}
+								width={pillar.visual.width}
+								height={pillar.visual.height}
+								alt=""
+								class="h-full w-full object-cover object-center"
+								loading="lazy"
+								decoding="async"
+							/></>)}
 						</div>
 
 						<div class="relative flex flex-col gap-4 px-4 pt-4">
-							<h3 class="text-what-card-title text-section-heading" data-what-reveal-text>
-								{pillar.title}
+							<h3 class="heading-h3" data-what-reveal-text>
+								{index === 0 ? (<slot name="pillar-0-title">{pillar.title}</slot>) : index === 1 ? (<slot name="pillar-1-title">{pillar.title}</slot>) : index === 2 ? (<slot name="pillar-2-title">{pillar.title}</slot>) : (<>{pillar.title}</>)}
 							</h3>
-							<p class="text-section-copy text-foreground/50" data-what-reveal-text>
-								{pillar.body}
+							<p class="paragraph text-description-foreground" data-what-reveal-text>
+								{index === 0 ? (<slot name="pillar-0-body">{pillar.body}</slot>) : index === 1 ? (<slot name="pillar-1-body">{pillar.body}</slot>) : index === 2 ? (<slot name="pillar-2-body">{pillar.body}</slot>) : (<>{pillar.body}</>)}
 							</p>
 						</div>
 					</article>
@@ -123,11 +150,13 @@ const {
 
 <script>
 	import { gsap } from "gsap";
+	import { revealParagraph } from "../../scripts/revealParagraph";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	const splitWhatRows = (element: HTMLElement) => {
+		if (revealParagraph(element)) return;
 		if (element.dataset.whatPrepared === "true") return;
 
 		const text = element.textContent?.replace(/\s+/g, " ").trim();

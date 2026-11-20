@@ -1,83 +1,79 @@
 ---
+import { createTranslator, getLocale } from "../../i18n";
+import type { ImageMetadata } from "astro";
 import CtaButton from "../ui/CtaButton.astro";
-import heroMockup from "../../assets/livecook-product-page/hero-mockup.png";
+import LottieLogo from "../ui/LottieLogo.astro";
+import kitchenImage from "../../assets/vision/full-width.png";
+import livecookIcon from "../../assets/livecook-product-page/livecook-icon.png";
 
-type HeadlineSegment = {
-	text: string;
-	muted?: boolean;
-};
+const t = createTranslator(getLocale(Astro.url.pathname));
 
 type Props = {
-	label?: string;
-	headlineLines?: HeadlineSegment[][];
+	title?: string;
+	intro?: string;
 	body?: string;
+	image?: ImageMetadata;
+	imageAlt?: string;
+	icon?: ImageMetadata;
 	ctaLabel?: string;
 	ctaHref?: string;
 };
 
 const {
-	label = "[ El primer producto activo de Forwide ]",
-	headlineLines = [
-		[{ text: "Cocina en vivo. " }, { text: "Chefs", muted: true }],
-		[{ text: "reales.", muted: true }, { text: " Desde cualquier" }],
-		[{ text: "lugar." }],
-	],
-	body = "LiveCook no te manda a guardar otra receta. Te pone en una clase en directo: haces la receta, preguntas, sigues el ritmo del chef y terminas con un plato hecho. También es la primera prueba real de cómo Forwide lleva una idea al uso.",
-	ctaLabel = "Conocer LiveCook",
-	ctaHref = "#conocer-livecook",
+	title = t("Productos"),
+	intro = t("Cada producto de Forwide tiene su propia marca y su propio público. Todos funcionan sobre la misma tecnología."),
+	body = t("Clases de cocina en directo con chefs reales: cocinas a la vez que el chef, preguntas en el momento y terminas con tu plato hecho."),
+	image = kitchenImage,
+	imageAlt = t("Cocina profesional con superficies de acero y luces cálidas."),
+	icon = livecookIcon,
+	ctaLabel = t("Conocer LiveCook"),
+	ctaHref = "https://livecook.com",
 } = Astro.props;
 ---
 
 <section
 	id="livecook"
-	class="relative isolate min-h-[100svh] bg-surface-soft px-[var(--frame-inset)] pt-header text-foreground"
+	class="bg-surface-soft pt-header text-foreground"
 	aria-labelledby="livecook-product-title"
 >
-	<div class="relative flex min-h-[calc(100svh-var(--header-height))] flex-col border-x border-foreground px-[clamp(1rem,1.25vw,1.25rem)]">
-		<div class="relative z-20 pt-[clamp(2rem,7vw,3.5rem)] lg:pt-[clamp(3.25rem,5vw,4.25rem)]">
-			<p class="livecook-product-label mx-auto mb-[clamp(0.75rem,1.4vw,1.25rem)] max-w-[26rem] text-center lg:ml-auto lg:mr-0 lg:max-w-none lg:text-right" data-reveal-copy>
-				{label}
-			</p>
-
-			<h1
-				id="livecook-product-title"
-				class="livecook-product-title mx-auto max-w-[26rem] text-center lg:ml-auto lg:mr-0 lg:max-w-[76.5rem] lg:text-right"
-				aria-label="Cocina en vivo. Chefs reales. Desde cualquier lugar."
-			>
-				{
-					headlineLines.map((line) => (
-						<span class="relative block overflow-hidden" data-reveal-heading-line>
-							<span class="block" data-reveal-heading-text>
-								{line.map((segment) => (
-									<span class:list={[segment.muted && "text-foreground/50"]}>{segment.text}</span>
-								))}
-							</span>
-							<span class="pointer-events-none absolute inset-0 z-10 block bg-reveal-bar" data-reveal-heading-bar aria-hidden="true" />
-						</span>
-					))
-				}
+	<div class="px-[var(--frame-inset)]">
+		<div class="border-x border-foreground px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(2rem,3vw,3rem)]">
+			<h1 id="livecook-product-title" class="heading-h1" data-reveal-fade>
+				<slot name="title">{title}</slot>
 			</h1>
 		</div>
+	</div>
 
-		<div class="relative z-30 mt-5 flex flex-col items-center pb-0 text-center lg:absolute lg:inset-x-[clamp(1rem,1.25vw,1.25rem)] lg:bottom-0 lg:top-[39%] lg:mt-0 lg:items-end lg:pb-[clamp(2rem,3.2vw,3.5rem)] lg:text-right">
-			<div class="max-w-[22rem] lg:mt-auto lg:max-w-[43rem]">
-				<p class="text-description font-normal text-foreground" data-reveal-copy>
-					{body}
+	<figure class="border-y border-foreground">
+		<slot name="image-0"><img
+			src={image.src}
+			width={image.width}
+			height={image.height}
+			alt={imageAlt}
+			class="aspect-[1.35] w-full object-cover object-center sm:aspect-auto sm:h-auto"
+			loading="eager"
+			fetchpriority="high"
+			decoding="async"
+		/></slot>
+	</figure>
+
+	<div class="px-[var(--frame-inset)]">
+		<div class="border-x border-foreground px-[clamp(1rem,1.25vw,1.25rem)] pb-[clamp(2rem,3vw,3rem)] pt-[clamp(1.75rem,3vw,2.5rem)]">
+			<p class="product-intro max-w-[68rem]" data-reveal-fade>
+				<slot name="intro">{intro}</slot>
+			</p>
+
+			<div class="mt-[clamp(2rem,4vw,3rem)] grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-[clamp(1rem,2.5vw,1.75rem)] gap-y-6 md:grid-cols-[auto_minmax(0,1fr)_auto]" data-reveal-fade>
+				<LottieLogo fallback={icon} class="w-[clamp(6rem,12vw,9rem)] self-center" />
+				<p class="paragraph max-w-[44ch]">
+					<slot name="body">{body}</slot>
 				</p>
-
-				<CtaButton href={ctaHref} label={ctaLabel} class="mt-5 min-w-[15.5rem] px-[clamp(1.5rem,2.2vw,2.25rem)] lg:mt-[clamp(2rem,3vw,3rem)]" />
+				<CtaButton
+					href={ctaHref}
+					label={ctaLabel}
+					class="col-span-2 min-h-[3.25rem] justify-self-start px-4 md:col-span-1 md:justify-self-end"
+				><slot name="cta-label">{ctaLabel}</slot></CtaButton>
 			</div>
 		</div>
-
-		<img
-			src={heroMockup.src}
-			width={heroMockup.width}
-			height={heroMockup.height}
-			alt="Mockup de LiveCook mostrando el perfil de una chef dentro de la app."
-			class="relative z-10 mx-auto mt-auto h-auto w-[min(24rem,82vw)] max-w-none pt-8 drop-shadow-[0_1.5rem_3rem_rgba(0,0,0,0.16)] lg:absolute lg:bottom-0 lg:left-0 lg:mx-0 lg:mt-0 lg:w-[min(46rem,47vw)] lg:pt-0"
-			loading="eager"
-			decoding="async"
-			data-reveal-fade
-		/>
 	</div>
 </section>

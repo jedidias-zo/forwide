@@ -1,0 +1,79 @@
+---
+import type { ImageMetadata } from "astro";
+
+type Props = {
+	fallback: ImageMetadata;
+	label?: string;
+	class?: string;
+};
+
+const { fallback, label = "LiveCook", class: className } = Astro.props;
+---
+
+<div class:list={["relative flex aspect-square shrink-0 items-center justify-center", className]} role="img" aria-label={label} data-lottie-logo>
+	<img
+		src={fallback.src}
+		width={fallback.width}
+		height={fallback.height}
+		alt=""
+		aria-hidden="true"
+		class="h-full w-full object-contain"
+		data-lottie-fallback
+	/>
+	<div class="pointer-events-none absolute inset-0" aria-hidden="true" data-lottie-container></div>
+</div>
+
+<script>
+	import lottie from "lottie-web/build/player/lottie_light";
+	import animationData from "../../assets/lotties/loader-logo.json";
+
+	document.querySelectorAll<HTMLElement>("[data-lottie-logo]").forEach((element) => {
+		const container = element.querySelector<HTMLElement>("[data-lottie-container]");
+		const fallback = element.querySelector<HTMLImageElement>("[data-lottie-fallback]");
+		if (!container || !fallback) return;
+
+		const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+		let visible = false;
+		let ready = false;
+		const animation = lottie.loadAnimation({
+			container,
+			renderer: "svg",
+			loop: true,
+			autoplay: false,
+			animationData: structuredClone(animationData),
+			rendererSettings: { preserveAspectRatio: "xMidYMid meet" },
+		});
+
+		const updatePlayback = () => {
+			const showAnimation = ready && !motion.matches;
+			container.style.visibility = showAnimation ? "visible" : "hidden";
+			fallback.style.visibility = showAnimation ? "hidden" : "visible";
+			if (showAnimation && visible && !document.hidden) animation.play();
+			else animation.pause();
+		};
+
+		animation.addEventListener("DOMLoaded", () => {
+			ready = true;
+			updatePlayback();
+		});
+		animation.addEventListener("data_failed", () => {
+			ready = false;
+			updatePlayback();
+		});
+
+		const observer = new IntersectionObserver(([entry]) => {
+			visible = entry.isIntersecting;
+			updatePlayback();
+		});
+		observer.observe(element);
+		motion.addEventListener("change", updatePlayback);
+		document.addEventListener("visibilitychange", updatePlayback);
+
+		document.addEventListener("astro:before-swap", () => {
+			observer.disconnect();
+			motion.removeEventListener("change", updatePlayback);
+			document.removeEventListener("visibilitychange", updatePlayback);
+			animation.destroy();
+		}, { once: true });
+	});
+</script>

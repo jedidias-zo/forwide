@@ -1,10 +1,12 @@
 <script>
 	import { gsap } from "gsap";
+	import { revealParagraph } from "../../scripts/revealParagraph";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	const splitTextRows = (element: HTMLElement, kind: "heading" | "copy") => {
+		if (revealParagraph(element)) return;
 		if (element.dataset.revealPrepared === "true") return;
 
 		const text = element.textContent?.replace(/\s+/g, " ").trim();

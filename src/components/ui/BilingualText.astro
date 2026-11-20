@@ -1,0 +1,15 @@
+---
+import { getLocale } from "../../i18n";
+
+interface Props {
+	/** Spanish copy. Edit this and English from Settings on the page canvas. */
+	spanish: string;
+	/** English copy. This is independent of the Spanish wording. */
+	english: string;
+}
+
+const { spanish, english } = Astro.props;
+const locale = getLocale(Astro.url.pathname);
+---
+
+<span data-bilingual-text style="white-space: pre-line;">{locale === "en" ? english : spanish}</span>

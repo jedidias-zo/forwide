@@ -44,13 +44,13 @@ const {
 			<article class="relative z-10 bg-surface-dark px-[clamp(1.25rem,1.6vw,1.5rem)] py-[clamp(2.5rem,4vw,4rem)] text-surface-dark-foreground [--reveal-bar:var(--surface-dark-foreground)]">
 				<h2
 					id="responsabilidad-livecook-title"
-					class="max-w-[39rem] text-[clamp(2.75rem,4.4vw,4.95rem)] font-normal uppercase leading-[0.98] tracking-[-0.06em]"
+					class="heading-h2 max-w-[39rem]"
 					data-responsabilidad-livecook-reveal-text
 				>
 					{title}
 				</h2>
 
-				<p class="mt-[clamp(0.9rem,1.4vw,1.25rem)] max-w-[42rem] text-description font-normal text-surface-dark-foreground" data-responsabilidad-livecook-reveal-text>
+				<p class="mt-[clamp(0.9rem,1.4vw,1.25rem)] max-w-[42rem] paragraph text-surface-dark-foreground" data-responsabilidad-livecook-reveal-text>
 					{body}
 				</p>
 
@@ -81,11 +81,13 @@ const {
 
 <script>
 	import { gsap } from "gsap";
+	import { revealParagraph } from "../../scripts/revealParagraph";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	const splitRows = (element: HTMLElement) => {
+		if (revealParagraph(element)) return;
 		if (element.dataset.responsabilidadLivecookPrepared === "true") return;
 
 		const text = element.textContent?.replace(/\s+/g, " ").trim();

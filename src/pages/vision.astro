@@ -1,4 +1,22 @@
 ---
+import EditableImage from "../components/ui/EditableImage.astro";
+import editableImage0 from "../assets/vision/hero/asset-000.png";
+import editableImage1 from "../assets/vision/hero/asset-001.png";
+import editableImage4 from "../assets/livecook-product-page/livecook-icon.png";
+import editableImage5 from "../assets/vision/visible/asset-01.png";
+import editableImage6 from "../assets/vision/visible/asset-02.png";
+import editableImage7 from "../assets/livecook-product-page/grid-03.png";
+import editableImage8 from "../assets/vision/zoom-out-animation/asset-00.png";
+import editableImage9 from "../assets/vision/zoom-out-animation/asset-03.png";
+import editableImage10 from "../assets/vision/zoom-out-animation/asset-01.png";
+import editableImage11 from "../assets/vision/zoom-out-animation/asset-04.png";
+import editableImage12 from "../assets/vision/zoom-out-animation/asset-05.png";
+import editableImage13 from "../assets/vision/zoom-out-animation/asset-06.png";
+import editableImage14 from "../assets/vision/zoom-out-animation/asset-07.png";
+import BilingualText from "../components/ui/BilingualText.astro";
+import { createTranslator, getLocale } from "../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import BaseLayout from "../layouts/BaseLayout.astro";
 import VisionHero from "../components/sections/VisionHero.astro";
 import VisionProblemSection from "../components/sections/VisionProblemSection.astro";
@@ -6,15 +24,95 @@ import VisionBeliefsSection from "../components/sections/VisionBeliefsSection.as
 import VisionVisibleSection from "../components/sections/VisionVisibleSection.astro";
 import VisionZoomOutSection from "../components/sections/VisionZoomOutSection.astro";
 import VisionManifestoSection from "../components/sections/VisionManifestoSection.astro";
-import VisionSharedStructureSection from "../components/sections/VisionSharedStructureSection.astro";
+import hero from '../assets/responsabilidad-page/hero.png';
+import asset_02 from '../assets/responsabilidad-page/asset-02.png';
 ---
 
-<BaseLayout title="Vision | Forwide" headerHomeVariant="logo">
-	<VisionHero />
-	<VisionProblemSection />
-	<VisionBeliefsSection />
-	<VisionVisibleSection />
-	<VisionZoomOutSection />
-	<VisionManifestoSection />
-	<VisionSharedStructureSection />
+<BaseLayout title={t("Vision | Forwide")} headerHomeVariant="logo">
+	<VisionHero>
+		<BilingualText slot="kicker" spanish="[ Nuestro manifiesto ]" english="[ Our manifesto ]" />
+		<BilingualText slot="body" spanish="Forwide convierte cada producto en tecnología, operación y aprendizaje reutilizable. LiveCook es el primer caso visible; la ambición es una compañía capaz de abrir nuevos verticales sin perder coherencia." english="Forwide turns each product into reusable technology, operations and knowledge. LiveCook is the first visible example; our ambition is to build a company that can enter new verticals while staying coherent." />
+		<BilingualText slot="headline-0-0" spanish="No lanzamos apps sueltas." english="We don't launch isolated apps." />
+		<BilingualText slot="headline-1-0" spanish="Construimos una base para" english="We build a foundation to" />
+		<BilingualText slot="headline-2-0" spanish="lanzar " english="launch " />
+		<BilingualText slot="headline-2-1" spanish="mejor cada vez." english="better every time." />
+		<EditableImage slot="image-0" src={editableImage0} spanishAlt="" englishAlt="" class="aspect-[1.18] w-full object-cover object-[50%_26%] grayscale contrast-125 lg:w-[min(45vw,46rem)]" loading="eager" decoding="async" data-vision-morph-source />
+	</VisionHero>
+	<VisionProblemSection>
+		<BilingualText slot="eyebrow" spanish="[ El problema que vemos ]" english="[ The problem we see ]" />
+		<BilingualText slot="body" spanish="El mercado digital premia lanzar rápido. Penaliza construir sin estructura. Muchos productos nacen como apuestas aisladas: consumen esfuerzo, no dejan sistema y obligan a empezar de cero la siguiente vez." english="The digital market rewards fast launches. It penalises building without structure. Many products start as isolated bets: they consume effort, leave no system behind and force teams to start from scratch next time." />
+		<BilingualText slot="bridge" spanish="Forwide quiere construir de otra manera:" english="Forwide wants to build differently:" />
+		<BilingualText slot="headline-0-0" spanish="Muchas ideas llegan a " english="Many ideas become " />
+		<BilingualText slot="headline-0-1" spanish="producto." english="products." />
+		<BilingualText slot="headline-0-2" spanish=" Pocas se" english=" Few become " />
+		<BilingualText slot="headline-1-0" spanish="convierten en capacidad duradera." english="lasting capabilities." />
+		<BilingualText slot="point-0" spanish="Con método" english="With a clear approach" />
+		<BilingualText slot="point-1" spanish="Operación" english="Operations" />
+		<BilingualText slot="point-2" spanish="Una estructura capaz de sostener nuevas oportunidades." english="A structure that can support new opportunities." />
+		<EditableImage slot="image-0" src={editableImage1} spanishAlt="" englishAlt="" class="absolute inset-0 h-full w-full object-cover grayscale" loading="lazy" decoding="async" data-vision-morph-target />
+	</VisionProblemSection>
+	<VisionBeliefsSection>
+		<BilingualText slot="eyebrow" spanish="[ Lo que creemos ]" english="[ What we believe ]" />
+		<BilingualText slot="title" spanish="Creemos en tecnología con dirección." english="We believe in technology with direction." />
+		<BilingualText slot="principlesLabel" spanish="[ Nuestros principios ]" english="[ Our principles ]" />
+		<BilingualText slot="card-0-number" spanish="[ 01 ]" english="[ 01 ]" />
+		<BilingualText slot="card-1-number" spanish="[ 02 ]" english="[ 02 ]" />
+		<BilingualText slot="card-0-body" spanish="Partimos de comportamientos, necesidades y oportunidades observables." english="We start with observable behaviours, needs and opportunities." />
+		<BilingualText slot="card-1-body" spanish="Interfaz, lenguaje, flujos, comunidad y operación forman parte del sistema. " english="The interface, language, workflows, community and operations are all part of the system. " />
+		<BilingualText slot="card-0-title" spanish="Resolver algo concreto" english="Solve a specific problem" />
+		<BilingualText slot="card-1-title" spanish="La experiencia también es infraestructura" english="Experience is infrastructure too" />
+		<BilingualText slot="principle-0-number" spanish="[ 03 ]" english="[ 03 ]" />
+		<BilingualText slot="principle-0-title" spanish="Dejar aprendizaje acumulable" english="Build knowledge that lasts" />
+		<BilingualText slot="principle-0-body" spanish="Lo que se diseña, prueba y construye debe servir para mejorar lo siguiente." english="Everything we design, test and build should help make the next thing better." />
+		<BilingualText slot="principle-1-number" spanish="[ 04 ]" english="[ 04 ]" />
+		<BilingualText slot="principle-1-title" spanish="Escalar es mantener claridad" english="Scaling means staying clear" />
+		<BilingualText slot="principle-1-body" spanish="Crecer no significa hacer más cosas. Significa sostener coherencia mientras aumenta la complejidad." english="Growth does not mean doing more things. It means maintaining coherence as complexity increases." />
+		<EditableImage slot="image-0-0" src={hero} spanishAlt="Persona observando a través de binoculares." englishAlt="A person looking through binoculars." class="absolute inset-0 h-full w-full object-cover grayscale" loading="lazy" decoding="async" />
+		<EditableImage slot="image-0-1" src={asset_02} spanishAlt="Estructura de concreto usada como referencia de infraestructura." englishAlt="A concrete structure representing infrastructure." class="absolute inset-0 h-full w-full object-cover grayscale" loading="lazy" decoding="async" />
+	</VisionBeliefsSection>
+	<VisionVisibleSection>
+		<BilingualText slot="title" spanish="Lo visible es el producto. Lo que sostiene el crecimiento es la base." english="The product is what you see. The foundation is what sustains growth." />
+		<BilingualText slot="body" spanish="Cada producto de Forwide puede tener identidad, propósito y dinámica propios. Debajo, todos comparten una estructura de tecnología, operación, marca, aprendizaje y pensamiento de sistema." english="Each Forwide product can have its own identity, purpose and dynamics. Underneath, they all share a foundation of technology, operations, brand, knowledge and systems thinking." />
+		<BilingualText slot="system-0" spanish="[ LANZAR ]" english="[ LAUNCH ]" />
+		<BilingualText slot="system-1" spanish="[ OPERAR ]" english="[ OPERATE ]" />
+		<BilingualText slot="system-2" spanish="[ MEDIR ]" english="[ MEASURE ]" />
+		<BilingualText slot="community-0" spanish="[ AJUSTAR ]" english="[ ADJUST ]" />
+		<BilingualText slot="community-1" spanish="[ APRENDER ]" english="[ LEARN ]" />
+		<BilingualText slot="community-2" spanish="[ MEJORAR ]" english="[ IMPROVE ]" />
+		<BilingualText slot="text-0" spanish="CRECER" english="GROW" />
+		<EditableImage slot="image-0" src={editableImage4} spanishAlt="" englishAlt="" class="h-[78%] w-[78%] object-contain" loading="lazy" />
+		<EditableImage slot="image-1" src={editableImage5} spanishAlt="" englishAlt="" class="absolute inset-0 h-full w-full object-cover grayscale" loading="lazy" decoding="async" data-visible-reveal-fade />
+		<EditableImage slot="image-2" src={editableImage6} spanishAlt="" englishAlt="" class="absolute inset-0 h-full w-full object-cover grayscale" loading="lazy" decoding="async" data-visible-reveal-fade />
+		<EditableImage slot="image-3" src={editableImage7} spanishAlt="" englishAlt="" class="absolute inset-0 h-full w-full object-cover" loading="lazy" decoding="async" data-visible-reveal-fade />
+	</VisionVisibleSection>
+	<VisionZoomOutSection>
+		<BilingualText slot="stage-0-word" spanish="¿Qué es Forwide?" english="What is Forwide?" />
+		<BilingualText slot="stage-1-word" spanish="Útil" english="Purposeful" />
+		<BilingualText slot="stage-2-word" spanish="Conectada" english="Connected" />
+		<BilingualText slot="stage-3-word" spanish="Atenta" english="Responsive" />
+		<BilingualText slot="stage-4-word" spanish="Continua" english="Continuous" />
+		<BilingualText slot="stage-1-copy" spanish="Cada función tiene un propósito claro." english="Every feature serves a clear purpose." />
+		<BilingualText slot="stage-2-copy" spanish="Cada decisión aporta a una estructura mayor.
+" english="Every decision contributes to a larger structure." />
+		<BilingualText slot="stage-3-copy" spanish="La base evoluciona con el mercado." english="The foundation evolves with the market." />
+		<BilingualText slot="stage-4-copy" spanish="Un producto bien construido facilita el siguiente." english="A well-built product makes the next one easier." />
+		<EditableImage slot="image-0-0" src={editableImage8} spanishAlt="" englishAlt="" class="h-full w-full object-cover" loading="eager" decoding="async" />
+		<EditableImage slot="image-0-1" src={editableImage9} spanishAlt="" englishAlt="" class="h-full w-full object-cover" loading="eager" decoding="async" />
+		<EditableImage slot="image-0-2" src={editableImage10} spanishAlt="" englishAlt="" class="h-full w-full object-cover" loading="lazy" decoding="async" />
+		<EditableImage slot="image-0-3" src={editableImage11} spanishAlt="" englishAlt="" class="h-full w-full object-cover" loading="lazy" decoding="async" />
+		<EditableImage slot="image-0-4" src={editableImage12} spanishAlt="" englishAlt="" class="h-full w-full object-cover" loading="lazy" decoding="async" />
+		<EditableImage slot="image-0-5" src={editableImage13} spanishAlt="" englishAlt="" class="h-full w-full object-cover" loading="lazy" decoding="async" />
+		<EditableImage slot="image-0-6" src={editableImage14} spanishAlt="" englishAlt="" class="h-full w-full object-cover" loading="lazy" decoding="async" />
+	</VisionZoomOutSection>
+	<VisionManifestoSection>
+		<BilingualText slot="title" spanish="Manifiesto Forwide" english="The Forwide manifesto" />
+		<BilingualText slot="paragraph-0" spanish="No nos interesa una colección de logos. Nos interesa una compañía donde cada producto
+hace mejor al siguiente." english="We’re not interested in building a collection of logos. We’re building a company where every product makes the next one better." />
+		<BilingualText slot="paragraph-1" spanish="Construimos desde oportunidades concretas. Probamos con personas reales, operación y
+datos. Lo que funciona se convierte en base. Lo que no funciona se convierte en criterio." english="We build from real opportunities. We test with real people, real operations, and real data. What works becomes the foundation. What doesn’t becomes insight." />
+		<BilingualText slot="paragraph-2" spanish="La visión es construir una compañía capaz de lanzar, operar y escalar productos digitales
+con coherencia. Forwide existe para convertir ideas en sistemas, y sistemas en productos
+capaces de crecer." english="Our vision is to build a company capable of launching, operating, and scaling digital products with consistency and purpose.
+Forwide exists to turn ideas into systems, and systems into products built to grow." />
+	</VisionManifestoSection>
 </BaseLayout>

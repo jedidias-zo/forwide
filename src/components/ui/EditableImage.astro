@@ -1,0 +1,22 @@
+---
+import type { ImageMetadata } from "astro";
+import { getLocale } from "../../i18n";
+
+interface Props {
+	/** Choose a replacement in Stacki's asset picker. Shared by Spanish and English. */
+	src: ImageMetadata;
+	/** Spanish image description. Leave empty for a decorative image. */
+	spanishAlt: string;
+	/** English image description. Leave empty for a decorative image. */
+	englishAlt: string;
+	class?: string;
+	loading?: "eager" | "lazy";
+	decoding?: "async" | "sync" | "auto";
+	fetchpriority?: "high" | "low" | "auto";
+}
+
+const { src, spanishAlt, englishAlt, loading = "lazy", decoding = "async", ...attributes } = Astro.props;
+const alt = getLocale(Astro.url.pathname) === "en" ? englishAlt : spanishAlt;
+---
+
+<img {...attributes} src={src.src} width={src.width} height={src.height} alt={alt} loading={loading} decoding={decoding} />

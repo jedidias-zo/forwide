@@ -1,4 +1,7 @@
 ---
+import { createTranslator, getLocale } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import livecookIcon from "../../assets/livecook-product-page/livecook-icon.png";
 import asciiLeft from "../../assets/livecook-product-page/section_03/ascii-bg-left.png";
 import asciiRight from "../../assets/livecook-product-page/section_03/ascii-bg-right.png";
@@ -8,9 +11,9 @@ import image02 from "../../assets/livecook-product-page/section_03/image-02.png"
 import image03 from "../../assets/livecook-product-page/section_03/image-03.png";
 
 const phoneBody = [
-	"Hoy sobran videos, posts y recetas guardadas. La intención está ahí, pero falta el momento, la guía y la confianza para empezar.",
-	"LiveCook convierte esa intención en acción: una clase en vivo, un chef presente, otras personas cocinando contigo y un plato terminado al final. Por eso LiveCook no compite con otro video de cocina. Crea una situación real para cocinar, aprender y compartir en el mismo momento.",
-	"LiveCook convierte esa intención en acción: una clase en vivo, un chef presente, otras personas cocinando contigo y un plato terminado al final. Por eso LiveCook no compite con otro video de cocina. Crea una situación real para cocinar, aprender y compartir en el mismo momento.",
+	t("Hoy sobran videos, posts y recetas guardadas. La intención está ahí, pero falta el momento, la guía y la confianza para empezar."),
+	t("LiveCook convierte esa intención en acción: una clase en vivo, un chef presente, otras personas cocinando contigo y un plato terminado al final. Por eso LiveCook no compite con otro video de cocina. Crea una situación real para cocinar, aprender y compartir en el mismo momento."),
+	t("LiveCook convierte esa intención en acción: una clase en vivo, un chef presente, otras personas cocinando contigo y un plato terminado al final. Por eso LiveCook no compite con otro video de cocina. Crea una situación real para cocinar, aprender y compartir en el mismo momento."),
 ];
 ---
 
@@ -24,15 +27,15 @@ const phoneBody = [
 		<div class="relative overflow-hidden px-[clamp(1rem,1.25vw,1.25rem)] pt-[clamp(3.5rem,6vw,5.5rem)]">
 			<h2
 				id="livecook-save-title"
-				class="mx-auto max-w-[64rem] text-center text-[clamp(2rem,4.7vw,4.5rem)] font-normal uppercase leading-[0.96] tracking-[-0.065em]"
-				aria-label="Todos guardan recetas. LiveCook ayuda a cocinarlas."
+				class="heading-h2 mx-auto max-w-[64rem] text-center"
+				aria-label={t("Todos guardan recetas. LiveCook ayuda a cocinarlas.")}
 			>
 				<span class="relative block overflow-hidden" data-livecook-save-manual-line>
-					<span class="block" data-livecook-save-line-text>Todos guardan recetas.</span>
+					<span class="block" data-livecook-save-line-text>{t("Todos guardan recetas.")}</span>
 					<span class="pointer-events-none absolute inset-0 z-10 block bg-reveal-bar" data-livecook-save-line-bar aria-hidden="true"></span>
 				</span>
 				<span class="relative block overflow-hidden" data-livecook-save-manual-line>
-					<span class="block" data-livecook-save-line-text><span class="text-foreground/50">LiveCook</span> ayuda a cocinarlas.</span>
+					<span class="block" data-livecook-save-line-text><span class="text-foreground/50">LiveCook</span>{t(" ayuda a cocinarlas.")}</span>
 					<span class="pointer-events-none absolute inset-0 z-10 block bg-reveal-bar" data-livecook-save-line-bar aria-hidden="true"></span>
 				</span>
 			</h2>
@@ -80,7 +83,7 @@ const phoneBody = [
 							decoding="async"
 							data-livecook-save-reveal-fade
 						/>
-						<div class="mt-[clamp(1.25rem,2.2vw,2.25rem)] w-full space-y-[clamp(0.9rem,1.3vw,1.35rem)] text-left text-[clamp(0.78rem,1.22vw,1.25rem)] font-normal leading-[1.08] tracking-[-0.045em] text-foreground">
+						<div class="mt-[clamp(1.25rem,2.2vw,2.25rem)] w-full space-y-[clamp(0.9rem,1.3vw,1.35rem)] text-left text-[clamp(0.78rem,1.22vw,1.25rem)] font-normal leading-[1.08] tracking-normal text-foreground">
 							{phoneBody.map((paragraph) => <p data-livecook-save-reveal-text>{paragraph}</p>)}
 						</div>
 					</div>
@@ -89,14 +92,14 @@ const phoneBody = [
 		</div>
 
 		<div class="grid border-y border-foreground px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(1.75rem,3vw,2.25rem)] lg:grid-cols-[1fr_auto] lg:items-center lg:gap-8" data-livecook-save-row>
-			<h3 class="max-w-[42rem] text-[clamp(1.8rem,3vw,3rem)] font-normal uppercase leading-[0.95] tracking-[-0.065em]" data-livecook-save-reveal-text>
-				De guardar recetas, a encender la cocina.
+			<h3 class="heading-h3 max-w-[42rem]" data-livecook-save-reveal-text>
+				{t("De guardar recetas, a encender la cocina.")}
 			</h3>
 			<img
 				src={image01.src}
 				width={image01.width}
 				height={image01.height}
-				alt="Mesa con comida preparada durante una clase de cocina."
+				alt={t("Mesa con comida preparada durante una clase de cocina.")}
 				class="mt-6 w-full max-w-[14.75rem] justify-self-start object-cover lg:mt-0 lg:justify-self-end"
 				loading="lazy"
 				decoding="async"
@@ -105,8 +108,8 @@ const phoneBody = [
 		</div>
 
 		<div class="border-b border-foreground bg-surface-soft px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(2rem,3.2vw,3rem)]" data-livecook-save-row>
-			<h3 class="text-[clamp(1.8rem,3vw,3rem)] font-normal uppercase leading-[0.95] tracking-[-0.065em]" data-livecook-save-reveal-text>
-				De mirar el resultado a cocinarlo paso a paso.
+			<h3 class="heading-h3" data-livecook-save-reveal-text>
+				{t("De mirar el resultado a cocinarlo paso a paso.")}
 			</h3>
 		</div>
 
@@ -115,7 +118,7 @@ const phoneBody = [
 				src={image02.src}
 				width={image02.width}
 				height={image02.height}
-				alt="Vegetales siendo cortados en una cocina."
+				alt={t("Vegetales siendo cortados en una cocina.")}
 				class="h-[clamp(13rem,18vw,15.75rem)] w-full object-cover"
 				loading="lazy"
 				decoding="async"
@@ -123,14 +126,14 @@ const phoneBody = [
 		</figure>
 
 		<div class="grid px-[clamp(1rem,1.25vw,1.25rem)] py-[clamp(1.75rem,3vw,2.25rem)] lg:grid-cols-[1fr_auto] lg:items-center lg:gap-8" data-livecook-save-row>
-			<h3 class="max-w-[46rem] text-[clamp(1.8rem,3vw,3rem)] font-normal uppercase leading-[0.95] tracking-[-0.065em]" data-livecook-save-reveal-text>
-				De seguidores a personas cocinando en la misma clase.
+			<h3 class="heading-h3 max-w-[46rem]" data-livecook-save-reveal-text>
+				{t("De seguidores a personas cocinando en la misma clase.")}
 			</h3>
 			<img
 				src={image03.src}
 				width={image03.width}
 				height={image03.height}
-				alt="Plato terminado servido en una mesa."
+				alt={t("Plato terminado servido en una mesa.")}
 				class="mt-6 w-full max-w-[14.75rem] justify-self-start object-cover lg:mt-0 lg:justify-self-end"
 				loading="lazy"
 				decoding="async"
@@ -142,11 +145,13 @@ const phoneBody = [
 
 <script>
 	import { gsap } from "gsap";
+	import { revealParagraph } from "../../scripts/revealParagraph";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	const splitLiveCookSaveRows = (element: HTMLElement) => {
+		if (revealParagraph(element)) return;
 		if (element.dataset.livecookSavePrepared === "true") return;
 		if (element.querySelector("[data-livecook-save-line-text]")) {
 			element.dataset.livecookSavePrepared = "true";

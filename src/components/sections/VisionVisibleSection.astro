@@ -1,4 +1,7 @@
 ---
+import { createTranslator, getLocale } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
+
 import grid001 from "../../assets/vision/visible/asset-01.png";
 import grid02 from "../../assets/vision/visible/asset-02.png";
 import grid03 from "../../assets/livecook-product-page/grid-03.png";
@@ -10,12 +13,12 @@ type Props = {
 };
 
 const {
-	title = "Lo visible es el producto. Lo que sostiene el crecimiento es la base.",
-	body = "Cada producto de Forwide puede tener identidad, propósito y dinámica propios. Debajo, todos comparten una estructura de tecnología, operación, marca, aprendizaje y pensamiento de sistema.",
+	title = t("Lo visible es el producto. Lo que sostiene el crecimiento es la base."),
+	body = t("Cada producto de Forwide puede tener identidad, propósito y dinámica propios. Debajo, todos comparten una estructura de tecnología, operación, marca, aprendizaje y pensamiento de sistema."),
 } = Astro.props;
 
-const systemLabels = ["[ Sistema ]", "[ Tecnología ]", "[ Producto ]"];
-const communityLabels = ["[ Marca ]", "[ Comunidad ]", "[ Operación ]"];
+const systemLabels = [t("[ Sistema ]"), t("[ Tecnología ]"), t("[ Producto ]")];
+const communityLabels = [t("[ Marca ]"), t("[ Comunidad ]"), t("[ Operación ]")];
 ---
 
 <section
@@ -23,38 +26,38 @@ const communityLabels = ["[ Marca ]", "[ Comunidad ]", "[ Operación ]"];
 	class="relative -mt-px bg-surface-light px-[var(--frame-inset)] text-foreground"
 	aria-labelledby="vision-visible-title"
 	data-visible-section
+	data-header-bg="var(--surface-light)"
 >
 	<div class="border-x border-t border-foreground">
 		<div class="flex min-h-[clamp(30rem,48vw,45rem)] flex-col items-center justify-center border-b border-foreground px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(4rem,7vw,6rem)] text-center" data-visible-reveal-group>
 			<h2
 				id="vision-visible-title"
-				class="mx-auto max-w-[77rem] text-[clamp(3rem,5.8vw,6rem)] font-normal uppercase leading-[0.98] tracking-[-0.065em]"
-				aria-label={title}
+				class="heading-h2 mx-auto max-w-[77rem]"
 				data-visible-reveal-text
 			>
-				{title}
+				<slot name="title">{title}</slot>
 			</h2>
 
-			<p class="mt-[clamp(1.5rem,3vw,2.5rem)] max-w-[40rem] text-description font-normal text-foreground" data-visible-reveal-text>
-				{body}
+			<p class="mt-[clamp(1.5rem,3vw,2.5rem)] max-w-[40rem] paragraph text-description-foreground" data-visible-reveal-text>
+				<slot name="body">{body}</slot>
 			</p>
 
 			<div class="mt-[clamp(2.5rem,5vw,4rem)] flex w-full max-w-[54rem] items-center justify-center gap-[clamp(0.35rem,1.4vw,1.5rem)]" aria-hidden="true" data-visible-reveal-fade>
 				{Array.from({ length: 3 }).map(() => (
-					<div class="h-[clamp(2.5rem,7vw,6rem)] w-[clamp(2.5rem,7vw,6rem)] flex-none rounded-xl bg-surface-soft/70"></div>
+					<div class="h-[clamp(2.5rem,7vw,6rem)] w-[clamp(2.5rem,7vw,6rem)] flex-none rounded-[32%] bg-surface-soft/70"></div>
 				))}
-				<div class="grid h-[clamp(4rem,9vw,7.25rem)] w-[clamp(4rem,9vw,7.25rem)] flex-none place-items-center rounded-[1.35rem] bg-[#e8d0a5] shadow-[0_1.5rem_3rem_rgba(0,0,0,0.14)]">
-					<img src={livecookIcon.src} alt="" class="h-[78%] w-[78%] object-contain" loading="lazy" />
+				<div class="grid h-[clamp(4rem,9vw,7.25rem)] w-[clamp(4rem,9vw,7.25rem)] flex-none place-items-center rounded-[32%] bg-[#e8d0a5] shadow-[0_1.5rem_3rem_rgba(0,0,0,0.14)]">
+					<slot name="image-0"><img src={livecookIcon.src} alt="" class="h-[78%] w-[78%] object-contain" loading="lazy" /></slot>
 				</div>
 				{Array.from({ length: 3 }).map(() => (
-					<div class="h-[clamp(2.5rem,7vw,6rem)] w-[clamp(2.5rem,7vw,6rem)] flex-none rounded-xl bg-surface-soft/70"></div>
+					<div class="h-[clamp(2.5rem,7vw,6rem)] w-[clamp(2.5rem,7vw,6rem)] flex-none rounded-[32%] bg-surface-soft/70"></div>
 				))}
 			</div>
 		</div>
 
 		<div class="grid lg:grid-cols-3">
 			<figure class="relative min-h-[24rem] overflow-hidden border-b border-foreground lg:aspect-square lg:border-b-0" data-visible-reveal-group>
-				<img
+				<slot name="image-1"><img
 					src={grid001.src}
 					width={grid001.width}
 					height={grid001.height}
@@ -63,7 +66,7 @@ const communityLabels = ["[ Marca ]", "[ Comunidad ]", "[ Operación ]"];
 					loading="lazy"
 					decoding="async"
 					data-visible-reveal-fade
-				/>
+				/></slot>
 			</figure>
 
 			<div class="grid min-h-[24rem] place-items-center border-b border-foreground px-[clamp(1rem,2vw,2rem)] text-center lg:aspect-square lg:border-l" data-visible-reveal-group>
@@ -71,21 +74,21 @@ const communityLabels = ["[ Marca ]", "[ Comunidad ]", "[ Operación ]"];
 					{systemLabels.map((label, index) => (
 						<p
 							class:list={[
-								"font-normal leading-none tracking-[-0.06em]",
+								"font-normal leading-none tracking-normal",
 								index === 1
 									? "text-[clamp(2rem,3.6vw,3.75rem)] text-foreground"
 									: "text-[clamp(1.55rem,2.6vw,2.6rem)] text-muted-foreground",
 							]}
 							data-visible-reveal-text
 						>
-							{label}
+							{index === 0 ? (<slot name="system-0">{label}</slot>) : index === 1 ? (<slot name="system-1">{label}</slot>) : index === 2 ? (<slot name="system-2">{label}</slot>) : (<>{label}</>)}
 						</p>
 					))}
 				</div>
 			</div>
 
 			<figure class="relative min-h-[24rem] overflow-hidden border-b border-foreground lg:aspect-square lg:border-b-0 lg:border-l" data-visible-reveal-group>
-				<img
+				<slot name="image-2"><img
 					src={grid02.src}
 					width={grid02.width}
 					height={grid02.height}
@@ -94,7 +97,7 @@ const communityLabels = ["[ Marca ]", "[ Comunidad ]", "[ Operación ]"];
 					loading="lazy"
 					decoding="async"
 					data-visible-reveal-fade
-				/>
+				/></slot>
 			</figure>
 
 			<div class="grid min-h-[24rem] place-items-center border-b border-foreground px-[clamp(1rem,2vw,2rem)] text-center lg:aspect-square lg:border-b-0" data-visible-reveal-group>
@@ -102,21 +105,21 @@ const communityLabels = ["[ Marca ]", "[ Comunidad ]", "[ Operación ]"];
 					{communityLabels.map((label, index) => (
 						<p
 							class:list={[
-								"font-normal leading-none tracking-[-0.06em]",
+								"font-normal leading-none tracking-normal",
 								index === 1
 									? "text-[clamp(2rem,3.6vw,3.75rem)] text-foreground"
 									: "text-[clamp(1.55rem,2.6vw,2.6rem)] text-muted-foreground",
 							]}
 							data-visible-reveal-text
 						>
-							{label}
+							{index === 0 ? (<slot name="community-0">{label}</slot>) : index === 1 ? (<slot name="community-1">{label}</slot>) : index === 2 ? (<slot name="community-2">{label}</slot>) : (<>{label}</>)}
 						</p>
 					))}
 				</div>
 			</div>
 
 			<figure class="relative min-h-[24rem] overflow-hidden border-b border-foreground lg:aspect-square lg:border-b-0 lg:border-l" data-visible-reveal-group>
-				<img
+				<slot name="image-3"><img
 					src={grid03.src}
 					width={grid03.width}
 					height={grid03.height}
@@ -125,12 +128,12 @@ const communityLabels = ["[ Marca ]", "[ Comunidad ]", "[ Operación ]"];
 					loading="lazy"
 					decoding="async"
 					data-visible-reveal-fade
-				/>
+				/></slot>
 			</figure>
 
 			<div class="grid min-h-[24rem] place-items-center border-l border-t border-foreground px-[clamp(1rem,2vw,2rem)] text-center lg:aspect-square" data-visible-reveal-group>
-				<p class="text-[clamp(2rem,3.2vw,3.25rem)] font-normal uppercase leading-none tracking-[-0.06em]" data-visible-reveal-text>
-					Aprendizaje
+				<p class="text-[clamp(2rem,3.2vw,3.25rem)] font-normal uppercase leading-none tracking-normal" data-visible-reveal-text>
+				<slot name="text-0">{t("Aprendizaje")}</slot>
 				</p>
 			</div>
 		</div>
@@ -139,11 +142,13 @@ const communityLabels = ["[ Marca ]", "[ Comunidad ]", "[ Operación ]"];
 
 <script>
 	import { gsap } from "gsap";
+	import { revealParagraph } from "../../scripts/revealParagraph";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	const splitVisibleRows = (element: HTMLElement) => {
+		if (revealParagraph(element)) return;
 		if (element.dataset.visiblePrepared === "true") return;
 
 		const text = element.textContent?.replace(/\s+/g, " ").trim();

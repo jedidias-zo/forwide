@@ -1,16 +1,36 @@
 ---
+import EditableImage from "../../components/ui/EditableImage.astro";
+import editableImage0 from "../../assets/vision/full-width.png";
+import editableImage1 from "../../assets/livecook-product-page/livecook-hero-phone.png";
+import editableImage2 from "../../assets/livecook-product-page/section_layers/asset-05.png";
+import BilingualText from "../../components/ui/BilingualText.astro";
+import { createTranslator, getLocale } from "../../i18n";
+const t = createTranslator(getLocale(Astro.url.pathname));
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LiveCookProductHero from "../../components/sections/LiveCookProductHero.astro";
-import LiveCookProductIntro from "../../components/sections/LiveCookProductIntro.astro";
-import LiveCookProductSaveSection from "../../components/sections/LiveCookProductSaveSection.astro";
-import LiveCookProductLayersSection from "../../components/sections/LiveCookProductLayersSection.astro";
+import LiveCookShowcaseHero from "../../components/sections/LiveCookShowcaseHero.astro";
 import LiveCookProductProofSection from "../../components/sections/LiveCookProductProofSection.astro";
 ---
 
-<BaseLayout title="LiveCook | Forwide">
-	<LiveCookProductHero />
-	<LiveCookProductIntro />
-	<LiveCookProductSaveSection />
-	<LiveCookProductLayersSection />
-	<LiveCookProductProofSection />
+<BaseLayout title={t("Productos | Forwide")}>
+	<LiveCookProductHero>
+		<BilingualText slot="title" spanish="Productos" english="Products" />
+		<BilingualText slot="intro" spanish="Cada producto de Forwide tiene su propia marca y su propio público. Todos funcionan sobre la misma tecnología." english="Each Forwide product has its own brand and audience. They all run on the same technology." />
+		<BilingualText slot="body" spanish="Clases de cocina en directo con chefs reales: cocinas a la vez que el chef, preguntas en el momento y terminas con tu plato hecho." english="Live cooking classes with real chefs: cook alongside the chef, ask questions as you go and finish with a dish you've made yourself." />
+		<BilingualText slot="cta-label" spanish="Conocer LiveCook" english="Discover LiveCook" />
+		<EditableImage slot="image-0" src={editableImage0} spanishAlt="Cocina profesional con superficies de acero y luces cálidas." englishAlt="A professional kitchen with steel surfaces and warm lighting." class="aspect-[1.35] w-full object-cover object-center sm:aspect-auto sm:h-auto" loading="eager" fetchpriority="high" decoding="async" />
+	</LiveCookProductHero>
+	<LiveCookShowcaseHero>
+		<BilingualText slot="title" spanish="Cocina en directo. Chefs reales. Desde cualquier lugar." english="Live cooking. Real chefs. From anywhere." />
+		<BilingualText slot="label" spanish="[ El primer producto de Forwide ]" english="[ Forwide's first product ]" />
+		<BilingualText slot="body" spanish="LiveCook no te manda a guardar otra receta. Te pone en una clase en directo: haces la receta, preguntas, sigues el ritmo del chef y terminas con un plato hecho. También es la primera prueba real de cómo Forwide convierte una idea en un producto que se usa." english="LiveCook doesn't ask you to save another recipe. It puts you in a live class: you cook, ask questions, follow the chef's pace and finish with a completed dish. It is also the first real test of how Forwide turns an idea into a product people use." />
+		<BilingualText slot="cta-label" spanish="Conocer LiveCook" english="Discover LiveCook" />
+		<EditableImage slot="image-0" src={editableImage1} spanishAlt="Mockup de LiveCook mostrando el perfil de una chef dentro de la app." englishAlt="A LiveCook mockup showing a chef's profile in the app." class="h-auto w-full" loading="lazy" decoding="async" />
+	</LiveCookShowcaseHero>
+	<LiveCookProductProofSection>
+		<BilingualText slot="brand" spanish="LiveCook" english="LiveCook" />
+		<BilingualText slot="text-0" spanish=" ES EL PRIMER PRODUCTO DONDE FORWIDE PRUEBA CÓMO CONSTRUYE." english=" IS THE FIRST PRODUCT WHERE FORWIDE PUTS ITS APPROACH TO BUILDING INTO PRACTICE." />
+		<BilingualText slot="text-1" spanish="Para Forwide, LiveCook es la primera prueba en condiciones reales: con chefs, clases y personas cocinando." english="For Forwide, LiveCook is the first real-world test: with chefs, classes, and people cooking." />
+		<EditableImage slot="image-0" src={editableImage2} spanishAlt="Teléfono iluminado sostenido en una mano." englishAlt="An illuminated phone held in a hand." class="w-full" loading="lazy" decoding="async" />
+	</LiveCookProductProofSection>
 </BaseLayout>

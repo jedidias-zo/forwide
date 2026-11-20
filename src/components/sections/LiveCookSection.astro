@@ -44,8 +44,8 @@ const ctaCardClass =
 	<div class="lg:hidden overflow-hidden px-[var(--frame-inset)] py-[clamp(3.5rem,10vw,5rem)]">
 		<div class="flex w-full flex-col">
 			<div class="space-y-2 uppercase" data-livecook-item>
-				<p class="text-[1.25rem] text-section-label">{eyebrow}</p>
-				<h2 class="text-[clamp(2.25rem,13vw,4.5rem)] text-section-heading">
+				<p class="eyebrow text-muted-foreground">{eyebrow}</p>
+				<h2 class="heading-h2">
 					<span class="relative block overflow-hidden">
 						<span class="block" data-livecook-line-text>{title}</span>
 						<span class="pointer-events-none absolute inset-0 z-10 block bg-reveal-bar" data-livecook-line-bar aria-hidden="true"></span>
@@ -53,7 +53,7 @@ const ctaCardClass =
 				</h2>
 			</div>
 
-			<p class="mt-3 max-w-[23rem] text-section-copy" data-livecook-text data-livecook-item>
+			<p class="mt-3 max-w-[23rem] paragraph text-description-foreground" data-livecook-text data-livecook-item>
 				{summary}
 			</p>
 
@@ -75,7 +75,7 @@ const ctaCardClass =
 				/>
 			</figure>
 
-			<p class="mt-4 max-w-[22rem] text-section-copy" data-livecook-text data-livecook-item>
+			<p class="mt-4 max-w-[22rem] paragraph text-description-foreground" data-livecook-text data-livecook-item>
 				{intro}
 			</p>
 
@@ -87,7 +87,7 @@ const ctaCardClass =
 					loading="lazy"
 				/>
 
-				<p class="ml-auto max-w-[16rem] text-section-copy" data-livecook-text>
+				<p class="ml-auto max-w-[16rem] paragraph text-description-foreground" data-livecook-text>
 					{note}
 				</p>
 			</div>
@@ -101,7 +101,7 @@ const ctaCardClass =
 				/>
 			</figure>
 
-			<p class="mt-4 max-w-[26rem] text-section-copy" data-livecook-text data-livecook-item>
+			<p class="mt-4 max-w-[26rem] paragraph text-description-foreground" data-livecook-text data-livecook-item>
 				{proof}
 			</p>
 
@@ -129,7 +129,7 @@ const ctaCardClass =
 				data-livecook-item
 				data-livecook-transition-card
 			>
-				<span class="max-w-[23rem] p-5 text-[clamp(1.75rem,8vw,2.5rem)] leading-[1.02] tracking-[-0.055em]" data-livecook-text>{cta}</span>
+				<span class="max-w-[23rem] p-5 text-[clamp(1.75rem,8vw,2.5rem)] leading-[1.02] tracking-normal" data-livecook-text>{cta}</span>
 				<span class="flex items-center justify-between border-t border-foreground px-5 py-4 text-[1.25rem] uppercase">
 					{ctaLabel}
 					<ArrowRightIcon size={32} aria-hidden="true" />
@@ -146,8 +146,8 @@ const ctaCardClass =
 			>
 				<div class="flex w-[36rem] shrink-0 flex-col gap-8" data-livecook-item>
 					<div class="space-y-2 uppercase">
-						<p class="text-[1.5rem] text-section-label">{eyebrow}</p>
-						<h2 class="text-[clamp(3rem,5vw,4.5rem)] text-section-heading">
+						<p class="eyebrow text-muted-foreground">{eyebrow}</p>
+						<h2 class="heading-h2">
 							<span class="relative block overflow-hidden">
 								<span class="block" data-livecook-line-text>{title}</span>
 								<span class="pointer-events-none absolute inset-0 z-10 block bg-reveal-bar" data-livecook-line-bar aria-hidden="true"></span>
@@ -176,11 +176,11 @@ const ctaCardClass =
 						/>
 					</figure>
 
-					<p class="max-w-[23rem] text-section-copy" data-livecook-text>
+					<p class="max-w-[23rem] paragraph text-description-foreground" data-livecook-text>
 						{note}
 					</p>
 
-					<p class="max-w-[24rem] self-end text-section-copy" data-livecook-text>
+					<p class="max-w-[24rem] self-end paragraph text-description-foreground" data-livecook-text>
 						{intro}
 					</p>
 
@@ -195,7 +195,7 @@ const ctaCardClass =
 				</div>
 
 				<div class="flex w-[46rem] shrink-0 flex-col gap-8 self-center" data-livecook-item>
-					<p class="max-w-[38rem] text-section-copy" data-livecook-text>{proof}</p>
+					<p class="max-w-[38rem] paragraph text-description-foreground" data-livecook-text>{proof}</p>
 					<img
 						src={livecookUiCard.src}
 						alt="Clase en vivo de LiveCook con una tarjeta de reserva y detalles."
@@ -228,8 +228,8 @@ const ctaCardClass =
 					data-livecook-item
 					data-livecook-transition-card
 				>
-					<span class="max-w-[38rem] p-[clamp(2rem,3vw,4rem)] text-[clamp(1.8rem,2.25vw,3.1rem)] leading-[1.03] tracking-[-0.055em]" data-livecook-text>{cta}</span>
-					<span class="flex items-center justify-between border-t border-foreground px-[clamp(2rem,3vw,4rem)] py-[clamp(1.75rem,2.4vw,3rem)] text-[clamp(1.25rem,1.45vw,2rem)] leading-none tracking-[-0.04em] uppercase">
+					<span class="max-w-[38rem] p-[clamp(2rem,3vw,4rem)] text-[clamp(1.8rem,2.25vw,3.1rem)] leading-[1.03] tracking-normal" data-livecook-text>{cta}</span>
+					<span class="flex items-center justify-between border-t border-foreground px-[clamp(2rem,3vw,4rem)] py-[clamp(1.75rem,2.4vw,3rem)] text-[clamp(1.25rem,1.45vw,2rem)] leading-none tracking-normal uppercase">
 						{ctaLabel}
 						<ArrowRightIcon className="size-[clamp(2rem,1.9vw,2.75rem)]" aria-hidden="true" />
 					</span>
@@ -241,11 +241,15 @@ const ctaCardClass =
 
 <script>
 	import { gsap } from "gsap";
+	import { revealParagraph } from "../../scripts/revealParagraph";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	const splitLivecookRows = (element: HTMLElement) => {
+		// These paragraphs already receive the section's item entrance animation.
+		if (element.matches("p[data-livecook-item]")) return;
+		if (revealParagraph(element)) return;
 		if (element.dataset.livecookPrepared === "true") return;
 		if (element.querySelector("[data-livecook-line-text]")) {
 			element.dataset.livecookPrepared = "true";
