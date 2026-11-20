@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "forwide",
+  "compatibility_date": "2026-11-20",
+  "assets": {
+    "directory": "./dist"
+  }
+}
