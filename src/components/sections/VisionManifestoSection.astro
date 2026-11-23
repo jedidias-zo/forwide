@@ -40,7 +40,7 @@ const {
 			<div class="mt-[clamp(2rem,3.2vw,3rem)] space-y-[clamp(1.35rem,2vw,1.75rem)] paragraph text-description-foreground">
 				{
 					paragraphs.map((paragraph, index) => (
-						<p data-reveal-copy>{index === 0 ? (<slot name="paragraph-0"><span style="white-space: pre-line;">{paragraph}</span></slot>) : index === 1 ? (<slot name="paragraph-1"><span style="white-space: pre-line;">{paragraph}</span></slot>) : index === 2 ? (<slot name="paragraph-2"><span style="white-space: pre-line;">{paragraph}</span></slot>) : (<><span style="white-space: pre-line;">{paragraph}</span></>)}</p>
+						<p data-reveal-copy>{index === 0 ? (<slot name="paragraph-0"><span style="white-space: normal;">{paragraph}</span></slot>) : index === 1 ? (<slot name="paragraph-1"><span style="white-space: normal;">{paragraph}</span></slot>) : index === 2 ? (<slot name="paragraph-2"><span style="white-space: normal;">{paragraph}</span></slot>) : (<><span style="white-space: normal;">{paragraph}</span></>)}</p>
 					))
 				}
 			</div>

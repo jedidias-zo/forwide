@@ -6,10 +6,12 @@ interface Props {
 	spanish: string;
 	/** English copy. This is independent of the Spanish wording. */
 	english: string;
+	/** Disable to let paragraphs wrap naturally, ignoring line breaks in the editor. */
+	preserveLineBreaks?: boolean;
 }
 
-const { spanish, english } = Astro.props;
+const { spanish, english, preserveLineBreaks = true } = Astro.props;
 const locale = getLocale(Astro.url.pathname);
 ---
 
-<span data-bilingual-text style="white-space: pre-line;">{locale === "en" ? english : spanish}</span>
+<span data-bilingual-text style={{ whiteSpace: preserveLineBreaks ? "pre-line" : "normal" }}>{locale === "en" ? english : spanish}</span>
