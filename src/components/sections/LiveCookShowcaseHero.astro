@@ -60,7 +60,6 @@ const {
 			</figure>
 
 			<div class="relative z-10 flex flex-col items-start gap-6 pb-[clamp(3rem,4vw,4rem)] lg:gap-8" data-reveal-scroll-fade>
-				<p class="eyebrow"><slot name="label">{label}</slot></p>
 				<p class="paragraph max-w-[44ch]"><slot name="body">{body}</slot></p>
 				<CtaButton href={ctaHref} label={ctaLabel} ><slot name="cta-label">{ctaLabel}</slot></CtaButton>
 			</div>

@@ -8,7 +8,7 @@ PAIRS = {
     "/": ("/en/", "We turn digital", "Convertimos oportunidades"),
     "/vision": ("/en/vision", "What is Forwide?", "¿Qué es Forwide?"),
     "/productos/livecook": ("/en/products/livecook", "Discover LiveCook", "Conocer LiveCook"),
-    "/contactanos": ("/en/contact", "Contact & enquiries", "Contacto & consultas"),
+    "/contactanos": ("/en/contact", "General support", "Soporte general"),
     "/aviso-legal": ("/en/legal-notice", "Legal notice", "Aviso legal"),
     "/privacidad": ("/en/privacy", "Privacy policy", "Política de privacidad"),
     "/proteccion-datos-formularios": ("/en/data-protection", "Data protection", "Protección de datos"),

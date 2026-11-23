@@ -1,37 +1,7 @@
 ---
-import { createTranslator, getLocale } from "../../i18n";
-const t = createTranslator(getLocale(Astro.url.pathname));
-
-import CtaButton from "../ui/CtaButton.astro";
-import BilingualField from "../ui/BilingualField.astro";
-
-const contactGroups = [
-	{
-		title: "Global",
-		items: [
-			{ label: "General", value: "hola@forwide.com", href: "mailto:hola@forwide.com" },
-			{ label: "Legal", value: "legal@forwide.com", href: "mailto:legal@forwide.com" },
-		],
-	},
-	{
-		title: "Media",
-		items: [
-			{ label: t("Prensa"), value: "press@forwide.com", href: "mailto:press@forwide.com" },
-			{ label: "", value: t("Consultas directas solamente") },
-		],
-	},
-];
-
-const socialLinks = [
-	{ label: "LinkedIn", href: "#" },
-	{ label: "Twitter", href: "#" },
-	{ label: "Instagram", href: "#" },
-];
-
-const fieldClass =
-	"w-full border-0 border-b border-foreground bg-transparent px-0 pb-3 text-[clamp(1.15rem,1.55vw,1.5rem)] font-normal leading-none tracking-normal text-foreground placeholder:text-muted-foreground/45 focus:border-foreground focus:outline-none";
-const labelClass =
-	"block text-[clamp(0.75rem,0.9vw,0.9rem)] font-normal uppercase leading-none tracking-normal text-foreground";
+import { getLocale } from "../../i18n";
+import contactImage from "../../assets/responsabilidad-page/asset-03.png";
+const english = getLocale(Astro.url.pathname) === "en";
 ---
 
 <section
@@ -39,91 +9,30 @@ const labelClass =
 	class="relative bg-surface-light px-[var(--frame-inset)] pt-header text-foreground"
 	aria-labelledby="contact-title"
 >
-	<div class="border-x border-foreground px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(4rem,8vw,8rem)]">
-		<div class="grid min-h-[calc(100svh-var(--header-height)-6rem)] gap-[clamp(3rem,7vw,7rem)] xl:grid-cols-[1.45fr_1fr] xl:items-end">
-			<div>
-				<h1
-					id="contact-title"
-					class="heading-h1 max-w-[56rem]"
-					data-reveal-heading
-				>
-					<slot name="text-0">{t("Contacto & consultas")}</slot>
-				</h1>
+	<div class="min-h-[70svh] border-x border-foreground px-[clamp(1rem,1.6vw,1.5rem)] pb-[clamp(4rem,8vw,8rem)] pt-[clamp(3rem,6vw,6rem)]">
+		<div class="flex items-center justify-between gap-6" data-reveal-fade>
+			<h1 id="contact-title" class="heading-h1 min-w-0">
+				<slot name="title">{english ? "Contact" : "Contacto"}</slot>
+			</h1>
+			<svg class="h-[clamp(2.5rem,7vw,7rem)] w-[clamp(2.5rem,7vw,7rem)] shrink-0" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+				<path d="M15 15L85 85M20 85H85V20" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+			</svg>
+		</div>
 
-				<form
-					action="mailto:hola@forwide.com"
-					method="post"
-					enctype="text/plain"
-					class="mt-[clamp(4rem,8vw,7rem)] grid gap-[clamp(2rem,4vw,3.75rem)]"
-					data-reveal-fade
-				>
-					<div class="grid gap-[clamp(2rem,4vw,3.75rem)] md:grid-cols-2">
-						<label class="grid gap-8">
-							<span class={labelClass}><slot name="text-1">{t("Nombre completo")}</slot></span>
-							<BilingualField class={fieldClass} type="text" name="nombre" spanish="John Doe" english="John Doe" autocomplete="name" />
-						</label>
-
-						<label class="grid gap-8">
-							<span class={labelClass}><slot name="email-label">Email</slot></span>
-							<BilingualField class={fieldClass} type="email" name="email" spanish="john@example.com" english="john@example.com" autocomplete="email" />
-						</label>
-					</div>
-
-					<label class="grid gap-8">
-						<span class={labelClass}><slot name="text-2">{t("Asunto")}</slot></span>
-						<BilingualField class={fieldClass} type="text" name="asunto" spanish="Consulta general" english="General enquiry" />
-					</label>
-
-					<label class="grid gap-[clamp(5rem,10vw,8rem)]">
-						<span class={labelClass}><slot name="text-3">{t("Mensaje")}</slot></span>
-						<BilingualField tag="textarea" class={`${fieldClass} min-h-[8rem] resize-y`} name="mensaje" spanish="¿Cómo podemos ayudarte?" english="How can we help you?" />
-					</label>
-
-					<div class="flex justify-start md:justify-end">
-						<button type="submit" class="cta-button cta-button-dark min-w-[clamp(13rem,16vw,17rem)]">
-							<span><slot name="text-4">{t("Enviar mensaje")}</slot></span>
-						</button>
-					</div>
-				</form>
+		<div class="mt-[clamp(2.5rem,5vw,5rem)] grid grid-cols-[minmax(0,0.24fr)_minmax(0,1fr)] items-start gap-[clamp(1rem,4vw,4rem)] md:grid-cols-[minmax(0,0.2fr)_minmax(0,1fr)]" data-reveal-fade>
+			<figure class="aspect-[3/4] overflow-hidden bg-surface-soft">
+				<slot name="image"><img src={contactImage.src} width={contactImage.width} height={contactImage.height} alt="" class="h-full w-full object-cover grayscale" loading="eager" /></slot>
+			</figure>
+			<div class="paragraph border-t border-foreground/40">
+				<div class="flex flex-col gap-2 border-b border-foreground/40 py-4 md:flex-row md:items-center md:justify-between md:gap-6">
+					<h2 class="text-[length:inherit] font-normal uppercase"><slot name="legal-label">Legal</slot></h2>
+					<a href="mailto:admin@forwide.com" class="break-words hover:underline underline-offset-4 focus-visible:underline"><slot name="legal-email">admin@forwide.com</slot></a>
+				</div>
+				<div class="flex flex-col gap-2 border-b border-foreground/40 py-4 md:flex-row md:items-center md:justify-between md:gap-6">
+					<h2 class="text-[length:inherit] font-normal uppercase"><slot name="support-label">{english ? "General support" : "Soporte general"}</slot></h2>
+					<a href="mailto:support@forwide.com" class="break-words hover:underline underline-offset-4 focus-visible:underline"><slot name="support-email">support@forwide.com</slot></a>
+				</div>
 			</div>
-
-			<aside class="grid gap-[clamp(2rem,4vw,3.5rem)] pb-[clamp(0rem,2vw,2rem)]" aria-label={t("Información de contacto")} data-reveal-fade>
-				{
-					contactGroups.map((group, groupIndex) => (
-						<section class="grid gap-5 border-b border-foreground/20 pb-[clamp(1.75rem,3vw,2.5rem)] md:grid-cols-[0.72fr_1fr]">
-							<h2 class="heading-h3">
-								{groupIndex === 0 ? (<slot name="group-0-title">{group.title}</slot>) : groupIndex === 1 ? (<slot name="group-1-title">{group.title}</slot>) : (<>{group.title}</>)}
-							</h2>
-
-							<div class="grid gap-4 text-[clamp(1rem,1.35vw,1.35rem)] font-normal leading-[1.15] tracking-normal">
-								{group.items.map((item, itemIndex) => (
-									item.href ? (
-										<a href={item.href} class="transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
-											{groupIndex === 0 && itemIndex === 0 ? (<slot name="contact-0-0">{item.label ? `${item.label}: ` : ""}{item.value}</slot>) : groupIndex === 0 && itemIndex === 1 ? (<slot name="contact-0-1">{item.label ? `${item.label}: ` : ""}{item.value}</slot>) : groupIndex === 1 && itemIndex === 0 ? (<slot name="contact-1-0">{item.label ? `${item.label}: ` : ""}{item.value}</slot>) : groupIndex === 1 && itemIndex === 1 ? (<slot name="contact-1-1">{item.label ? `${item.label}: ` : ""}{item.value}</slot>) : (<>{item.label ? `${item.label}: ` : ""}{item.value}</>)}
-										</a>
-									) : (
-										<p>{groupIndex === 0 && itemIndex === 0 ? (<slot name="contact-0-0">{item.value}</slot>) : groupIndex === 0 && itemIndex === 1 ? (<slot name="contact-0-1">{item.value}</slot>) : groupIndex === 1 && itemIndex === 0 ? (<slot name="contact-1-0">{item.value}</slot>) : groupIndex === 1 && itemIndex === 1 ? (<slot name="contact-1-1">{item.value}</slot>) : (<>{item.value}</>)}</p>
-									)
-								))}
-							</div>
-						</section>
-					))
-				}
-
-				<nav aria-label={t("Redes sociales")}>
-					<ul class="flex flex-wrap gap-x-8 gap-y-3 text-[clamp(1rem,1.1vw,1.125rem)] font-normal leading-none tracking-normal">
-						{
-							socialLinks.map((link, index) => (
-								<li>
-									<a href={link.href} class="underline underline-offset-4 transition-colors duration-fast hover:text-muted-foreground focus-visible:text-muted-foreground">
-										{index === 0 ? (<slot name="social-0">{link.label}</slot>) : index === 1 ? (<slot name="social-1">{link.label}</slot>) : index === 2 ? (<slot name="social-2">{link.label}</slot>) : (<>{link.label}</>)}
-									</a>
-								</li>
-							))
-						}
-					</ul>
-				</nav>
-			</aside>
 		</div>
 	</div>
 </section>
