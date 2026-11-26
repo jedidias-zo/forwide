@@ -2,22 +2,18 @@
 import { getLocale, localisePath } from "../../i18n";
 
 const locale = getLocale(Astro.url.pathname);
+const targetLanguage = locale === "en" ? "es" : "en";
+const label = targetLanguage === "es" ? "Español" : "English";
 ---
 
-<nav aria-label={locale === "en" ? "Language" : "Idioma"} class="flex items-center gap-2 text-xs font-normal leading-none">
-	{(["es", "en"] as const).map((language) => (
-		<a
-			href={localisePath(Astro.url.pathname, language)}
-			lang={language}
-			hreflang={language}
-			aria-current={locale === language ? "true" : undefined}
-			aria-label={language === "es" ? "Español" : "English"}
-			class:list={[
-				"py-2 uppercase underline-offset-4 transition-colors hover:text-primary",
-				locale === language ? "underline" : "opacity-60",
-			]}
-		>
-			{language.toUpperCase()}
-		</a>
-	))}
+<nav aria-label={locale === "en" ? "Language" : "Idioma"} class="flex items-center text-xs font-normal leading-none">
+	<a
+		href={localisePath(Astro.url.pathname, targetLanguage)}
+		lang={targetLanguage}
+		hreflang={targetLanguage}
+		aria-label={label}
+		class="py-2 uppercase underline-offset-4 transition-colors hover:underline focus-visible:underline"
+	>
+		{label}
+	</a>
 </nav>

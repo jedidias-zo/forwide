@@ -18,7 +18,7 @@ type Props = {
 };
 
 const {
-	title = t("Cocina en directo. Chefs reales. Desde cualquier lugar."),
+	title = t("La gastronomía sin fronteras. En tiempo real."),
 	label = t("[ El primer producto de Forwide ]"),
 	body = t("LiveCook no te manda a guardar otra receta. Te pone en una clase en directo: haces la receta, preguntas, sigues el ritmo del chef y terminas con un plato hecho. También es la primera prueba real de cómo Forwide convierte una idea en un producto que se usa."),
 	image = phoneImage,
@@ -33,18 +33,23 @@ const {
 	class="overflow-hidden bg-surface-soft px-[var(--frame-inset)] text-foreground"
 	aria-labelledby="livecook-showcase-title"
 >
-	<div class="border-x border-foreground px-[clamp(1rem,1.25vw,1.25rem)] pt-[clamp(3.5rem,7vw,6rem)]">
-		<h2 id="livecook-showcase-title" class="heading-h2 text-right" data-reveal-scroll-fade>
-			<slot name="title">{title}</slot>
-		</h2>
+	<div class="border-x border-foreground">
 
-		<div class="mt-[clamp(3rem,6vw,6rem)] grid gap-[clamp(2.5rem,7vw,7rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-end">
-			<figure class="relative isolate mx-auto w-full max-w-[33rem] self-end lg:mx-0" data-reveal-scroll-fade>
+		<div class="border-b border-foreground/20 px-[clamp(1rem,1.25vw,1.25rem)] pb-[clamp(2.5rem,5vw,4rem)] pt-[clamp(3rem,6vw,6rem)]" data-reveal-scroll-fade>
+			<p class="eyebrow mb-6"><slot name="products-label">[ Nuestros productos ]</slot></p>
+			<div class="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-[clamp(2.5rem,5vw,5rem)]">
+				<h2 class="heading-h3 max-w-[26rem]"><slot name="products-title">Distintos universos. Un mismo origen.</slot></h2>
+				<p class="paragraph max-w-[40rem]"><slot name="products-body" /></p>
+			</div>
+		</div>
+
+		<div class="grid items-end gap-[clamp(2.5rem,5vw,5rem)] px-[clamp(1rem,1.25vw,1.25rem)] pt-[clamp(3rem,6vw,6rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+			<figure class="relative isolate order-2 mx-auto w-full max-w-[33rem] self-end overflow-hidden pl-[3%] pr-[24%] pt-[clamp(4rem,7vw,7rem)] lg:order-1" data-reveal-scroll-fade>
 				<img
 					src={waves.src}
 					alt=""
 					aria-hidden="true"
-					class="livecook-waves pointer-events-none absolute -top-[clamp(3rem,8vw,8rem)] left-[12%] -z-10 w-[125%] max-w-none opacity-70"
+					class="livecook-waves pointer-events-none absolute right-0 top-0 -z-10 h-[82%] w-[90%] max-w-none object-fill opacity-70"
 					data-livecook-waves
 					loading="lazy"
 				/>
@@ -59,9 +64,15 @@ const {
 				/></slot>
 			</figure>
 
-			<div class="relative z-10 flex flex-col items-start gap-6 pb-[clamp(3rem,4vw,4rem)] lg:gap-8" data-reveal-scroll-fade>
-				<p class="paragraph max-w-[44ch]"><slot name="body">{body}</slot></p>
-				<CtaButton href={ctaHref} label={ctaLabel} ><slot name="cta-label">{ctaLabel}</slot></CtaButton>
+			<div class="relative z-10 order-1 min-w-0 max-w-[40rem] lg:order-2 lg:pb-[clamp(3rem,6vw,6rem)]" data-reveal-scroll-fade>
+
+				<div class="space-y-5">
+					<p class="eyebrow"><slot name="label">[ LiveCook ]</slot></p>
+					<h3 id="livecook-showcase-title" class="heading-h3"><slot name="title">{title}</slot></h3>
+					<p class="paragraph"><slot name="body">{body}</slot></p>
+					<p class="paragraph"><slot name="experience" /></p>
+					<CtaButton href={ctaHref} label={ctaLabel} class="mt-2"><slot name="cta-label">{ctaLabel}</slot></CtaButton>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -71,7 +82,7 @@ const {
 	@media (prefers-reduced-motion: no-preference) {
 		.livecook-waves {
 			transform-origin: 45% 60%;
-			animation: livecook-wave-flow 8s ease-in-out infinite alternate;
+			animation: livecook-wave-flow 20s ease-in-out infinite;
 			animation-play-state: paused;
 		}
 
@@ -82,14 +93,11 @@ const {
 	}
 
 	@keyframes livecook-wave-flow {
-		0% {
-			transform: translate3d(-2%, 1%, 0) rotate(-3deg) scale(0.98, 0.96);
+		0%, 100% {
+			transform: translate3d(-2%, 1%, 0) rotate(-2deg) scale(1, 0.98);
 		}
 		50% {
-			transform: translate3d(1%, -1%, 0) rotate(0deg) scale(1.02, 1.04);
-		}
-		100% {
-			transform: translate3d(3%, -2%, 0) rotate(3deg) scale(1.04, 1.08);
+			transform: translate3d(2%, -1%, 0) rotate(2deg) scale(1.04, 1.06);
 		}
 	}
 </style>

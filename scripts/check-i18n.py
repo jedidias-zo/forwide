@@ -5,7 +5,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1] / "dist"
 PAIRS = {
-    "/": ("/en/", "We turn digital", "Convertimos oportunidades"),
+    "/": ("/en/", "WE CREATE TECHNOLOGY.", "CREAMOS TECNOLOGÍA."),
     "/vision": ("/en/vision", "What is Forwide?", "¿Qué es Forwide?"),
     "/productos/livecook": ("/en/products/livecook", "Discover LiveCook", "Conocer LiveCook"),
     "/contactanos": ("/en/contact", "General support", "Soporte general"),
@@ -59,12 +59,13 @@ for spanish, (english, english_copy, spanish_copy) in PAIRS.items():
         assert copy in text, (route, "Missing translated copy", copy)
         assert page.alternates == {"es": spanish, "en": english, "x-default": spanish}, (route, "Alternates")
         switches = {a.get("hreflang"): a for a in page.anchors if a.get("hreflang")}
-        assert switches["es"]["href"] == spanish, (route, "Spanish switch")
-        assert switches["en"]["href"] == english, (route, "English switch")
-        assert switches[language].get("aria-current") == "true", (route, "Active language")
+        target_language = "es" if language == "en" else "en"
+        target_route = spanish if target_language == "es" else english
+        assert set(switches) == {target_language}, (route, "Single language switch")
+        assert switches[target_language]["href"] == target_route, (route, "Equivalent page switch")
         assert sum(a.get("aria-current") == "page" for a in page.anchors) == (0 if "legal" in english or english.endswith(("privacy", "data-protection")) else 1), (route, "Active navigation")
         if language == "en":
-            assert not re.search(r"[áéíóúñ¿]", text), (route, "Untranslated Spanish text")
+            assert not re.search(r"[áéíóúñ¿]", text.replace("Español", "")), (route, "Untranslated Spanish text")
             assert not any(re.search(r"[áéíóúñ¿]", value) for value in page.localized_attributes if value != "Español"), (route, "Untranslated image description or accessibility label")
             assert not any(a.get("href", "").startswith("/") and not a["href"].startswith("/en") and a.get("hreflang") != "es" for a in page.anchors), (route, "Navigation leaves English")
 

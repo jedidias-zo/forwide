@@ -77,6 +77,11 @@ const {
 					>
 						<slot name="headline">{headline}</slot>
 					</h2>
+					{Astro.slots.has("description") && (
+						<p class="paragraph mt-8 max-w-[55rem] normal-case text-white" data-next-reveal-text>
+							<slot name="description" />
+						</p>
+					)}
 				</div>
 			</div>
 		</div>

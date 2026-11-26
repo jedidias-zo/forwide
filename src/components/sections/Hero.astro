@@ -31,7 +31,7 @@ const {
 	<HeroBackgroundManager client:load />
 
 	<div
-		class="relative z-10 grid min-h-[calc(100svh-var(--header-height))] grid-rows-[1fr_auto] gap-10 px-4 pb-10 pt-6 lg:gap-12 lg:pb-16 lg:pt-8"
+		class="relative z-10 grid min-w-0 min-h-[calc(100svh-var(--header-height))] grid-rows-[1fr_auto] gap-10 px-4 pb-10 pt-6 lg:gap-12 lg:pb-16 lg:pt-8"
 	>
 		<div class="flex min-h-0 flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
 			<a
@@ -53,7 +53,7 @@ const {
 
 		<h1
 			id="hero-title"
-			class="heading-h1 max-w-full"
+			class="heading-h1 min-w-0 max-w-full [overflow-wrap:anywhere]"
 		>
 			{
 				headlineLines.map((line, lineIndex) => (

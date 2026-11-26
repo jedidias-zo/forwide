@@ -13,17 +13,15 @@ import ForwideLogo from "../brand/ForwideLogo.astro";
 	class="relative bg-surface-soft px-[var(--frame-inset)] text-foreground"
 	aria-label="Footer"
 >
+	<div class="pointer-events-none absolute inset-y-0 left-[var(--frame-inset)] z-[61] w-px bg-foreground" aria-hidden="true"></div>
+	<div class="pointer-events-none absolute inset-y-0 right-[var(--frame-inset)] z-[61] w-px bg-foreground" aria-hidden="true"></div>
 	<div class="absolute inset-x-0 top-0 h-px bg-foreground" aria-hidden="true"></div>
 
 	<div class="border-x border-foreground">
-		<div class="grid min-h-[clamp(9rem,13vw,12rem)] gap-[clamp(2rem,5vw,5rem)] border-b border-foreground px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(2rem,4vw,4rem)] lg:grid-cols-[0.85fr_1.35fr] lg:items-center">
-			<a href={localisePath("/", locale)} aria-label="Forwide home" class="block w-[min(18rem,42vw)]">
+		<div class="border-b border-foreground px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(2rem,4vw,4rem)]">
+			<a href={localisePath("/", locale)} aria-label="Forwide home" class="footer-logo mx-auto block w-[90%]">
 				<ForwideLogo class="h-auto w-full" />
 			</a>
-
-			<p class="max-w-[43rem] text-[clamp(2rem,3.35vw,3rem)] font-normal uppercase leading-[0.98] tracking-normal lg:justify-self-end">
-				<BilingualText spanish="CREAMOS Y GESTIONAMOS NUESTRAS PROPIAS APLICACIONES." english="We create and manage our own applications." />
-			</p>
 		</div>
 
 		<div class="grid min-h-[clamp(13rem,19vw,16rem)] gap-[clamp(2.5rem,7vw,8rem)] px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(2rem,4vw,3rem)] text-[clamp(0.9rem,1.05vw,1rem)] font-normal uppercase leading-[1.55] tracking-normal lg:grid-cols-[0.8fr_0.8fr_1fr] lg:items-start">
@@ -77,3 +75,29 @@ import ForwideLogo from "../brand/ForwideLogo.astro";
 		</div>
 	</div>
 </footer>
+
+<style>
+	.footer-logo :global(svg) {
+		overflow: visible;
+	}
+
+	.footer-logo :global(path) {
+		stroke: currentColor;
+		stroke-width: 1px;
+		vector-effect: non-scaling-stroke;
+		stroke-opacity: 0;
+		transition: fill-opacity 400ms ease, stroke-opacity 400ms ease;
+	}
+
+	.footer-logo:hover :global(path),
+	.footer-logo:focus-visible :global(path) {
+		fill-opacity: 0;
+		stroke-opacity: 1;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.footer-logo :global(path) {
+			transition: none;
+		}
+	}
+</style>

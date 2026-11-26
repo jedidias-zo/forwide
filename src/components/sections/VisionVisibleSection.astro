@@ -5,7 +5,6 @@ const t = createTranslator(getLocale(Astro.url.pathname));
 import grid001 from "../../assets/vision/visible/asset-01.png";
 import grid02 from "../../assets/vision/visible/asset-02.png";
 import grid03 from "../../assets/livecook-product-page/grid-03.png";
-import livecookIcon from "../../assets/livecook-product-page/livecook-icon.png";
 
 type Props = {
 	title?: string;
@@ -29,31 +28,6 @@ const communityLabels = [t("[ Marca ]"), t("[ Comunidad ]"), t("[ Operación ]")
 	data-header-bg="var(--surface-light)"
 >
 	<div class="border-x border-t border-foreground">
-		<div class="flex min-h-[clamp(30rem,48vw,45rem)] flex-col items-center justify-center border-b border-foreground px-[clamp(1rem,1.6vw,1.5rem)] py-[clamp(4rem,7vw,6rem)] text-center" data-visible-reveal-group>
-			<h2
-				id="vision-visible-title"
-				class="heading-h2 mx-auto max-w-[77rem]"
-				data-visible-reveal-text
-			>
-				<slot name="title">{title}</slot>
-			</h2>
-
-			<p class="mt-[clamp(1.5rem,3vw,2.5rem)] max-w-[40rem] paragraph text-description-foreground" data-visible-reveal-text>
-				<slot name="body">{body}</slot>
-			</p>
-
-			<div class="mt-[clamp(2.5rem,5vw,4rem)] flex w-full max-w-[54rem] items-center justify-center gap-[clamp(0.35rem,1.4vw,1.5rem)]" aria-hidden="true" data-visible-reveal-fade>
-				{Array.from({ length: 3 }).map(() => (
-					<div class="h-[clamp(2.5rem,7vw,6rem)] w-[clamp(2.5rem,7vw,6rem)] flex-none rounded-[32%] bg-surface-soft/70"></div>
-				))}
-				<div class="grid h-[clamp(4rem,9vw,7.25rem)] w-[clamp(4rem,9vw,7.25rem)] flex-none place-items-center rounded-[32%] bg-[#e8d0a5] shadow-[0_1.5rem_3rem_rgba(0,0,0,0.14)]">
-					<slot name="image-0"><img src={livecookIcon.src} alt="" class="h-[78%] w-[78%] object-contain" loading="lazy" /></slot>
-				</div>
-				{Array.from({ length: 3 }).map(() => (
-					<div class="h-[clamp(2.5rem,7vw,6rem)] w-[clamp(2.5rem,7vw,6rem)] flex-none rounded-[32%] bg-surface-soft/70"></div>
-				))}
-			</div>
-		</div>
 
 		<div class="grid lg:grid-cols-3">
 			<figure class="relative min-h-[24rem] overflow-hidden border-b border-foreground lg:aspect-square lg:border-b-0" data-visible-reveal-group>
@@ -118,7 +92,7 @@ const communityLabels = [t("[ Marca ]"), t("[ Comunidad ]"), t("[ Operación ]")
 				</div>
 			</div>
 
-			<figure class="relative min-h-[24rem] overflow-hidden border-b border-foreground lg:aspect-square lg:border-b-0 lg:border-l" data-visible-reveal-group>
+			<figure class="relative min-h-[24rem] overflow-hidden border-b border-foreground lg:aspect-square lg:border-b-0 lg:border-x" data-visible-reveal-group>
 				<slot name="image-3"><img
 					src={grid03.src}
 					width={grid03.width}
@@ -131,7 +105,7 @@ const communityLabels = [t("[ Marca ]"), t("[ Comunidad ]"), t("[ Operación ]")
 				/></slot>
 			</figure>
 
-			<div class="grid min-h-[24rem] place-items-center border-l border-t border-foreground px-[clamp(1rem,2vw,2rem)] text-center lg:aspect-square" data-visible-reveal-group>
+			<div class="grid min-h-[24rem] place-items-center border-l border-t border-foreground px-[clamp(1rem,2vw,2rem)] text-center lg:aspect-square lg:border-l-0" data-visible-reveal-group>
 				<p class="text-[clamp(2rem,3.2vw,3.25rem)] font-normal uppercase leading-none tracking-normal" data-visible-reveal-text>
 				<slot name="text-0">{t("Aprendizaje")}</slot>
 				</p>
